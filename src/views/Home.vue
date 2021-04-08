@@ -89,7 +89,7 @@
   </basic-layout>
 </template>
 
-<script lang="ts">
+<script>
 import { IonButton } from "@ionic/vue";
 import { defineComponent } from "vue";
 import { keypad } from "ionicons/icons";

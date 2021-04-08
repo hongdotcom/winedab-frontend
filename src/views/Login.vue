@@ -4,7 +4,7 @@
   >
 </template>
 
-<script lang="ts">
+<script>
 import { defineComponent } from "vue";
 import { IonContent, IonPage } from "@ionic/vue";
 export default defineComponent({
