@@ -1,0 +1,69 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans");
+@import url("https://fonts.googleapis.com/css2?family=Raleway");
+:root {
+  --ion-font-family: "Josef Sans", sans-serif;
+  --ion-font-family: "Raleway", Arial;
+
+  --ion-color-primary: #f79850;
+  --ion-color-primary-rgb: 247, 152, 80;
+  --ion-color-primary-contrast: #000000;
+  --ion-color-primary-contrast-rgb: 0, 0, 0;
+  --ion-color-primary-shade: #d98646;
+  --ion-color-primary-tint: #f8a262;
+
+  --ion-color-secondary: #700016;
+  --ion-color-secondary-rgb: 112, 0, 22;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #630013;
+  --ion-color-secondary-tint: #7e1a2d;
+
+  --ion-color-tertiary: #ff2600;
+  --ion-color-tertiary-rgb: 255, 38, 0;
+  --ion-color-tertiary-contrast: #ffffff;
+  --ion-color-tertiary-contrast-rgb: 255, 255, 255;
+  --ion-color-tertiary-shade: #e02100;
+  --ion-color-tertiary-tint: #ff3c1a;
+
+  --ion-color-success: #ffd7c2;
+  --ion-color-success-rgb: 255, 215, 194;
+  --ion-color-success-contrast: #000000;
+  --ion-color-success-contrast-rgb: 0, 0, 0;
+  --ion-color-success-shade: #e0bdab;
+  --ion-color-success-tint: #ffdbc8;
+
+  --ion-color-warning: #f87d2a;
+  --ion-color-warning-rgb: 248, 125, 42;
+  --ion-color-warning-contrast: #000000;
+  --ion-color-warning-contrast-rgb: 0, 0, 0;
+  --ion-color-warning-shade: #da6e25;
+  --ion-color-warning-tint: #f98a3f;
+
+  --ion-color-danger: #eb445a;
+  --ion-color-danger-rgb: 235, 68, 90;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger-shade: #cf3c4f;
+  --ion-color-danger-tint: #ed576b;
+
+  --ion-color-dark: #556482;
+  --ion-color-dark-rgb: 85, 100, 130;
+  --ion-color-dark-contrast: #ffffff;
+  --ion-color-dark-contrast-rgb: 255, 255, 255;
+  --ion-color-dark-shade: #4b5872;
+  --ion-color-dark-tint: #66748f;
+
+  --ion-color-medium: #92949c;
+  --ion-color-medium-rgb: 146, 148, 156;
+  --ion-color-medium-contrast: #ffffff;
+  --ion-color-medium-contrast-rgb: 255, 255, 255;
+  --ion-color-medium-shade: #808289;
+  --ion-color-medium-tint: #9d9fa6;
+
+  --ion-color-light: #f4f5f8;
+  --ion-color-light-rgb: 244, 245, 248;
+  --ion-color-light-contrast: #000000;
+  --ion-color-light-contrast-rgb: 0, 0, 0;
+  --ion-color-light-shade: #d7d8da;
+  --ion-color-light-tint: #f5f6f9;
+}

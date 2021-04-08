@@ -1,0 +1,21 @@
+ion-toolbar {
+  --background: var(--ion-color-primary);
+  --color: var(--ion-color-dark);
+}
+
+.logo {
+  height: 8vh;
+  max-width: 55vw;
+}
+.wine {
+  height: 15vh;
+  border: none;
+  min-width: 20vw;
+  border-radius: 10px 30px 30px 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+}
+
+.buttonGroup {
+  border: none;
+}
