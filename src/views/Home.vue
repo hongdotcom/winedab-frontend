@@ -93,6 +93,7 @@
 import { IonButton } from "@ionic/vue";
 import { defineComponent } from "vue";
 import { keypad } from "ionicons/icons";
+import axios from "axios";
 
 export default defineComponent({
   name: "Home",
@@ -100,7 +101,23 @@ export default defineComponent({
     IonButton,
   },
   data() {
-    return { keypad };
+    return { keypad, responseData: {} };
+  },
+  methods: {
+    async fetchApi() {
+      await axios
+        .get("http://localhost:4000/students/")
+        .then((res) => {
+          this.responseData = res;
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+  },
+  mounted() {
+    this.fetchApi();
   },
 });
 </script>
