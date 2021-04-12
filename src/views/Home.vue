@@ -106,7 +106,10 @@ export default defineComponent({
   methods: {
     async fetchApi() {
       await axios
-        .get("http://localhost:4000/students/")
+        .get(
+          `${process.env.VUE_APP_WC_ENDPOINT}/wp-json/wc/v3/orders?consumer_key=${process.env.VUE_APP_CONSUMER_KEY}&consumer_secret=${process.env.VUE_APP_CONSUMER_SECRET}`,
+          {}
+        )
         .then((res) => {
           this.responseData = res;
           console.log(res);
