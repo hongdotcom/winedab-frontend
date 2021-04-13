@@ -2,10 +2,42 @@ ion-toolbar {
   --background: var(--ion-color-primary);
   --color: var(--ion-color-dark);
 }
-
+.login {
+  background: url("../../public/assets/icon/mobilebg.png");
+  /* background-color: rgba(200, 47, 47, 0.4); */
+  position: relative;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+}
+.overlay {
+  background-color: rgba(200, 47, 47, 0.15);
+  position: relative;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+}
 .logo {
   height: 8vh;
   max-width: 55vw;
+}
+.login-logo {
+  display: inline-block;
+  height: 10vh;
+  max-width: 55vw;
+}
+.base {
+  padding: 5px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+}
+.login-input {
+  margin-top: 10vh;
 }
 .wine {
   height: 15vh;
