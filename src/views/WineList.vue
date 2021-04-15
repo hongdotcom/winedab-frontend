@@ -85,6 +85,7 @@
           </ion-item>
         </ion-row>
       </ion-card>
+      <!-- <p>{{ responseData }}</p> -->
     </ion-content>
   </basic-layout>
 </template>
@@ -96,7 +97,7 @@ import { keypad } from "ionicons/icons";
 import axios from "axios";
 
 export default defineComponent({
-  name: "Home",
+  name: "WineList",
   components: {
     IonButton,
   },
@@ -111,8 +112,8 @@ export default defineComponent({
           {}
         )
         .then((res) => {
-          this.responseData = res;
-          console.log(res);
+          this.responseData = res.data;
+          console.log(this.responseData);
         })
         .catch((err) => {
           console.log(err);

@@ -14,6 +14,22 @@
       </ion-toolbar>
     </ion-header>
     <slot />
+    <ion-tabs>
+      <ion-tab-bar class="tabbar" slot="bottom">
+        <ion-tab-button tab="profile" @click="() => router.push('/profile')">
+          <ion-icon :icon="personOutline"></ion-icon>
+        </ion-tab-button>
+        <ion-tab-button
+          tab="subscription"
+          @click="() => router.push('/subscription')"
+        >
+          <ion-icon :icon="bagCheckOutline"></ion-icon>
+        </ion-tab-button>
+        <ion-tab-button tab="wine" @click="() => router.push('/wines')">
+          <ion-icon :icon="wineOutline"></ion-icon>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
   </ion-page>
 </template>
 
@@ -29,6 +45,8 @@ import {
 } from "@ionic/vue";
 import { defineComponent } from "vue";
 import { keypad, chevronBack } from "ionicons/icons";
+import { bagCheckOutline, personOutline, wineOutline } from "ionicons/icons";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   name: "Home",
@@ -43,7 +61,11 @@ export default defineComponent({
     IonTitle,
   },
   data() {
-    return { keypad, chevronBack };
+    return { keypad, chevronBack, bagCheckOutline, personOutline, wineOutline };
+  },
+  setup() {
+    const router = useRouter();
+    return { router };
   },
 });
 </script>

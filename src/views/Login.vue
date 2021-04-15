@@ -9,9 +9,10 @@
         <form novalidate>
           <ion-list class="login-input">
             <ion-item>
-              <ion-label position="stacked" color="primary">Username</ion-label>
+              <ion-label position="floating" color="primary"
+                >Username</ion-label
+              >
               <ion-input
-                v-model="username"
                 name="username"
                 type="text"
                 spellcheck="false"
@@ -21,31 +22,47 @@
             </ion-item>
 
             <ion-item>
-              <ion-label position="stacked" color="primary">Password</ion-label>
-              <ion-input
-                v-model="password"
-                name="password"
-                type="password"
-                required
-              ></ion-input>
+              <ion-label position="floating" color="primary"
+                >Password</ion-label
+              >
+              <ion-input name="password" type="password" required></ion-input>
             </ion-item>
           </ion-list>
 
           <ion-row responsive-sm>
             <ion-col>
-              <ion-button
-                @click="onLogin(loginForm)"
-                type="submit"
-                expand="block"
+              <ion-button @click="() => router.push('/wines')" expand="block"
                 >Login</ion-button
               >
             </ion-col>
-            <ion-col>
-              <ion-button @click="onSignup()" color="light" expand="block"
+            <ion-col router-link="/home">
+              <ion-button
+                @click="() => router.push('/wines')"
+                color="light"
+                expand="block"
                 >Signup</ion-button
               >
             </ion-col>
           </ion-row>
+          <ion-col class="separator">
+            <p class="separatorText">or</p>
+          </ion-col>
+          <div class="googleContainer" @click="() => router.push('/wines')">
+            <ion-icon :icon="logoGoogle"></ion-icon>
+            <p>&nbsp;Login With Google</p>
+          </div>
+          <div
+            class="twitterContainer"
+            @click="() => router.push('/wines')"
+            onClick="{twitterLogin}"
+          >
+            <img
+              src="assets/icon/twitterImage.png"
+              alt="Twitter Icon"
+              class="ImgSocial"
+            />
+            <p>Login With Twitter</p>
+          </div>
         </form>
       </div>
     </ion-content></ion-page
@@ -55,11 +72,21 @@
 <script>
 import { defineComponent } from "vue";
 import { IonContent, IonPage } from "@ionic/vue";
+import { useRouter } from "vue-router";
+import { logoGoogle } from "ionicons/icons";
 export default defineComponent({
   name: "Login",
   components: {
     IonContent,
     IonPage,
+    // IonThumbnail,
+  },
+  setup() {
+    const router = useRouter();
+    return { router };
+  },
+  data() {
+    return { logoGoogle };
   },
 });
 </script>

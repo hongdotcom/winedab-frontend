@@ -4,7 +4,8 @@ ion-toolbar {
 }
 .login {
   background: url("../../public/assets/icon/mobilebg.png");
-  /* background-color: rgba(200, 47, 47, 0.4); */
+  background-repeat: no-repeat;
+  background-size: cover;
   position: relative;
   top: 0;
   left: 0;
@@ -20,13 +21,13 @@ ion-toolbar {
   width: 100vw;
 }
 .logo {
-  height: 8vh;
-  max-width: 55vw;
+  height: 5vh;
+  max-width: 75vw;
 }
 .login-logo {
   display: inline-block;
   height: 10vh;
-  max-width: 55vw;
+  max-width: 75vw;
 }
 .base {
   padding: 5px;
@@ -37,7 +38,7 @@ ion-toolbar {
   width: 100vw;
 }
 .login-input {
-  margin-top: 10vh;
+  margin-top: 18vh;
 }
 .wine {
   height: 15vh;
@@ -50,4 +51,61 @@ ion-toolbar {
 
 .buttonGroup {
   border: none;
+}
+.googleContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 97vw;
+  height: 5vh;
+  background: #ea4335;
+  position: relative;
+  color: white;
+  --ion-font-family: "Josef Sans", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+  cursor: pointer;
+
+  margin: 10px;
+  border-radius: 8px;
+}
+.twitterContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 97vw;
+  height: 5vh;
+  background: #00a2f4;
+  position: relative;
+  color: white;
+  --ion-font-family: "Josef Sans", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+  cursor: pointer;
+  margin: 10px;
+  border-radius: 8px;
+}
+.ImgSocial {
+  display: flex;
+  align-items: center;
+  height: 4vh;
+}
+.separator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.separatorText {
+  color: white;
+  --ion-font-family: "Josef Sans", sans-serif;
+  font-size: 3rem;
+  font-weight: 500;
+}
+.tabbar {
+  --background: var(--ion-color-dark);
+}
+.content {
+  margin-top: 20vh;
+  border: 5px;
+  background: blue;
 }
