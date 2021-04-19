@@ -6,7 +6,7 @@
         <ion-title>
           <img src="assets/icon/logo-white.png" alt="logo" class="login-logo"
         /></ion-title>
-        <form novalidate>
+        <form novalidate class="ion-padding">
           <ion-list class="login-input">
             <ion-item>
               <ion-label position="floating" color="primary"
@@ -44,7 +44,7 @@
               >
             </ion-col>
           </ion-row>
-          <ion-col class="separator">
+          <!-- <ion-col class="separator">
             <p class="separatorText">or</p>
           </ion-col>
           <div class="googleContainer" @click="() => router.push('/wines')">
@@ -62,7 +62,7 @@
               class="ImgSocial"
             />
             <p>Login With Twitter</p>
-          </div>
+          </div> -->
         </form>
       </div>
     </ion-content></ion-page
@@ -71,7 +71,18 @@
 
 <script>
 import { defineComponent } from "vue";
-import { IonContent, IonPage } from "@ionic/vue";
+import {
+  IonContent,
+  IonPage,
+  IonRow,
+  IonCol,
+  IonList,
+  IonItem,
+  IonButton,
+  IonLabel,
+  IonInput,
+  IonTitle,
+} from "@ionic/vue";
 import { useRouter } from "vue-router";
 import { logoGoogle } from "ionicons/icons";
 export default defineComponent({
@@ -79,7 +90,14 @@ export default defineComponent({
   components: {
     IonContent,
     IonPage,
-    // IonThumbnail,
+    IonRow,
+    IonCol,
+    IonList,
+    IonItem,
+    IonButton,
+    IonLabel,
+    IonInput,
+    IonTitle,
   },
   setup() {
     const router = useRouter();

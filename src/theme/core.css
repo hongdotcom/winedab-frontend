@@ -109,3 +109,14 @@ ion-toolbar {
   border: 5px;
   background: blue;
 }
+
+.pageTitle {
+  --color: var(--ion-color-tertiary);
+  --ion-font-family: "Josef Sans", sans-serif;
+  font-size: 1.3rem;
+  font-weight: 800;
+  max-width: 40vw;
+}
+.tabButton {
+  --color: var(--ion-color-tertiary);
+}

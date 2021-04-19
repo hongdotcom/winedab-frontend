@@ -20,9 +20,21 @@ const store = createStore({
     },
   },
   action: {
-    increment() {},
+    loadSubscription() {},
+    loadWines() {},
+    loadProfile() {},
   },
-  getter: {},
+  getter: {
+    subscription(state) {
+      return state.subscription;
+    },
+    profile(state) {
+      return state.profile;
+    },
+    wines(state) {
+      return state.wines;
+    },
+  },
 });
 
 export default store;

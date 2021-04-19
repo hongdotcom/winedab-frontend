@@ -1,5 +1,5 @@
 <template>
-  <basic-layout>
+  <basic-layout page-title="Wine List" page-default-back-link="/subscription">
     <ion-content>
       <ion-card>
         <ion-card-header>
@@ -91,7 +91,17 @@
 </template>
 
 <script>
-import { IonButton } from "@ionic/vue";
+import {
+  IonButton,
+  IonItem,
+  IonRow,
+  IonCol,
+  IonCardContent,
+  IonCardHeader,
+  IonCardTitle,
+  IonCard,
+  IonContent,
+} from "@ionic/vue";
 import { defineComponent } from "vue";
 import { keypad } from "ionicons/icons";
 import axios from "axios";
@@ -99,7 +109,15 @@ import axios from "axios";
 export default defineComponent({
   name: "WineList",
   components: {
+    IonContent,
     IonButton,
+    IonItem,
+    IonRow,
+    IonCol,
+    IonCardContent,
+    IonCardHeader,
+    IonCardTitle,
+    IonCard,
   },
   data() {
     return { keypad, responseData: {} };

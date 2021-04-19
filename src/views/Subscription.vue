@@ -1,5 +1,5 @@
 <template>
-  <basic-layout>
+  <basic-layout page-title="Subscription" page-default-back-link="/profile">
     <ion-page>
       <ion-content> {{ responseData }}</ion-content></ion-page
     >

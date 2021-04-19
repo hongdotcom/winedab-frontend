@@ -1,5 +1,5 @@
 <template>
-  <basic-layout>
+  <basic-layout page-title="Profile" page-default-back-link="/subscription">
     <ion-content class="content">
       <ion-card>
         <h3>Hi {{ responseData.data }}, Good to see you again</h3>
@@ -43,6 +43,11 @@ export default defineComponent({
   },
   mounted() {
     this.fetchApi();
+  },
+  computed: {
+    profile() {
+      return this.$store.getters.profile;
+    },
   },
 });
 </script>
