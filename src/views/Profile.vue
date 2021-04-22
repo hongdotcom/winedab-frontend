@@ -2,7 +2,18 @@
   <basic-layout page-title="Profile" page-default-back-link="/subscription">
     <ion-content class="content">
       <ion-card>
-        <h3>Hi {{ responseData.data }}, Good to see you again</h3>
+        <ion-item>
+          <ion-avatar slot="start">
+            <img :src="profile.avatar_url" />
+          </ion-avatar>
+          <ion-label>
+            <h3>{{ profile.first_name }}</h3>
+            <p>{{ profile.email }}</p>
+          </ion-label>
+        </ion-item>
+        <h3 class="ion-padding">
+          Hi {{ profile.first_name }}, Good to see you again
+        </h3>
       </ion-card>
     </ion-content>
   </basic-layout></template
@@ -10,44 +21,33 @@
 
 <script>
 import { defineComponent } from "vue";
-import { IonContent, IonCard } from "@ionic/vue";
+import { IonContent, IonCard, IonAvatar, IonItem, IonLabel } from "@ionic/vue";
 import BasicLayout from "../components/BasicLayout.vue";
-import axios from "axios";
+import { mapGetters, mapActions } from "vuex";
 
 export default defineComponent({
   name: "Profile",
   components: {
     IonContent,
     IonCard,
+    IonAvatar,
+    IonItem,
+    IonLabel,
     BasicLayout,
   },
-  data() {
-    return { responseData: {} };
-  },
-  setup() {},
   methods: {
-    async fetchApi() {
-      await axios
-        .get(
-          `${process.env.VUE_APP_WC_ENDPOINT}/wp-json/wc/v3/customers/13?consumer_key=${process.env.VUE_APP_CONSUMER_KEY}&consumer_secret=${process.env.VUE_APP_CONSUMER_SECRET}`,
-          {}
-        )
-        .then((res) => {
-          this.responseData = res;
-          console.log(this.responseData);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
-  },
-  mounted() {
-    this.fetchApi();
+    ...mapActions(["loadProfile"]),
   },
   computed: {
-    profile() {
-      return this.$store.getters.profile;
-    },
+    ...mapGetters({
+      subs: "subscription",
+      wines: "wines",
+      profile: "profile",
+    }),
+  },
+  created() {
+    console.log("i m in created");
+    this.loadProfile();
   },
 });
 </script>

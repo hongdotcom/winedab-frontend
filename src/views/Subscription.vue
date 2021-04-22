@@ -54,7 +54,7 @@ export default defineComponent({
     ...mapGetters({
       subs: "subscription",
       wines: "wines",
-      profile: "pros",
+      profile: "profile",
     }),
   },
   created() {

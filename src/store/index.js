@@ -15,11 +15,22 @@ const store = createStore({
         {}
       );
       commit("SET_SUBSCRIPTION", response.data);
-      // console.log("this is action");
-      // console.log(response.data);
     },
-    async loadWines() {},
-    async loadProfile() {},
+    async loadWines({ commit }) {
+      const response2 = await axios.get(
+        `${process.env.VUE_APP_WC_ENDPOINT}/wp-json/wc/v3/customers/13?consumer_key=${process.env.VUE_APP_CONSUMER_KEY}&consumer_secret=${process.env.VUE_APP_CONSUMER_SECRET}`,
+        {}
+      );
+      commit("SET_WINES", response2.data);
+    },
+    async loadProfile({ commit }) {
+      const response3 = await axios.get(
+        `${process.env.VUE_APP_WC_ENDPOINT}/wp-json/wc/v3/customers/13?consumer_key=${process.env.VUE_APP_CONSUMER_KEY}&consumer_secret=${process.env.VUE_APP_CONSUMER_SECRET}`,
+        {}
+      );
+      commit("SET_PROFILE", response3.data);
+      console.log(response3.data);
+    },
   },
   mutations: {
     SET_SUBSCRIPTION: (state, subs) => {
@@ -28,6 +39,12 @@ const store = createStore({
       // console.log(subs);
       // console.log("this is state sub mutation");
       // console.log(state.subs);
+    },
+    SET_WINES: (state, wines) => {
+      state.wines = wines;
+    },
+    SET_PROFILE: (state, profile) => {
+      state.profile = profile;
     },
   },
   getters: {
@@ -42,7 +59,6 @@ const store = createStore({
     },
     wines(state) {
       console.log("getter wine");
-
       return state.wines;
     },
   },
