@@ -1,60 +1,65 @@
 <template>
   <basic-layout page-title="Subscription" page-default-back-link="/profile">
-    <ion-page>
-      <ion-content> {{ responseData }}</ion-content></ion-page
+    <ion-content class="content">
+      <ion-list>
+        <ion-item v-for="subItem in subs" :key="subItem.id">
+          <ion-card>
+            <ion-card-title>
+              <h3>{{ subItem.line_items[0].name }}</h3>
+
+              <ion-card-content>
+                {{ subItem.id }}
+                <p>
+                  {{ subItem.shipping.first_name }}&nbsp;
+                  {{ subItem.shipping.last_name }}
+                </p>
+                <p>Order Date: {{ subItem.date_paid }}</p>
+              </ion-card-content>
+            </ion-card-title>
+          </ion-card>
+        </ion-item>
+      </ion-list></ion-content
     >
   </basic-layout></template
 >
 <script>
 import { defineComponent } from "vue";
-import { IonContent, IonPage } from "@ionic/vue";
+import {
+  IonContent,
+  IonCard,
+  IonCardTitle,
+  IonCardContent,
+  IonList,
+  IonItem,
+} from "@ionic/vue";
 import BasicLayout from "../components/BasicLayout.vue";
-import axios from "axios";
+import { mapGetters, mapActions } from "vuex";
 
 export default defineComponent({
   name: "Subscription",
   components: {
     IonContent,
-    IonPage,
+    IonCard,
+    IonCardTitle,
+    IonCardContent,
+    IonList,
+    IonItem,
     BasicLayout,
   },
-  data() {
-    return { responseData: {} };
-  },
-  setup() {},
   methods: {
-    async fetchOrder() {
-      await axios
-        .get(
-          `${process.env.VUE_APP_WC_ENDPOINT}/wp-json/wc/v3/orders/10532?consumer_key=${process.env.VUE_APP_CONSUMER_KEY}&consumer_secret=${process.env.VUE_APP_CONSUMER_SECRET}`,
-          {}
-        )
-        .then((res) => {
-          this.responseData = res.data;
-          console.log(this.responseData);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
-    async fetchProduct() {
-      await axios
-        .get(
-          `${process.env.VUE_APP_WC_ENDPOINT}/wp-json/wc/v3/orders/10532?consumer_key=${process.env.VUE_APP_CONSUMER_KEY}&consumer_secret=${process.env.VUE_APP_CONSUMER_SECRET}`,
-          {}
-        )
-        .then((res) => {
-          this.responseData = res.data;
-          console.log(this.responseData);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
+    ...mapActions(["loadSubscription"]),
   },
-  mounted() {
-    this.fetchOrder();
-    this.fetchProduct();
+
+  computed: {
+    ...mapGetters({
+      subs: "subscription",
+      wines: "wines",
+      profile: "pros",
+    }),
+  },
+  created() {
+    console.log("i m in created");
+    this.loadSubscription();
   },
 });
 </script>
