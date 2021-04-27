@@ -16,39 +16,38 @@
         </ion-button> -->
       </ion-toolbar>
     </ion-header>
+
     <slot />
-    <ion-tabs>
-      <ion-tab-bar class="tabbar" slot="bottom">
-        <ion-tab-button
-          tab="profile"
-          @click="() => router.push('/profile')"
-          class="tabButton"
-        >
-          <ion-icon :icon="personOutline"></ion-icon>
-        </ion-tab-button>
-        <ion-tab-button
-          tab="subscription"
-          @click="() => router.push('/subscription')"
-          class="tabButton"
-        >
-          <ion-icon :icon="bagCheckOutline"></ion-icon>
-        </ion-tab-button>
-        <ion-tab-button
-          tab="wine"
-          @click="() => router.push('/wines')"
-          class="tabButton"
-        >
-          <ion-icon :icon="wineOutline"></ion-icon>
-        </ion-tab-button>
-      </ion-tab-bar>
-    </ion-tabs>
+
+    <ion-tab-bar class="tabbar" slot="bottom">
+      <ion-tab-button
+        tab="profile"
+        @click="() => router.push('/profile')"
+        class="tabButton"
+      >
+        <ion-icon :icon="personOutline"></ion-icon>
+      </ion-tab-button>
+      <ion-tab-button
+        tab="subscription"
+        @click="() => router.push('/subscription')"
+        class="tabButton"
+      >
+        <ion-icon :icon="bagCheckOutline"></ion-icon>
+      </ion-tab-button>
+      <ion-tab-button
+        tab="wine"
+        @click="() => router.push('/wines')"
+        class="tabButton"
+      >
+        <ion-icon :icon="wineOutline"></ion-icon>
+      </ion-tab-button>
+    </ion-tab-bar>
   </ion-page>
 </template>
 
 <script lang="ts">
 import {
   IonTitle,
-  IonTabs,
   IonPage,
   IonToolbar,
   IonTabBar,
@@ -68,15 +67,12 @@ export default defineComponent({
   name: "Home",
   components: {
     IonTitle,
-    IonTabs,
     IonPage,
     IonToolbar,
     IonTabBar,
     IonTabButton,
     IonHeader,
     IonIcon,
-    // IonButtons,
-    // IonBackButton,
   },
   data() {
     return { chevronBack, bagCheckOutline, personOutline, wineOutline };

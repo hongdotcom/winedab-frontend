@@ -35,14 +35,14 @@
                 >Login</ion-button
               >
             </ion-col>
-            <ion-col router-link="/home">
+            <!-- <ion-col router-link="/home">
               <ion-button
                 @click="() => router.push('/wines')"
                 color="light"
                 expand="block"
                 >Signup</ion-button
               >
-            </ion-col>
+            </ion-col> -->
           </ion-row>
           <!-- <ion-col class="separator">
             <p class="separatorText">or</p>

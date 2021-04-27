@@ -120,3 +120,6 @@ ion-toolbar {
 .tabButton {
   --color: var(--ion-color-tertiary);
 }
+.normalButton {
+  pointer-events: initial !important;
+}

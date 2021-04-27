@@ -11,21 +11,21 @@ const store = createStore({
   actions: {
     async loadSubscription({ commit }) {
       const response = await axios.get(
-        `${process.env.VUE_APP_WC_ENDPOINT}/wp-json/wc/v3/orders?consumer_key=${process.env.VUE_APP_CONSUMER_KEY}&consumer_secret=${process.env.VUE_APP_CONSUMER_SECRET}`,
+        `${process.env.VUE_APP_WC_ENDPOINT}/wp-json/wc/v3/orders?consumer_key=${process.env.VUE_APP_CONSUMER_KEY}&consumer_secret=${process.env.VUE_APP_CONSUMER_SECRET}&customer=24`,
         {}
       );
       commit("SET_SUBSCRIPTION", response.data);
     },
     async loadWines({ commit }) {
       const response2 = await axios.get(
-        `${process.env.VUE_APP_WC_ENDPOINT}/wp-json/wc/v3/customers/13?consumer_key=${process.env.VUE_APP_CONSUMER_KEY}&consumer_secret=${process.env.VUE_APP_CONSUMER_SECRET}`,
+        `${process.env.VUE_APP_WC_ENDPOINT}/wp-json/wc/v3/customers/24?consumer_key=${process.env.VUE_APP_CONSUMER_KEY}&consumer_secret=${process.env.VUE_APP_CONSUMER_SECRET}`,
         {}
       );
       commit("SET_WINES", response2.data);
     },
     async loadProfile({ commit }) {
       const response3 = await axios.get(
-        `${process.env.VUE_APP_WC_ENDPOINT}/wp-json/wc/v3/customers/13?consumer_key=${process.env.VUE_APP_CONSUMER_KEY}&consumer_secret=${process.env.VUE_APP_CONSUMER_SECRET}`,
+        `${process.env.VUE_APP_WC_ENDPOINT}/wp-json/wc/v3/customers/645?consumer_key=${process.env.VUE_APP_CONSUMER_KEY}&consumer_secret=${process.env.VUE_APP_CONSUMER_SECRET}`,
         {}
       );
       commit("SET_PROFILE", response3.data);

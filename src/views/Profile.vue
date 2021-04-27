@@ -14,6 +14,7 @@
         <h3 class="ion-padding">
           Hi {{ profile.first_name }}, Good to see you again
         </h3>
+        <ion-button>Test</ion-button>
       </ion-card>
     </ion-content>
   </basic-layout></template
@@ -21,7 +22,14 @@
 
 <script>
 import { defineComponent } from "vue";
-import { IonContent, IonCard, IonAvatar, IonItem, IonLabel } from "@ionic/vue";
+import {
+  IonContent,
+  IonCard,
+  IonAvatar,
+  IonItem,
+  IonLabel,
+  IonButton,
+} from "@ionic/vue";
 import BasicLayout from "../components/BasicLayout.vue";
 import { mapGetters, mapActions } from "vuex";
 
@@ -33,6 +41,7 @@ export default defineComponent({
     IonAvatar,
     IonItem,
     IonLabel,
+    IonButton,
     BasicLayout,
   },
   methods: {
