@@ -8,7 +8,7 @@ import Profile from "../views/Profile.vue";
 const routes = [
   {
     path: "/",
-    redirect: "/login",
+    redirect: "/subscription",
   },
   {
     path: "/login",

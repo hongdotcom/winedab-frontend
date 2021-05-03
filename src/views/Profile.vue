@@ -14,7 +14,7 @@
         <h3 class="ion-padding">
           Hi {{ profile.first_name }}, Good to see you again
         </h3>
-        <ion-button>Test</ion-button>
+        <ion-button>Edit</ion-button>
       </ion-card>
     </ion-content>
   </basic-layout></template
@@ -45,18 +45,20 @@ export default defineComponent({
     BasicLayout,
   },
   methods: {
-    ...mapActions(["loadProfile"]),
+    ...mapActions(["loadProfile", "loadQuiz"]),
   },
   computed: {
     ...mapGetters({
       subs: "subscription",
       wines: "wines",
       profile: "profile",
+      quiz: "quiz",
     }),
   },
   created() {
     console.log("i m in created");
     this.loadProfile();
+    this.loadQuiz();
   },
 });
 </script>
