@@ -1,7 +1,7 @@
 <template>
   <basic-layout page-title="Profile" page-default-back-link="/subscription">
     <ion-content class="content">
-      <ion-card>
+      <ion-card class="ion-padding">
         <ion-item>
           <ion-avatar slot="start">
             <img :src="profile.avatar_url" />

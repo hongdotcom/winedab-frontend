@@ -8,43 +8,65 @@
       <ion-list v-else>
         <ion-item v-for="subItem in subs" :key="subItem.id">
           <ion-card>
-            <ion-row responsive-sm>
+            <ion-row>
               <ion-col>
                 <ion-card-title class="ion-padding">
                   <h3>{{ subItem.line_items[0].name }}</h3>
                   <ion-card-content>
-                    <p>
-                      {{ subItem.shipping.first_name }}&nbsp;
-                      {{ subItem.shipping.last_name }}
-                    </p>
-                    <p>Order Date: {{ subItem.date_paid }}</p>
-                    <p>Order Status: {{ subItem.status }}</p>
+                    <ion-row>
+                      <ion-col>
+                        <p>
+                          {{ subItem.shipping.first_name }}&nbsp;
+                          {{ subItem.shipping.last_name }}
+                        </p>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col>
+                        <p>Next Payment Date:</p>
+                      </ion-col>
+                      <ion-col>
+                        <p>
+                          {{ subItem.next_payment_date }}
+                        </p>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col>
+                        <p>Order Status:</p>
+                      </ion-col>
+                      <ion-col>
+                        {{ subItem.status }}
+                      </ion-col>
+                    </ion-row>
                   </ion-card-content>
                 </ion-card-title>
               </ion-col>
-              <ion-col>
-                <ion-row>
-                  <ion-col>
-                    <ion-button
-                      class="normalButton"
-                      @click="showAlert(`Stop 1 Month`)"
-                      expand="block"
-                      >Stop 1 Mth</ion-button
-                    >
-                  </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col>
-                    <ion-button
-                      fill="outline"
-                      @click="showAlert(`On-Hold`)"
-                      expand="block"
-                      >On-Hold</ion-button
-                    >
-                  </ion-col>
-                </ion-row>
-              </ion-col>
             </ion-row>
+            <ion-col>
+              <ion-row>
+                <ion-col>
+                  <ion-button
+                    class="normalButton"
+                    @click="showOnHoldAlert()"
+                    expand="block"
+                    >Stop 1 Mth</ion-button
+                  >
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <ion-button
+                    fill="outline"
+                    @click="showOnHoldAlert(subItem.id)"
+                    expand="block"
+                    >{{
+                      subItem.status == "on-hold" ? "Activate" : "On-Hold"
+                    }}</ion-button
+                  >
+                </ion-col>
+              </ion-row>
+            </ion-col>
           </ion-card>
         </ion-item>
       </ion-list></ion-content
@@ -82,31 +104,29 @@ export default defineComponent({
     IonButton,
   },
   methods: {
-    ...mapActions(["loadSubscription"]),
+    ...mapActions(["loadSubscription", "onholdSubscription"]),
     onhold() {
       console.log("on-hold");
     },
     stop1() {
       console.log("Stop 1 month");
     },
-    async showAlert(clickedAction) {
+    async showOnHoldAlert(id) {
       const alert = await alertController.create({
         header: "Alert",
         subheader: "Subtitle",
-        message: `Are you sure you want to put your subscription ${clickedAction}?`,
+        message: `Are you sure you want to put your subscription on-hold?`,
         buttons: [
           {
             text: "Cancel",
             role: "cancel",
             cssClass: "secondary",
-            handler: () => {
-              console.log("Confirm Cancel");
-            },
+            handler: () => {},
           },
           {
             text: "Ok",
             handler: () => {
-              console.log("Confirm Ok");
+              this.onholdSubscription(id);
             },
           },
         ],

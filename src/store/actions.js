@@ -2,7 +2,6 @@ import axios from "axios";
 const wineCustId = "745";
 const proCustId = "645";
 const subCustId = "24";
-// const orderId = "15692";
 const custUUID = "2f2c1e2a-6ca6-4693-b4f9-1c13cc06b72b";
 export default {
   async loadSubscription({ commit }) {
@@ -38,5 +37,15 @@ export default {
     );
     console.log(response4.data);
     commit("SET_QUIZ", response4.data);
+  },
+  async onholdSubscription({ commit }, id) {
+    console.log("onhold");
+    const response5 = await axios.put(
+      // `${process.env.VUE_APP_WC_ENDPOINT}/wp-json/wc/v3/orders?consumer_key=${process.env.VUE_APP_CONSUMER_KEY}&consumer_secret=${process.env.VUE_APP_CONSUMER_SECRET}&customer=24`,
+      `${process.env.VUE_APP_WC_ENDPOINT}/wp-json/wc/v1/subscriptions/${id}?consumer_key=${process.env.VUE_APP_CONSUMER_KEY}&consumer_secret=${process.env.VUE_APP_CONSUMER_SECRET}&status=on-hold`,
+      {}
+    );
+    commit("SET_PROFILE", response5.data);
+    console.log(response5.data);
   },
 };

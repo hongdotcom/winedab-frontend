@@ -14,8 +14,7 @@
           </ion-col>
           <ion-col center text-center>
             <ion-card-content>
-              Full body with Lorem ipsum dolor, sit amet consectetur adipisicing
-              elit.
+              {{ wine.wine_info }}
             </ion-card-content>
           </ion-col>
           <ion-item class="buttonGroup">
@@ -72,54 +71,14 @@ export default defineComponent({
     async editCommentPrompt() {
       const alert = await alertController.create({
         cssClass: "my-custom-class",
-        header: "Prompt!",
+        header: "Enter Your Comment!",
         inputs: [
           {
-            placeholder: "Placeholder 1",
-          },
-          {
-            name: "name2",
-            id: "name2-id",
-            value: "hello",
-            placeholder: "Placeholder 2",
-          },
-          {
-            name: "name3",
-            value: "http://ionicframework.com",
-            type: "url",
-            placeholder: "Favorite site ever",
-          },
-          // input date with min & max
-          {
-            name: "name4",
-            type: "date",
-            min: "2017-03-01",
-            max: "2018-01-12",
-          },
-          // input date without min nor max
-          {
-            name: "name5",
-            type: "date",
-          },
-          {
-            name: "name6",
-            type: "number",
-            min: -5,
-            max: 10,
-          },
-          {
-            name: "name7",
-            type: "number",
-          },
-          {
-            name: "name8",
-            type: "password",
-            placeholder: "Advanced Attributes",
-            cssClass: "specialClass",
-            attributes: {
-              maxlength: 4,
-              inputmode: "decimal",
-            },
+            name: "Wine Comment",
+            id: "wine_comment",
+            value: "",
+            placeholder: "Your Comment",
+            type: "textarea",
           },
         ],
         buttons: [
