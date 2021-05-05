@@ -38,14 +38,13 @@ export default {
     console.log(response4.data);
     commit("SET_QUIZ", response4.data);
   },
-  async onholdSubscription({ commit }, id) {
-    console.log("onhold");
-    const response5 = await axios.put(
-      // `${process.env.VUE_APP_WC_ENDPOINT}/wp-json/wc/v3/orders?consumer_key=${process.env.VUE_APP_CONSUMER_KEY}&consumer_secret=${process.env.VUE_APP_CONSUMER_SECRET}&customer=24`,
-      `${process.env.VUE_APP_WC_ENDPOINT}/wp-json/wc/v1/subscriptions/${id}?consumer_key=${process.env.VUE_APP_CONSUMER_KEY}&consumer_secret=${process.env.VUE_APP_CONSUMER_SECRET}&status=on-hold`,
+  async onholdSubscription({ commit }, payload) {
+    console.log("i m in action load" + payload.id + payload.status);
+    await axios.put(
+      `${process.env.VUE_APP_WC_ENDPOINT}/wp-json/wc/v1/subscriptions/${payload.id}?consumer_key=${process.env.VUE_APP_CONSUMER_KEY}&consumer_secret=${process.env.VUE_APP_CONSUMER_SECRET}&status=${payload.status}`,
       {}
     );
-    commit("SET_PROFILE", response5.data);
-    console.log(response5.data);
+    commit("SET_UPDATE_SUBS");
+    // console.log(response5.data);
   },
 };

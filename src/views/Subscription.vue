@@ -48,7 +48,7 @@
                 <ion-col>
                   <ion-button
                     class="normalButton"
-                    @click="showOnHoldAlert()"
+                    @click="showOnHoldAlert(subItem.id, subItem.status)"
                     expand="block"
                     >Stop 1 Mth</ion-button
                   >
@@ -58,11 +58,9 @@
                 <ion-col>
                   <ion-button
                     fill="outline"
-                    @click="showOnHoldAlert(subItem.id)"
+                    @click="showOnHoldAlert(subItem.id, subItem.status)"
                     expand="block"
-                    >{{
-                      subItem.status == "on-hold" ? "Activate" : "On-Hold"
-                    }}</ion-button
+                    >{{ this.reverseStatus(subItem.status) }}</ion-button
                   >
                 </ion-col>
               </ion-row>
@@ -105,17 +103,13 @@ export default defineComponent({
   },
   methods: {
     ...mapActions(["loadSubscription", "onholdSubscription"]),
-    onhold() {
-      console.log("on-hold");
-    },
-    stop1() {
-      console.log("Stop 1 month");
-    },
-    async showOnHoldAlert(id) {
+    async showOnHoldAlert(id, status) {
       const alert = await alertController.create({
         header: "Alert",
         subheader: "Subtitle",
-        message: `Are you sure you want to put your subscription on-hold?`,
+        message: `Are you sure you want to put your subscription ${this.reverseStatus(
+          status
+        )}?`,
         buttons: [
           {
             text: "Cancel",
@@ -126,12 +120,22 @@ export default defineComponent({
           {
             text: "Ok",
             handler: () => {
-              this.onholdSubscription(id);
+              console.log("this is" + +id + status);
+              const payload = [];
+              payload.id = id;
+              payload.status = this.reverseStatus(status);
+              this.onholdSubscription(payload);
+              this.loadSubscription();
             },
           },
         ],
       });
       alert.present();
+    },
+    reverseStatus(status) {
+      const newStatus = status != "on-hold" ? "on-hold" : "active";
+      console.log(newStatus);
+      return newStatus;
     },
   },
   computed: {
