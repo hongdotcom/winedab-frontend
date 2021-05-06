@@ -48,9 +48,15 @@
                 <ion-col>
                   <ion-button
                     class="normalButton"
-                    @click="showOnHoldAlert(subItem.id, subItem.status)"
+                    @click="
+                      showPostponeAlert(
+                        subItem.id,
+                        subItem.status,
+                        subItem.next_payment_date
+                      )
+                    "
                     expand="block"
-                    >Stop 1 Mth</ion-button
+                    >Postpone</ion-button
                   >
                 </ion-col>
               </ion-row>
@@ -132,10 +138,50 @@ export default defineComponent({
       });
       alert.present();
     },
+    async showPostponeAlert(id, status, nextPaymentDate) {
+      const alert = await alertController.create({
+        header: "Alert",
+        subheader: "Subtitle",
+        message: `How many months do you want to postpone??`,
+        inputs: [
+          {
+            value: "1",
+            name: "month",
+            type: "number",
+            min: 1,
+            max: 3,
+          },
+        ],
+        buttons: [
+          {
+            text: "Cancel",
+            role: "cancel",
+            cssClass: "secondary",
+            handler: () => {},
+          },
+          {
+            text: "Ok",
+            handler: () => {
+              console.log("this is" + +id + status + nextPaymentDate);
+              const payload = [];
+              payload.id = id;
+              payload.status = this.reverseStatus(status);
+              payload.nextPaymentDate = this.newPaymentDate(nextPaymentDate);
+              this.onholdSubscription(payload);
+              this.loadSubscription();
+            },
+          },
+        ],
+      });
+      alert.present();
+    },
     reverseStatus(status) {
       const newStatus = status != "on-hold" ? "on-hold" : "active";
       console.log(newStatus);
       return newStatus;
+    },
+    newPaymentDate(nextPaymentDate) {
+      console.log(!nextPaymentDate ? "yes" : "no");
     },
   },
   computed: {

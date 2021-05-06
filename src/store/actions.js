@@ -41,7 +41,7 @@ export default {
   async onholdSubscription({ commit }, payload) {
     console.log("i m in action load" + payload.id + payload.status);
     await axios.put(
-      `${process.env.VUE_APP_WC_ENDPOINT}/wp-json/wc/v1/subscriptions/${payload.id}?consumer_key=${process.env.VUE_APP_CONSUMER_KEY}&consumer_secret=${process.env.VUE_APP_CONSUMER_SECRET}&status=${payload.status}`,
+      `${process.env.VUE_APP_WC_ENDPOINT}/wp-json/wc/v1/subscriptions/${payload.id}?consumer_key=${process.env.VUE_APP_CONSUMER_KEY}&consumer_secret=${process.env.VUE_APP_CONSUMER_SECRET}&status=${payload.status}&next_payment_date=2050-05-05T06:01:09`,
       {}
     );
     commit("SET_UPDATE_SUBS");
