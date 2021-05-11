@@ -45,7 +45,7 @@
             </ion-row>
             <ion-col>
               <ion-row>
-                <ion-col>
+                <ion-col v-if="subItem.status == `active`">
                   <ion-button
                     class="normalButton"
                     @click="
@@ -64,7 +64,13 @@
                 <ion-col>
                   <ion-button
                     fill="outline"
-                    @click="showOnHoldAlert(subItem.id, subItem.status)"
+                    @click="
+                      showOnHoldAlert(
+                        subItem.id,
+                        subItem.status,
+                        subItem.next_payment_date
+                      )
+                    "
                     expand="block"
                     >{{ this.reverseStatus(subItem.status) }}</ion-button
                   >
@@ -108,7 +114,18 @@ export default defineComponent({
     IonButton,
   },
   methods: {
-    ...mapActions(["loadSubscription", "onholdSubscription"]),
+    ...mapActions([
+      "loadSubscription",
+      "onholdSubscription",
+      "postponeSubscription",
+    ]),
+    statusAction(id, status, nextPaymentDate) {
+      if (status == "active") {
+        this.showOnHoldAlert(id, status);
+      } else {
+        this.showActiveAlert(id, status, nextPaymentDate);
+      }
+    },
     async showOnHoldAlert(id, status) {
       const alert = await alertController.create({
         header: "Alert",
@@ -130,8 +147,41 @@ export default defineComponent({
               const payload = [];
               payload.id = id;
               payload.status = this.reverseStatus(status);
-              this.onholdSubscription(payload);
-              this.loadSubscription();
+              this.onholdSubscription(payload).then(() => {
+                console.log("done onhold load again");
+                this.loadSubscription();
+              });
+            },
+          },
+        ],
+      });
+      alert.present();
+    },
+    async showActiveAlert(id, status, nextPaymentDate) {
+      const alert = await alertController.create({
+        header: "Alert",
+        subheader: "Subtitle",
+        message: `Are you sure you want to put your subscription ${this.reverseStatus(
+          status
+        )}?`,
+        buttons: [
+          {
+            text: "Cancel",
+            role: "cancel",
+            cssClass: "secondary",
+            handler: () => {},
+          },
+          {
+            text: "Ok",
+            handler: () => {
+              console.log("this is" + +id + status);
+              const payload = [];
+              payload.id = id;
+              payload.status = this.reverseStatus(status);
+              payload.nextPaymentDate = this.newPaymentDate(nextPaymentDate, 0);
+              this.onholdSubscription(payload).then(() => {
+                this.loadSubscription();
+              });
             },
           },
         ],
@@ -161,27 +211,54 @@ export default defineComponent({
           },
           {
             text: "Ok",
-            handler: () => {
-              console.log("this is" + +id + status + nextPaymentDate);
+            handler: (data) => {
+              console.log(
+                "postpone" + +id + status + nextPaymentDate + data.month
+              );
               const payload = [];
               payload.id = id;
-              payload.status = this.reverseStatus(status);
-              payload.nextPaymentDate = this.newPaymentDate(nextPaymentDate);
-              this.onholdSubscription(payload);
-              this.loadSubscription();
+              payload.nextPaymentDate = this.newPaymentDate(
+                nextPaymentDate,
+                data.month
+              );
+              this.postponeSubscription(payload).then(() => {
+                this.loadSubscription();
+              });
             },
           },
         ],
       });
       alert.present();
     },
+    //This function reverse the current status
     reverseStatus(status) {
       const newStatus = status != "on-hold" ? "on-hold" : "active";
-      console.log(newStatus);
       return newStatus;
     },
-    newPaymentDate(nextPaymentDate) {
-      console.log(!nextPaymentDate ? "yes" : "no");
+    //This function calculate the new next_payment_date. Used in Postpone and Active function.
+    newPaymentDate(nextPaymentDate, month) {
+      if (nextPaymentDate == "") {
+        //enter this when active or anything without a nextpaymentdate.
+        //No business logic so just add 1 month
+        const newDate = new Date();
+        newDate.setMonth(parseInt(newDate.getMonth()) + parseInt(1));
+        return this.changeDateFormat(newDate);
+      } else {
+        const newDate = new Date(nextPaymentDate);
+        newDate.setMonth(parseInt(newDate.getMonth()) + parseInt(month));
+        return this.changeDateFormat(newDate);
+      }
+    },
+    //This function change date format to a param required format
+    changeDateFormat(newDate) {
+      return (
+        newDate.getFullYear() +
+        "-" +
+        (newDate.getMonth() + 1) +
+        "-" +
+        newDate.getDate() +
+        "%2000:00:00"
+      );
     },
   },
   computed: {
