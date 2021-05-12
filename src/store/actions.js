@@ -1,8 +1,8 @@
 import axios from "axios";
 const wineCustId = "745";
 const proCustId = "645";
-const subCustId = "660";
-// const subCustId = "24";
+// const subCustId = "660";
+const subCustId = "24";
 const custUUID = "2f2c1e2a-6ca6-4693-b4f9-1c13cc06b72b";
 export default {
   async loadSubscription({ commit }) {

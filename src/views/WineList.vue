@@ -14,7 +14,7 @@
           </ion-col>
           <ion-col center text-center>
             <ion-card-content>
-              {{ wine.wine_info }}
+              {{ wine.wine_info }} {{ wine.price }}
             </ion-card-content>
           </ion-col>
           <ion-item class="buttonGroup">
@@ -24,7 +24,10 @@
             <ion-button fill="outline" slot="end" @click="editCommentPrompt()"
               >Comment</ion-button
             >
-            <ion-button fill="outline" slot="end" @click="orderMorePrompt()"
+            <ion-button
+              fill="outline"
+              slot="end"
+              @click="orderMorePrompt(wine.name, wine.year)"
               >Order More</ion-button
             >
           </ion-item>
@@ -100,7 +103,37 @@ export default defineComponent({
       });
       return alert.present();
     },
-    orderMorePrompt() {},
+    async orderMorePrompt(name, year) {
+      const alert = await alertController.create({
+        header: "Alert",
+        subheader: "Subtitle",
+        message: `How many ${name} ${year ? year : ""} do you want more?`,
+        inputs: [
+          {
+            value: "1",
+            name: "bottle",
+            type: "number",
+            min: 1,
+            max: 24,
+          },
+        ],
+        buttons: [
+          {
+            text: "Cancel",
+            role: "cancel",
+            cssClass: "secondary",
+            handler: () => {},
+          },
+          {
+            text: "Ok",
+            handler: () => {
+              console.log("buymore");
+            },
+          },
+        ],
+      });
+      alert.present();
+    },
     async editRatingPrompt() {
       const alert = await alertController.create({
         cssClass: "alertstar",
@@ -184,7 +217,6 @@ export default defineComponent({
     }),
   },
   created() {
-    console.log("i m in created loading wines");
     this.loadWines();
   },
 });
