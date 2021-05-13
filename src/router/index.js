@@ -5,6 +5,7 @@ import Login from "../views/Login.vue";
 import Subscription from "../views/Subscription.vue";
 import WineList from "../views/WineList.vue";
 import Profile from "../views/Profile.vue";
+import BuyMore from "../views/BuyMore.vue";
 const routes = [
   {
     path: "/",
@@ -29,6 +30,11 @@ const routes = [
     path: "/profile",
     name: "Profile",
     component: Profile,
+  },
+  {
+    path: "/buymore",
+    name: "BuyMore",
+    component: BuyMore,
   },
 ];
 

@@ -58,4 +58,13 @@ export default {
     );
     commit("SET_UPDATE_SUBS");
   },
+  async buyMoreOrder({ commit }, payload) {
+    console.log("action buy more");
+    const response5 = await axios.post(
+      `${process.env.VUE_APP_WC_ENDPOINT}/wp-json/wc/v3/orders?consumer_key=${process.env.VUE_APP_CONSUMER_KEY}&consumer_secret=${process.env.VUE_APP_CONSUMER_SECRET}`,
+      { payload }
+    );
+    commit("SET_UPDATE_SUBS");
+    console.log(response5.data);
+  },
 };
