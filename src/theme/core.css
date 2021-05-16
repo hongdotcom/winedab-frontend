@@ -1,29 +1,36 @@
+/* 
 ion-toolbar {
   --background: var(--ion-color-primary);
   --color: var(--ion-color-dark);
-}
+} */
+
 .login {
-  background: url("../../public/assets/icon/mobilebg.png");
+  /*background: url("../../public/assets/icon/mobilebg.png");
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: cover; */
+  background-color: #6e1541;
   position: relative;
   top: 0;
   left: 0;
   height: 100vh;
   width: 100vw;
 }
-.overlay {
-  background-color: rgba(200, 47, 47, 0.15);
-  position: relative;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 100vw;
-}
+
 .logo {
-  height: 5vh;
+  height: 4vh;
   max-width: 75vw;
 }
+
+/*
+.overlay {
+  background-color: rgba(200, 47, 47, 0.15); 
+  position: relative;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+}
+
 .login-logo {
   display: inline-block;
   height: 10vh;
@@ -52,6 +59,9 @@ ion-toolbar {
 .buttonGroup {
   border: none;
 }
+*/
+
+/*
 .googleContainer {
   display: flex;
   align-items: center;
@@ -90,6 +100,10 @@ ion-toolbar {
   align-items: center;
   height: 4vh;
 }
+
+*/
+
+/*
 .separator {
   display: flex;
   align-items: center;
@@ -102,7 +116,7 @@ ion-toolbar {
   font-weight: 500;
 }
 .tabbar {
-  --background: var(--ion-color-dark);
+  margin-top: 55px; 
 }
 .content {
   margin-top: 20vh;
@@ -122,4 +136,56 @@ ion-toolbar {
 }
 .normalButton {
   pointer-events: initial !important;
+}
+
+*/
+/*Junix code here*/
+
+ion-card {
+  padding: 10px;
+  width: 100%;
+}
+
+ion-toolbar {
+  --background: var(--ion-color-primary);
+  --color: var(--ion-color-light);
+}
+
+ion-tab-bar {
+  --background: var(--ion-color-secondary);
+  --color: var(--ion-color-secondary-contrast);
+}
+
+/* ion-tab-button {
+  --color: var(--ion-color-secondary-contrast);
+  --color-selected: var(--ion-color-primary-shade);
+} */
+
+.active-button {
+  background-color: #fff;
+  padding: 2px;
+  color: black;
+  border: solid 4px #f99e0d;
+  border-bottom: none;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.login-page {
+  background-color: #6e1541 !important;
+  color: #fff;
+}
+
+.login-page h1 {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+  background-color: #6e1541;
+  color: #fff;
+}
+
+.login-logo {
+  display: block;
+  margin: 0 auto;
+  height: 5vh;
 }

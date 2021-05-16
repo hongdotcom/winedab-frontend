@@ -1,6 +1,6 @@
 <template>
   <main-layout pageTitle="Username">
-    <ion-page>      
+    <ion-page>
       <!--  Main Menu here  -->
       <ion-toolbar color="secondary">
         <ion-tabs>
@@ -16,7 +16,7 @@
             </ion-tab-button>
 
             <ion-tab-button
-              tab="profile"
+              tab="my-cellar"
               @click="() => $router.push('/my-cellar')"
             >
               <!-- <ion-icon :icon="personOutline"> </ion-icon> -->
@@ -32,7 +32,7 @@
             </ion-tab-button>
 
             <ion-tab-button
-              tab="subscription"
+              tab="my-subscription"
               @click="() => $router.push('/my-subscription')"
             >
               <!-- <ion-icon :icon="bagCheckOutline"></ion-icon> -->
@@ -44,21 +44,25 @@
       </ion-toolbar>
 
       <ion-content>
-        <ion-card>
-          <ion-item>
-            <ion-avatar slot="start">
-              <img :src="profile.avatar_url" />
-            </ion-avatar>
-            <ion-label>
-              <h3>{{ profile.first_name }}</h3>
-              <p>{{ profile.email }}</p>
-            </ion-label>
-          </ion-item>
-          <h3 class="ion-padding">
-            Hi {{ profile.first_name }}, Good to see you again
-          </h3>
-        </ion-card>
-        <ion-card> <h3>This is a test page </h3> </ion-card>
+        <div class="ion-padding">
+          <h2> My Orders </h2>        
+        </div>
+        <ion-card class="ion-padding">
+        <ion-item>
+          <ion-avatar slot="start">
+            <img :src="profile.avatar_url" />
+          </ion-avatar>
+          <ion-label>
+            <h3>{{ profile.first_name }}</h3>
+            <p>{{ profile.email }}</p>
+          </ion-label>
+        </ion-item>
+        <h3 class="ion-padding">
+          Hi {{ profile.first_name }}, Good to see you again
+        </h3>
+        <ion-button>Edit</ion-button>
+      </ion-card>
+        <ion-card> <h3>Rate Your Wine</h3> </ion-card>
       </ion-content>
     </ion-page>
   </main-layout>
@@ -74,7 +78,6 @@ import { mapGetters, mapActions } from "vuex";
 export default defineComponent({
   name: "Profile",
   components: {
-    /*IonTabBar, IonTabButton, IonTabs, IonLabel,*/ 
     IonPage,
     IonAvatar,
     IonItem,
@@ -82,17 +85,20 @@ export default defineComponent({
     IonIcon
   },
   methods: {
-    ...mapActions(["loadProfile"]),
+    ...mapActions(["loadProfile", "loadQuiz"]),
   },
   computed: {
     ...mapGetters({
       subs: "subscription",
       wines: "wines",
       profile: "profile",
+      quiz: "quiz",
     }),
   },
   created() {    
+    console.log("i m in created");
     this.loadProfile();
+    this.loadQuiz();
   },
   setup() {
     const beforeTabChange = () => {
@@ -102,7 +108,6 @@ export default defineComponent({
       // do something after tab change
     };
     return {
-      //   calendar,
       settings,
       beforeTabChange,
       afterTabChange,

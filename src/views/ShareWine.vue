@@ -1,13 +1,12 @@
 <template>
   <main-layout pageTitle="Username">
-    <ion-page>      
+    <ion-page>
       <!--  Main Menu here  -->
       <ion-toolbar color="secondary">
         <ion-tabs>
           <!-- Tab bar -->
           <ion-tab-bar>
-            <ion-tab-button
-              class="active-button"
+            <ion-tab-button              
               tab="rate-wine"
               @click="() => $router.push('/rate-wine')"
             >
@@ -15,8 +14,8 @@
               <h5>Rate Wine</h5>
             </ion-tab-button>
 
-            <ion-tab-button
-              tab="profile"
+            <ion-tab-button            
+              tab="my-cellar"
               @click="() => $router.push('/my-cellar')"
             >
               <!-- <ion-icon :icon="personOutline"> </ion-icon> -->
@@ -24,6 +23,7 @@
             </ion-tab-button>
 
             <ion-tab-button
+            class="active-button"
               tab="share-wine"
               @click="() => $router.push('/share-wine')"
             >
@@ -32,7 +32,7 @@
             </ion-tab-button>
 
             <ion-tab-button
-              tab="subscription"
+              tab="my-subscription"
               @click="() => $router.push('/my-subscription')"
             >
               <!-- <ion-icon :icon="bagCheckOutline"></ion-icon> -->
@@ -44,6 +44,9 @@
       </ion-toolbar>
 
       <ion-content>
+        <div class="ion-padding">
+          <h2> Give the best gift to a friend, wine. </h2>        
+        </div>
         <ion-card>
           <ion-item>
             <ion-avatar slot="start">
@@ -58,7 +61,7 @@
             Hi {{ profile.first_name }}, Good to see you again
           </h3>
         </ion-card>
-        <ion-card> <h3>This is a test page </h3> </ion-card>
+        <ion-card> <h3>Share Wine Page </h3> </ion-card>
       </ion-content>
     </ion-page>
   </main-layout>
@@ -74,8 +77,7 @@ import { mapGetters, mapActions } from "vuex";
 export default defineComponent({
   name: "Profile",
   components: {
-    /*IonTabBar, IonTabButton, IonTabs, IonLabel,*/ 
-    IonPage,
+    /*IonTabBar, IonTabButton, IonTabs, IonLabel,*/ IonPage,
     IonAvatar,
     IonItem,
     IonLabel,
