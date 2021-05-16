@@ -12,7 +12,7 @@
               @click="() => $router.push('/rate-wine')"
             >
               <!-- <ion-icon :icon="wineOutline"></ion-icon> -->
-              <h5>Rate Wine</h5>
+              <h5>Rate&nbsp;Wine</h5>
             </ion-tab-button>
 
             <ion-tab-button
@@ -20,7 +20,7 @@
               @click="() => $router.push('/my-cellar')"
             >
               <!-- <ion-icon :icon="personOutline"> </ion-icon> -->
-              <h5>My Cellar</h5>
+              <h5>My&nbsp;Cellar</h5>
             </ion-tab-button>
 
             <ion-tab-button
@@ -28,7 +28,7 @@
               @click="() => $router.push('/share-wine')"
             >
               <!-- <ion-icon :icon="bagCheckOutline"></ion-icon> -->
-              <h5>Share Wine</h5>
+              <h5>Share&nbsp;Wine</h5>
             </ion-tab-button>
 
             <ion-tab-button
@@ -37,32 +37,53 @@
             >
               <!-- <ion-icon :icon="bagCheckOutline"></ion-icon> -->
               <h1><ion-icon :icon="settings"></ion-icon></h1>
-              
             </ion-tab-button>
           </ion-tab-bar>
         </ion-tabs>
       </ion-toolbar>
 
-      <ion-content>
+      <ion-content class="ion-padding">
         <div class="ion-padding">
-          <h2> My Orders </h2>        
+          <h2>My Orders</h2>
         </div>
-        <ion-card class="ion-padding">
-        <ion-item>
-          <ion-avatar slot="start">
-            <img :src="profile.avatar_url" />
-          </ion-avatar>
-          <ion-label>
-            <h3>{{ profile.first_name }}</h3>
-            <p>{{ profile.email }}</p>
-          </ion-label>
-        </ion-item>
-        <h3 class="ion-padding">
-          Hi {{ profile.first_name }}, Good to see you again
-        </h3>
-        <ion-button>Edit</ion-button>
-      </ion-card>
-        <ion-card> <h3>Rate Your Wine</h3> </ion-card>
+
+        <div class="ion-padding">
+          <ion-segment @ionChange="segmentChanged($event)" value="Current" color="primary">
+          <ion-segment-button value="Current">
+            <ion-label>Current</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="Upcoming">
+            <ion-label>Upcoming</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="12 Apr">
+            <ion-label>12 Apr</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="12 Mar">
+            <ion-label>12 Mar</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+        </div>
+
+        <div v-if="wines.length == 0" class="ion-padding">
+          <h3>Sorry! We don't have wines delivered to you yet!</h3>
+        </div>
+        <ion-card v-else v-for="wine in wines" :key="wine.id">
+          <ion-card-header>
+            <ion-card-title>{{ wine.name }} {{ wine.year }}</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            <img src="/assets/icon/wine1.jpg" alt="wine1" class="wine" />
+
+            <div>
+              {{ wine.wine_info }}
+            </div>
+
+            <ion-button expand="block" @click="orderMorePrompt()">
+              Order More
+            </ion-button>
+          </ion-card-content>
+        </ion-card>
       </ion-content>
     </ion-page>
   </main-layout>
@@ -70,35 +91,188 @@
 
 <script>
 import { defineComponent } from "vue";
-import { IonPage, IonAvatar, IonItem, IonLabel, IonIcon } from "@ionic/vue";
-import { settings } from 'ionicons/icons';
-
+import { alertController } from "@ionic/core";
+import { settings, keypad } from "ionicons/icons";
+import {
+  IonButton,
+  //IonItem,
+  //IonRow,
+  //IonCol,
+  IonCardContent,
+  IonCardHeader,
+  IonCardTitle,
+  IonCard,
+  IonContent,
+  IonIcon,
+} from "@ionic/vue";
 import { mapGetters, mapActions } from "vuex";
-
 export default defineComponent({
-  name: "Profile",
+  name: "WineList",
   components: {
-    IonPage,
-    IonAvatar,
-    IonItem,
-    IonLabel,
-    IonIcon
+    IonContent,
+    IonButton,
+    //IonItem,
+    //IonRow,
+    //IonCol,
+    IonCardContent,
+    IonCardHeader,
+    IonCardTitle,
+    IonCard,
+    IonIcon,
+  },
+  data() {
+    return { keypad, responseData: {} };
   },
   methods: {
-    ...mapActions(["loadProfile", "loadQuiz"]),
+    ...mapActions(["loadWines"]),
+    async editCommentPrompt() {
+      const alert = await alertController.create({
+        cssClass: "my-custom-class",
+        header: "Enter Your Comment!",
+        inputs: [
+          {
+            name: "Wine Comment",
+            id: "wine_comment",
+            value: "",
+            placeholder: "Your Comment",
+            type: "textarea",
+          },
+        ],
+        buttons: [
+          {
+            text: "Cancel",
+            role: "cancel",
+            cssClass: "secondary",
+            handler: () => {
+              console.log("Confirm Cancel");
+            },
+          },
+          {
+            text: "Ok",
+            handler: () => {
+              console.log("Confirm Ok");
+            },
+          },
+        ],
+      });
+      return alert.present();
+    },
+    async orderMorePrompt(name, year) {
+      const alert = await alertController.create({
+        header: "Alert",
+        subheader: "Subtitle",
+        message: `How many ${name} ${year ? year : ""} do you want more?`,
+        inputs: [
+          {
+            value: "1",
+            name: "bottle",
+            type: "number",
+            min: 1,
+            max: 24,
+          },
+        ],
+        buttons: [
+          {
+            text: "Cancel",
+            role: "cancel",
+            cssClass: "secondary",
+            handler: () => {},
+          },
+          {
+            text: "Ok",
+            handler: () => {
+              console.log("buymore");
+            },
+          },
+        ],
+      });
+      alert.present();
+    },
+    async editRatingPrompt() {
+      const alert = await alertController.create({
+        cssClass: "alertstar",
+        header: "Radio",
+        inputs: [
+          {
+            type: "radio",
+            label: "Radio 1",
+            value: "value1",
+            handler: () => {
+              console.log("Radio 1 selected");
+            },
+            checked: true,
+          },
+          {
+            type: "radio",
+            label: "Radio 2",
+            value: "value2",
+            handler: () => {
+              console.log("Radio 2 selected");
+            },
+          },
+          {
+            type: "radio",
+            label: "Radio 3",
+            value: "value3",
+            handler: () => {
+              console.log("Radio 3 selected");
+            },
+          },
+          {
+            type: "radio",
+            label: "Radio 4",
+            value: "value4",
+            handler: () => {
+              console.log("Radio 4 selected");
+            },
+          },
+          {
+            type: "radio",
+            label: "Radio 5",
+            value: "value5",
+            handler: () => {
+              console.log("Radio 5 selected");
+            },
+          },
+          {
+            type: "radio",
+            label: "Radio 6",
+            value: "value6",
+            handler: () => {
+              console.log("Radio 6 selected");
+            },
+          },
+        ],
+        buttons: [
+          {
+            text: "Cancel",
+            role: "cancel",
+            cssClass: "secondary",
+            handler: () => {
+              console.log("Confirm Cancel");
+            },
+          },
+          {
+            text: "Ok",
+            handler: () => {
+              console.log("Confirm Ok");
+            },
+          },
+        ],
+      });
+      return alert.present();
+    },
   },
   computed: {
     ...mapGetters({
       subs: "subscription",
       wines: "wines",
       profile: "profile",
-      quiz: "quiz",
     }),
   },
-  created() {    
-    console.log("i m in created");
-    this.loadProfile();
-    this.loadQuiz();
+  created() {
+    console.log("i m in created loading wines");
+    this.loadWines();
   },
   setup() {
     const beforeTabChange = () => {
@@ -108,6 +282,7 @@ export default defineComponent({
       // do something after tab change
     };
     return {
+      //   calendar,
       settings,
       beforeTabChange,
       afterTabChange,

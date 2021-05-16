@@ -167,8 +167,8 @@ ion-tab-bar {
   color: black;
   border: solid 4px #f99e0d;
   border-bottom: none;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
 }
 
 .login-page {
@@ -178,6 +178,7 @@ ion-tab-bar {
 
 .login-page h1 {
   display: block;
+  padding: 10px;
   margin: 0 auto;
   text-align: center;
   background-color: #6e1541;

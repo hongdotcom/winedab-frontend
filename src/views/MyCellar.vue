@@ -6,21 +6,21 @@
         <ion-tabs>
           <!-- Tab bar -->
           <ion-tab-bar>
-            <ion-tab-button              
+            <ion-tab-button
               tab="rate-wine"
               @click="() => $router.push('/rate-wine')"
             >
               <!-- <ion-icon :icon="wineOutline"></ion-icon> -->
-              <h5>Rate Wine</h5>
+              <h5>Rate&nbsp;Wine</h5>
             </ion-tab-button>
 
             <ion-tab-button
-            class="active-button"
+              class="active-button"
               tab="my-cellar"
               @click="() => $router.push('/my-cellar')"
             >
               <!-- <ion-icon :icon="personOutline"> </ion-icon> -->
-              <h5>My Cellar</h5>
+              <h5>My&nbsp;Cellar</h5>
             </ion-tab-button>
 
             <ion-tab-button
@@ -28,7 +28,7 @@
               @click="() => $router.push('/share-wine')"
             >
               <!-- <ion-icon :icon="bagCheckOutline"></ion-icon> -->
-              <h5>Share Wine</h5>
+              <h5>Share&nbsp;Wine</h5>
             </ion-tab-button>
 
             <ion-tab-button
@@ -37,47 +37,52 @@
             >
               <!-- <ion-icon :icon="bagCheckOutline"></ion-icon> -->
               <h1><ion-icon :icon="settings"></ion-icon></h1>
-              
             </ion-tab-button>
           </ion-tab-bar>
         </ion-tabs>
       </ion-toolbar>
 
-      <ion-content>
+      <ion-content  class="ion-padding">
         <div class="ion-padding">
-          <h2> My Favourites </h2>        
+          <h2>My Favourites</h2>
         </div>
-      <div v-if="wines.length == 0" class="ion-padding">
-        <h3>Sorry! We don't have wines delivered to you yet!</h3>
-      </div>
-      <ion-card v-else v-for="wine in wines" :key="wine.id">
-        <ion-card-header>
-          <ion-card-title>{{ wine.name }} {{ wine.year }}</ion-card-title>
-        </ion-card-header>
-        <ion-row>
-          <ion-col center text-center>
-            <img src="/assets/icon/wine1.jpg" alt="wine1" class="wine" />
-          </ion-col>
-          <ion-col center text-center>
-            <ion-card-content>
-              {{ wine.wine_info }}
-            </ion-card-content>
-          </ion-col>
-          <ion-item class="buttonGroup">
-            <ion-button fill="outline" slot="end" @click="editRatingPrompt()"
-              >Rate</ion-button
-            >
-            <ion-button fill="outline" slot="end" @click="editCommentPrompt()"
-              >Comment</ion-button
-            >
-            <ion-button fill="outline" slot="end" @click="orderMorePrompt()"
-              >Order More</ion-button
-            >
-          </ion-item>
-        </ion-row>
-      </ion-card>
-    </ion-content>
+        <div v-if="wines.length == 0" class="ion-padding">
+          <h3>Sorry! We don't have wines delivered to you yet!</h3>
+        </div>
+        <ion-card v-else v-for="wine in wines" :key="wine.id">
+          <ion-card-header>
+            <ion-card-title>{{ wine.name }} {{ wine.year }}</ion-card-title>
+          </ion-card-header>
 
+          <ion-card-content>
+            <img src="/assets/icon/wine1.jpg" alt="wine1" class="wine" />
+
+            <div>
+              {{ wine.wine_info }}
+            </div>
+
+            <ion-grid>
+              <ion-row>
+                <ion-col>
+                  <ion-button expand="block" @click="editRatingPrompt()">
+                    Rate
+                  </ion-button>
+                </ion-col>
+                <ion-col>
+                  <ion-button expand="block" @click="editCommentPrompt()">
+                    Comment
+                  </ion-button>
+                </ion-col>
+                <ion-col>
+                  <ion-button expand="block" @click="orderMorePrompt()">
+                    Order More
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      </ion-content>
     </ion-page>
   </main-layout>
 </template>
@@ -85,18 +90,18 @@
 <script>
 import { defineComponent } from "vue";
 import { alertController } from "@ionic/core";
-import { settings, keypad } from 'ionicons/icons';
+import { settings, keypad } from "ionicons/icons";
 import {
   IonButton,
-  IonItem,
-  IonRow,
-  IonCol,
+  //IonItem,
+  //IonRow,
+  //IonCol,
   IonCardContent,
   IonCardHeader,
   IonCardTitle,
   IonCard,
   IonContent,
-  IonIcon
+  IonIcon,
 } from "@ionic/vue";
 import { mapGetters, mapActions } from "vuex";
 export default defineComponent({
@@ -104,14 +109,14 @@ export default defineComponent({
   components: {
     IonContent,
     IonButton,
-    IonItem,
-    IonRow,
-    IonCol,
+    //IonItem,
+    //IonRow,
+    //IonCol,
     IonCardContent,
     IonCardHeader,
     IonCardTitle,
     IonCard,
-    IonIcon
+    IonIcon,
   },
   data() {
     return { keypad, responseData: {} };
@@ -150,7 +155,37 @@ export default defineComponent({
       });
       return alert.present();
     },
-    orderMorePrompt() {},
+    async orderMorePrompt(name, year) {
+      const alert = await alertController.create({
+        header: "Alert",
+        subheader: "Subtitle",
+        message: `How many ${name} ${year ? year : ""} do you want more?`,
+        inputs: [
+          {
+            value: "1",
+            name: "bottle",
+            type: "number",
+            min: 1,
+            max: 24,
+          },
+        ],
+        buttons: [
+          {
+            text: "Cancel",
+            role: "cancel",
+            cssClass: "secondary",
+            handler: () => {},
+          },
+          {
+            text: "Ok",
+            handler: () => {
+              console.log("buymore");
+            },
+          },
+        ],
+      });
+      alert.present();
+    },
     async editRatingPrompt() {
       const alert = await alertController.create({
         cssClass: "alertstar",

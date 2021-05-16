@@ -11,7 +11,7 @@
               @click="() => $router.push('/rate-wine')"
             >
               <!-- <ion-icon :icon="wineOutline"></ion-icon> -->
-              <h5>Rate Wine</h5>
+              <h5>Rate&nbsp;Wine</h5>
             </ion-tab-button>
 
             <ion-tab-button            
@@ -19,7 +19,7 @@
               @click="() => $router.push('/my-cellar')"
             >
               <!-- <ion-icon :icon="personOutline"> </ion-icon> -->
-              <h5>My Cellar</h5>
+              <h5>My&nbsp;Cellar</h5>
             </ion-tab-button>
 
             <ion-tab-button            
@@ -27,7 +27,7 @@
               @click="() => $router.push('/share-wine')"
             >
               <!-- <ion-icon :icon="bagCheckOutline"></ion-icon> -->
-              <h5>Share Wine</h5>
+              <h5>Share&nbsp;Wine</h5>
             </ion-tab-button>
 
             <ion-tab-button
@@ -45,7 +45,7 @@
 
       <ion-content>
         <div class="ion-padding">
-          <h2>Manage Subsciption</h2>        
+          <h2>Manage Subscription</h2>        
         </div>
         
       <div v-if="subs.length == 0" class="ion-padding">
@@ -108,8 +108,7 @@
               </ion-row>
               <ion-row>
                 <ion-col>
-                  <ion-button
-                    fill="outline"
+                  <ion-button color="medium"
                     @click="showOnHoldAlert(subItem.id, subItem.status)"
                     expand="block"
                     >{{ this.reverseStatus(subItem.status) }}</ion-button
