@@ -2,94 +2,60 @@
   <main-layout pageTitle="Username">
     <ion-page>
       <!--  Main Menu here  -->
-      <ion-toolbar color="secondary">
-        <ion-tabs>
-          <!-- Tab bar -->
-          <ion-tab-bar>
-            <ion-tab-button              
-              tab="rate-wine"
-              @click="() => $router.push('/rate-wine')"
-            >
-              <!-- <ion-icon :icon="wineOutline"></ion-icon> -->
-              <h5>Rate&nbsp;Wine</h5>
-            </ion-tab-button>
-
-            <ion-tab-button            
-              tab="my-cellar"
-              @click="() => $router.push('/my-cellar')"
-            >
-              <!-- <ion-icon :icon="personOutline"> </ion-icon> -->
-              <h5>My&nbsp;Cellar</h5>
-            </ion-tab-button>
-
-            <ion-tab-button            
-              tab="share-wine"
-              @click="() => $router.push('/share-wine')"
-            >
-              <!-- <ion-icon :icon="bagCheckOutline"></ion-icon> -->
-              <h5>Share&nbsp;Wine</h5>
-            </ion-tab-button>
-
-            <ion-tab-button
-            class="active-button"
-              tab="my-subscription"
-              @click="() => $router.push('/my-subscription')"
-            >
-              <!-- <ion-icon :icon="bagCheckOutline"></ion-icon> -->
-              <h1><ion-icon :icon="settings"></ion-icon></h1>
-              
-            </ion-tab-button>
-          </ion-tab-bar>
-        </ion-tabs>
-      </ion-toolbar>
 
       <ion-content>
         <div class="ion-padding">
-          <h2>Manage Subscription</h2>        
+          <h2>Manage Subscription</h2>
         </div>
-        
-      <div v-if="subs.length == 0" class="ion-padding">
-        <h3>Sorry! We can't find your valid subscription yet!</h3>
-      </div>
 
-      <ion-list v-else>
-        <ion-item v-for="subItem in subs" :key="subItem.id">
-          <ion-card>
-            <ion-row>
-              <ion-col>
-                <ion-card-title class="ion-padding">
-                  <h3>{{ subItem.line_items[0].name }}</h3>
-                  <ion-card-content>
-                    <ion-row>
-                      <ion-col>
-                        <p>
-                          {{ subItem.shipping.first_name }} &nbsp;  {{ subItem.shipping.last_name }}
-                        </p>
-                      </ion-col>
-                    </ion-row>
-                    <ion-row>
-                      <ion-col>
-                        <p>Next Payment Date:</p>
-                      </ion-col>
-                      <ion-col>
-                        <p>
-                          {{ subItem.next_payment_date }}
-                        </p>
-                      </ion-col>
-                    </ion-row>
-                    <ion-row>
-                      <ion-col>
-                        <p>Order Status:</p>
-                      </ion-col>
-                      <ion-col>
-                        {{ subItem.status }}
-                      </ion-col>
-                    </ion-row>
-                  </ion-card-content>
-                </ion-card-title>
-              </ion-col>
-            </ion-row>
-            <ion-col>
+        <div v-if="subs.length == 0" class="ion-padding">
+          <h3>Sorry! We can't find your valid subscription yet!</h3>
+        </div>
+
+        <div class="subs-margin" v-else>
+            <ion-card v-for="subItem in subs" :key="subItem.id">
+              
+              <ion-row>
+                <ion-col>
+                  <ion-card-title class="ion-padding">
+                    <h3>{{ subItem.line_items[0].name }}</h3>
+
+                    <ion-card-content>
+                      <ion-row>
+                        <ion-col>
+                          <p>
+                            {{ subItem.shipping.first_name }} &nbsp;
+                            {{ subItem.shipping.last_name }}
+                          </p>
+                        </ion-col>
+                      </ion-row>
+
+                      <ion-row>
+                        <ion-col>
+                          <p>Next Payment Date:</p>
+                        </ion-col>
+                        <ion-col>
+                          <p>
+                            {{ subItem.next_payment_date }}
+                          </p>
+                        </ion-col>
+                      </ion-row>
+
+                      <ion-row>
+                        <ion-col>
+                          <p>Order Status:</p>
+                        </ion-col>
+                        <ion-col>
+                          {{ subItem.status }}
+                        </ion-col>
+                      </ion-row>
+
+                    </ion-card-content>
+
+                  </ion-card-title>
+                </ion-col>
+              </ion-row>
+
               <ion-row>
                 <ion-col>
                   <ion-button
@@ -106,20 +72,22 @@
                   >
                 </ion-col>
               </ion-row>
+
               <ion-row>
                 <ion-col>
-                  <ion-button color="medium"
+                  <ion-button
+                    color="medium"
                     @click="showOnHoldAlert(subItem.id, subItem.status)"
                     expand="block"
                     >{{ this.reverseStatus(subItem.status) }}</ion-button
                   >
                 </ion-col>
               </ion-row>
-            </ion-col>
-          </ion-card>
-        </ion-item>
-      </ion-list>
+
+            </ion-card>
+        </div>
       </ion-content>
+
     </ion-page>
   </main-layout>
 </template>
@@ -127,18 +95,16 @@
 <script>
 import { defineComponent } from "vue";
 import { alertController } from "@ionic/core";
-import { settings } from 'ionicons/icons';
 import {
   IonContent,
   IonCard,
   IonCardTitle,
   IonCardContent,
-  IonList,
-  IonItem,
+  // IonList,
+  // IonItem,
   IonRow,
   IonCol,
   IonButton,
-  IonIcon
 } from "@ionic/vue";
 import { mapGetters, mapActions } from "vuex";
 export default defineComponent({
@@ -148,12 +114,11 @@ export default defineComponent({
     IonCard,
     IonCardTitle,
     IonCardContent,
-    IonList,
-    IonItem,
+    // IonList,
+    // IonItem,
     IonRow,
     IonCol,
     IonButton,
-    IonIcon
   },
   methods: {
     ...mapActions(["loadSubscription", "onholdSubscription"]),
@@ -242,20 +207,6 @@ export default defineComponent({
   created() {
     console.log("i m in created");
     this.loadSubscription();
-  },
-  setup() {
-    const beforeTabChange = () => {
-      // do something before tab change
-    };
-    const afterTabChange = () => {
-      // do something after tab change
-    };
-    return {
-      //   calendar,
-      settings,
-      beforeTabChange,
-      afterTabChange,
-    };
   },
 });
 </script>

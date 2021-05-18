@@ -2,45 +2,6 @@
   <main-layout pageTitle="Username">
     <ion-page>
       <!--  Main Menu here  -->
-      <ion-toolbar color="secondary">
-        <ion-tabs>
-          <!-- Tab bar -->
-          <ion-tab-bar>
-            <ion-tab-button
-              class="active-button"
-              tab="rate-wine"
-              @click="() => $router.push('/rate-wine')"
-            >
-              <!-- <ion-icon :icon="wineOutline"></ion-icon> -->
-              <h5>Rate&nbsp;Wine</h5>
-            </ion-tab-button>
-
-            <ion-tab-button
-              tab="my-cellar"
-              @click="() => $router.push('/my-cellar')"
-            >
-              <!-- <ion-icon :icon="personOutline"> </ion-icon> -->
-              <h5>My&nbsp;Cellar</h5>
-            </ion-tab-button>
-
-            <ion-tab-button
-              tab="share-wine"
-              @click="() => $router.push('/share-wine')"
-            >
-              <!-- <ion-icon :icon="bagCheckOutline"></ion-icon> -->
-              <h5>Share&nbsp;Wine</h5>
-            </ion-tab-button>
-
-            <ion-tab-button
-              tab="my-subscription"
-              @click="() => $router.push('/my-subscription')"
-            >
-              <!-- <ion-icon :icon="bagCheckOutline"></ion-icon> -->
-              <h1><ion-icon :icon="settings"></ion-icon></h1>
-            </ion-tab-button>
-          </ion-tab-bar>
-        </ion-tabs>
-      </ion-toolbar>
 
       <ion-content class="ion-padding">
         <div class="ion-padding">
@@ -75,7 +36,7 @@
           <ion-card-content>
             <img src="/assets/icon/wine1.jpg" alt="wine1" class="wine" />
 
-            <div>
+            <div class="truncate">
               {{ wine.wine_info }}
             </div>
 
@@ -95,15 +56,11 @@ import { alertController } from "@ionic/core";
 import { settings, keypad } from "ionicons/icons";
 import {
   IonButton,
-  //IonItem,
-  //IonRow,
-  //IonCol,
   IonCardContent,
   IonCardHeader,
   IonCardTitle,
   IonCard,
   IonContent,
-  IonIcon,
 } from "@ionic/vue";
 import { mapGetters, mapActions } from "vuex";
 export default defineComponent({
@@ -111,14 +68,10 @@ export default defineComponent({
   components: {
     IonContent,
     IonButton,
-    //IonItem,
-    //IonRow,
-    //IonCol,
     IonCardContent,
     IonCardHeader,
     IonCardTitle,
     IonCard,
-    IonIcon,
   },
   data() {
     return { keypad, responseData: {} };
@@ -275,17 +228,8 @@ export default defineComponent({
     this.loadWines();
   },
   setup() {
-    const beforeTabChange = () => {
-      // do something before tab change
-    };
-    const afterTabChange = () => {
-      // do something after tab change
-    };
     return {
-      //   calendar,
       settings,
-      beforeTabChange,
-      afterTabChange,
     };
   },
 });

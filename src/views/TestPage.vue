@@ -12,7 +12,7 @@
               @click="() => $router.push('/rate-wine')"
             >
               <!-- <ion-icon :icon="wineOutline"></ion-icon> -->
-              <h5>Rate Wine</h5>
+              <h5>Test Page</h5>
             </ion-tab-button>
 
             <ion-tab-button
@@ -28,7 +28,7 @@
               @click="() => $router.push('/share-wine')"
             >
               <!-- <ion-icon :icon="bagCheckOutline"></ion-icon> -->
-              <h5>Share Wine</h5>
+              Share Wine
             </ion-tab-button>
 
             <ion-tab-button
@@ -39,6 +39,10 @@
               <h1><ion-icon :icon="settings"></ion-icon></h1>
               
             </ion-tab-button>
+            
+            <ion-button router-link="/login">
+              Got to Login page
+            </ion-button>
           </ion-tab-bar>
         </ion-tabs>
       </ion-toolbar>
