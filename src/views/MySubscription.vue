@@ -59,7 +59,6 @@
               <ion-row>
                 <ion-col>
                   <ion-button
-                    class="normalButton"
                     @click="
                       showPostponeAlert(
                         subItem.id,
@@ -71,9 +70,7 @@
                     >Postpone</ion-button
                   >
                 </ion-col>
-              </ion-row>
 
-              <ion-row>
                 <ion-col>
                   <ion-button
                     color="medium"
@@ -82,6 +79,16 @@
                     >{{ this.reverseStatus(subItem.status) }}</ion-button
                   >
                 </ion-col>
+
+                <ion-col>
+                  <ion-button
+                    color="danger"
+                    @click="showOnHoldAlert(subItem.id, subItem.status)"
+                    expand="block"
+                    >Edit</ion-button
+                  >
+                </ion-col>
+                
               </ion-row>
 
             </ion-card>
