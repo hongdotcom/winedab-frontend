@@ -1,0 +1,234 @@
+<template>
+  <main-layout pageTitle="Username">
+    <ion-page>
+      <!--  Main Menu here  -->
+
+      <ion-content  class="ion-padding">
+        <div class="ion-padding">
+          <h2>My Favourites</h2>
+        </div>
+        <div v-if="wines.length == 0" class="ion-padding">
+          <h3>Sorry! We don't have wines delivered to you yet!</h3>
+        </div>
+        <ion-card v-else v-for="wine in wines" :key="wine.id">
+          <ion-card-header>
+            <ion-card-title>{{ wine.name }} {{ wine.year }}</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            <!-- <img src="/assets/icon/wine1.jpg" alt="wine1" class="wine" /> -->
+
+            <div class="truncate">
+              {{ wine.wine_info }}
+            </div>
+
+            <ion-grid>
+              <ion-row>
+                <ion-col>
+                  <ion-button expand="block" @click="editRatingPrompt()"> Rate </ion-button>
+                </ion-col>
+                <ion-col>
+                  <ion-button expand="block" @click="editCommentPrompt()"> Comment </ion-button>
+                </ion-col>
+                <ion-col>
+                  <ion-button expand="block" @click="orderMorePrompt()"> Order More </ion-button>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      </ion-content>
+    </ion-page>
+  </main-layout>
+</template>
+
+<script>
+import { defineComponent } from "vue";
+import { alertController } from "@ionic/core";
+import { settings, keypad } from "ionicons/icons";
+import {
+  IonButton,
+  //IonItem,
+  //IonRow,
+  //IonCol,
+  IonCardContent,
+  IonCardHeader,
+  IonCardTitle,
+  IonCard,
+  IonContent,
+} from "@ionic/vue";
+import { mapGetters, mapActions } from "vuex";
+export default defineComponent({
+  name: "WineList",
+  components: {
+    IonContent,
+    IonButton,
+    //IonItem,
+    //IonRow,
+    //IonCol,
+    IonCardContent,
+    IonCardHeader,
+    IonCardTitle,
+    IonCard,
+  },
+  data() {
+    return { keypad, responseData: {} };
+  },
+  methods: {
+    ...mapActions(["loadWines"]),
+    async editCommentPrompt() {
+      const alert = await alertController.create({
+        cssClass: "my-custom-class",
+        header: "Enter Your Comment!",
+        inputs: [
+          {
+            name: "Wine Comment",
+            id: "wine_comment",
+            value: "",
+            placeholder: "Your Comment",
+            type: "textarea",
+          },
+        ],
+        buttons: [
+          {
+            text: "Cancel",
+            role: "cancel",
+            cssClass: "secondary",
+            handler: () => {
+              console.log("Confirm Cancel");
+            },
+          },
+          {
+            text: "Ok",
+            handler: () => {
+              console.log("Confirm Ok");
+            },
+          },
+        ],
+      });
+      return alert.present();
+    },
+    async orderMorePrompt(name, year) {
+      const alert = await alertController.create({
+        header: "Alert",
+        subheader: "Subtitle",
+        message: `How many ${name} ${year ? year : ""} do you want more?`,
+        inputs: [
+          {
+            value: "1",
+            name: "bottle",
+            type: "number",
+            min: 1,
+            max: 24,
+          },
+        ],
+        buttons: [
+          {
+            text: "Cancel",
+            role: "cancel",
+            cssClass: "secondary",
+            handler: () => {},
+          },
+          {
+            text: "Ok",
+            handler: () => {
+              console.log("buymore");
+            },
+          },
+        ],
+      });
+      alert.present();
+    },
+    async editRatingPrompt() {
+      const alert = await alertController.create({
+        cssClass: "alertstar",
+        header: "Radio",
+        inputs: [
+          {
+            type: "radio",
+            label: "Radio 1",
+            value: "value1",
+            handler: () => {
+              console.log("Radio 1 selected");
+            },
+            checked: true,
+          },
+          {
+            type: "radio",
+            label: "Radio 2",
+            value: "value2",
+            handler: () => {
+              console.log("Radio 2 selected");
+            },
+          },
+          {
+            type: "radio",
+            label: "Radio 3",
+            value: "value3",
+            handler: () => {
+              console.log("Radio 3 selected");
+            },
+          },
+          {
+            type: "radio",
+            label: "Radio 4",
+            value: "value4",
+            handler: () => {
+              console.log("Radio 4 selected");
+            },
+          },
+          {
+            type: "radio",
+            label: "Radio 5",
+            value: "value5",
+            handler: () => {
+              console.log("Radio 5 selected");
+            },
+          },
+          {
+            type: "radio",
+            label: "Radio 6",
+            value: "value6",
+            handler: () => {
+              console.log("Radio 6 selected");
+            },
+          },
+        ],
+        buttons: [
+          {
+            text: "Cancel",
+            role: "cancel",
+            cssClass: "secondary",
+            handler: () => {
+              console.log("Confirm Cancel");
+            },
+          },
+          {
+            text: "Ok",
+            handler: () => {
+              console.log("Confirm Ok");
+            },
+          },
+        ],
+      });
+      return alert.present();
+    },
+  },
+  computed: {
+    ...mapGetters({
+      subs: "subscription",
+      wines: "wines",
+      profile: "profile",
+    }),
+  },
+  created() {
+    console.log("i m in created loading wines");
+    this.loadWines();
+  },
+  setup() {
+    return {
+      settings,
+    };
+  },
+});
+</script>

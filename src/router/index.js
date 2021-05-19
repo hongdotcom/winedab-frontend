@@ -6,10 +6,18 @@ import Subscription from "../views/Subscription.vue";
 import WineList from "../views/WineList.vue";
 import Profile from "../views/Profile.vue";
 import BuyMore from "../views/BuyMore.vue";
+// junico's new pages
+
+import TestPage from "../views/TestPage.vue";
+import TestPage2 from "../views/TestPage2.vue";
+import RateWine from "../views/RateWine.vue";
+import MyCellar from "../views/MyCellar.vue";
+import ShareWine from "../views/ShareWine.vue";
+import MySubscription from "../views/MySubscription.vue";
 const routes = [
   {
     path: "/",
-    redirect: "/subscription",
+    redirect: "/login",
   },
   {
     path: "/login",
@@ -36,6 +44,41 @@ const routes = [
     name: "BuyMore",
     component: BuyMore,
   },
+  {
+    path: "/profile",
+    name: "Profile",
+    component: Profile,
+  },
+  {
+    path: "/testpage",
+    name: "TestPage",
+    component: TestPage,
+  },
+  {
+    path: "/testpage2",
+    name: "TestPage2",
+    component: TestPage2,
+  },
+  {
+    path: "/rate-wine",
+    name: "RateWine",
+    component: RateWine,
+  },
+  {
+    path: "/my-cellar",
+    name: "MyCellar",
+    component: MyCellar,
+  },
+  {
+    path: "/share-wine",
+    name: "ShareWine",
+    component: ShareWine,
+  },
+  {
+    path: "/my-subscription",
+    name: "MySubscription",
+    component: MySubscription,
+  }
 ];
 
 const router = createRouter({

@@ -10,7 +10,7 @@
           <ion-card>
             <ion-row>
               <ion-col>
-                <ion-card-title class="ion-padding">
+                <ion-card-title>
                   <h3>{{ subItem.line_items[0].name }}</h3>
                   <ion-card-content>
                     <ion-row>

@@ -1,6 +1,8 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import BasicLayout from "./components/BasicLayout.vue";
+import LoginLayout from "./components/LoginLayout.vue";
+import MainLayout from "./components/MainLayout.vue";
 import router from "./router/index";
 
 import { IonicVue } from "@ionic/vue";
@@ -32,6 +34,8 @@ const app = createApp(App)
   .use(router)
   .use(store);
 app.component("basic-layout", BasicLayout);
+app.component("login-layout", LoginLayout);
+app.component("main-layout", MainLayout);
 router.isReady().then(() => {
   app.mount("#app");
 });
