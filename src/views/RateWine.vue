@@ -7,15 +7,13 @@
         <div class="ion-padding">
           <h2>My Orders</h2>
         </div>
-
+        <!-- 
         <div class="ion-padding">
           <ion-segment @ionChange="segmentChanged($event)" value="Current" color="primary">
           <ion-segment-button value="Current">
             <ion-label>Current</ion-label>
           </ion-segment-button>
-          <ion-segment-button value="Upcoming">
-            <ion-label>Upcoming</ion-label>
-          </ion-segment-button>
+          
           <ion-segment-button value="12 Apr">
             <ion-label>12 Apr</ion-label>
           </ion-segment-button>
@@ -23,28 +21,141 @@
             <ion-label>12 Mar</ion-label>
           </ion-segment-button>
         </ion-segment>
+        </div> -->
+
+        <div class="tab-holder">
+          <button
+            @click="selectTab(1)"
+            :class="{ 'active-tab': currentTab == 1 }"
+          >
+            Current
+          </button>
+
+          <button
+            @click="selectTab(2)"
+            :class="{ 'active-tab': currentTab == 2 }"
+          >
+            Last Month
+          </button>
+
+          <button
+            @click="selectTab(3)"
+            :class="{ 'active-tab': currentTab == 3 }"
+          >
+            Previous Month
+          </button>
         </div>
 
         <div v-if="wines.length == 0" class="ion-padding">
           <h3>Sorry! We don't have wines delivered to you yet!</h3>
         </div>
-        <ion-card v-else v-for="wine in wines" :key="wine.id">
-          <ion-card-header>
-            <ion-card-title>{{ wine.name }} {{ wine.year }}</ion-card-title>
-          </ion-card-header>
 
-          <ion-card-content>
-            <img src="/assets/icon/wine1.jpg" alt="wine1" class="wine" />
+        <div v-if="currentTab == 1">
+          <h2>Current Order</h2>
+          <ion-card v-for="wine in wines" :key="wine.id">
+            <ion-card-header>
+              <ion-card-title>{{ wine.name }} {{ wine.year }}</ion-card-title>
+            </ion-card-header>
 
-            <div class="truncate">
-              {{ wine.wine_info }}
-            </div>
+            <ion-card-content>
+              <img src="/assets/icon/wine1.jpg" alt="wine1" class="wine" />
 
-            <ion-button expand="block" @click="orderMorePrompt()">
-              Order More
-            </ion-button>
-          </ion-card-content>
-        </ion-card>
+              <div>{{ wine.wine_info }}</div>
+
+              <ion-grid>
+                <ion-row>
+                  <ion-col>
+                    <ion-button expand="block" @click="editRatingPrompt()">
+                      Rate
+                    </ion-button>
+                  </ion-col>
+                  <!-- <ion-col>
+                  <ion-button expand="block" @click="editCommentPrompt()">
+                    Comment
+                  </ion-button>
+                </ion-col> -->
+                  <ion-col>
+                    <ion-button expand="block" @click="orderMorePrompt()">
+                      Order More
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-card-content>
+          </ion-card>
+        </div>
+
+        <div v-if="currentTab == 2">
+          <h2>Last Month Order</h2>
+          <ion-card v-for="wine in wines" :key="wine.id">
+            <ion-card-header>
+              <ion-card-title>{{ wine.name }} {{ wine.year }}</ion-card-title>
+            </ion-card-header>
+
+            <ion-card-content>
+              <img src="/assets/icon/wine1.jpg" alt="wine1" class="wine" />
+
+              <div>{{ wine.wine_info }}</div>
+
+              <ion-grid>
+                <ion-row>
+                  <ion-col>
+                    <ion-button expand="block" @click="editRatingPrompt()">
+                      Rate
+                    </ion-button>
+                  </ion-col>
+                  <!-- <ion-col>
+                  <ion-button expand="block" @click="editCommentPrompt()">
+                    Comment
+                  </ion-button>
+                </ion-col> -->
+                  <ion-col>
+                    <ion-button expand="block" @click="orderMorePrompt()">
+                      Order More
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-card-content>
+          </ion-card>
+        </div>
+
+        <div v-if="currentTab == 3">
+          <h2>Previous Order</h2>
+          <ion-card v-for="wine in wines" :key="wine.id">
+            <ion-card-header>
+              <ion-card-title>{{ wine.name }} {{ wine.year }}</ion-card-title>
+            </ion-card-header>
+
+            <ion-card-content>
+              <img src="/assets/icon/wine1.jpg" alt="wine1" class="wine" />
+
+              <div>{{ wine.wine_info }}</div>
+
+              <ion-grid>
+                <ion-row>
+                  <ion-col>
+                    <ion-button expand="block" @click="editRatingPrompt()">
+                      Rate
+                    </ion-button>
+                  </ion-col>
+                  <!-- <ion-col>
+                  <ion-button expand="block" @click="editCommentPrompt()">
+                    Comment
+                  </ion-button>
+                </ion-col> -->
+                  <ion-col>
+                    <ion-button expand="block" @click="orderMorePrompt()">
+                      Order More
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-card-content>
+          </ion-card>
+        </div>
+
+
       </ion-content>
     </ion-page>
   </main-layout>
@@ -74,7 +185,7 @@ export default defineComponent({
     IonCard,
   },
   data() {
-    return { keypad, responseData: {} };
+    return { keypad, responseData: {}, currentTab: 1 };
   },
   methods: {
     ...mapActions(["loadWines"]),
@@ -214,6 +325,9 @@ export default defineComponent({
         ],
       });
       return alert.present();
+    },
+    selectTab(selectedTab) {
+      this.currentTab = selectedTab;
     },
   },
   computed: {

@@ -175,7 +175,7 @@ ion-tab-bar {
 .nav-button {
   display: inline-block;
   background-color: #f99e0d;
-  width: 30%;
+  width: 45%;
   margin-top: -2px;
 }
 
@@ -216,3 +216,19 @@ a.router-link-exact-active {
   margin: 10px 0;
 }
 
+.tab-holder {
+  background-color: bisque;
+  border-radius: 4px;
+}
+.tab-holder button {
+  background-color: #f99e0d;
+  color: #6e1541;
+  padding: 10px;
+  margin: 0 2px;
+}
+
+.active-tab {
+  border-bottom: solid 2px #6e1541;
+  background-color: #f99e0d;
+  padding: 10px;
+}

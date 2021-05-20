@@ -67,23 +67,24 @@
                       )
                     "
                     expand="block"
-                    >Postpone</ion-button
+                    >PAUSE</ion-button
                   >
                 </ion-col>
 
-                <ion-col>
+                <!-- <ion-col>
                   <ion-button
                     color="medium"
                     @click="showOnHoldAlert(subItem.id, subItem.status)"
                     expand="block"
                     >{{ this.reverseStatus(subItem.status) }}</ion-button
                   >
-                </ion-col>
+                </ion-col> -->
 
                 <ion-col>
                   <ion-button
                     color="danger"
-                    @click="showOnHoldAlert(subItem.id, subItem.status)"
+                    @click="() => router.push('/testpage')"
+
                     expand="block"
                     >Edit</ion-button
                   >
