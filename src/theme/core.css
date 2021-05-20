@@ -175,14 +175,14 @@ ion-tab-bar {
 .nav-button {
   display: inline-block;
   background-color: #f99e0d;
-  width: 45%;
+  width: 33%;
   margin-top: -2px;
 }
 
 .nav-button-last {
   display: inline-block;
   background-color: #f99e0d;
-  width: 10%;
+  width: 34%;
   margin-top: -2px;
 }
 

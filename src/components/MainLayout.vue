@@ -24,8 +24,8 @@
       </div> -->
 
       <div class="nav-button-last">
-        <router-link to="/my-subscription">
-          <ion-icon :icon="settings"></ion-icon>
+        <router-link to="/my-subscription">Subscription
+          <!-- <ion-icon :icon="settings"></ion-icon> -->
         </router-link>
       </div>
     </div>
