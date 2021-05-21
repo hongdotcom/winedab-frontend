@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from "@ionic/vue-router";
 
 // import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
-import Subscription from "../views/Subscription.vue";
 import WineList from "../views/WineList.vue";
 import Profile from "../views/Profile.vue";
 import BuyMore from "../views/BuyMore.vue";
@@ -24,11 +23,7 @@ const routes = [
     name: "Login",
     component: Login,
   },
-  {
-    path: "/subscription",
-    name: "Subscription",
-    component: Subscription,
-  },
+
   {
     path: "/wines",
     name: "WineList",
@@ -78,7 +73,7 @@ const routes = [
     path: "/my-subscription",
     name: "MySubscription",
     component: MySubscription,
-  }
+  },
 ];
 
 const router = createRouter({
