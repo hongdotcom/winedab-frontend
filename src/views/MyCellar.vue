@@ -18,27 +18,27 @@
           <ion-card-content>
             <img src="/assets/icon/wine1.jpg" alt="wine1" class="wine" />
 
-            <div class="truncate">
+            <div>
               {{ wine.wine_info }}
             </div>
 
             <ion-grid>
               <ion-row>
-                <ion-col>
+                <!-- <ion-col>
                   <ion-button expand="block" @click="editRatingPrompt()">
                     Rate
                   </ion-button>
-                </ion-col>
+                </ion-col> -->
                 <ion-col>
                   <ion-button expand="block" @click="editCommentPrompt()">
                     Comment
                   </ion-button>
                 </ion-col>
-                <ion-col>
+                <!-- <ion-col>
                   <ion-button expand="block" @click="orderMorePrompt()">
                     Order More
                   </ion-button>
-                </ion-col>
+                </ion-col> -->
               </ion-row>
             </ion-grid>
           </ion-card-content>

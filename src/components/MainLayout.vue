@@ -19,12 +19,13 @@
         <router-link to="/my-cellar"> My&nbsp;Cellar </router-link>
       </div>
 
-      <div class="nav-button">
+      <!-- <div class="nav-button">
         <router-link to="/share-wine"> Share&nbsp;Wine </router-link>
-      </div>
+      </div> -->
+
       <div class="nav-button-last">
-        <router-link to="/my-subscription">
-          <ion-icon :icon="settings"></ion-icon>
+        <router-link to="/my-subscription">Subscription
+          <!-- <ion-icon :icon="settings"></ion-icon> -->
         </router-link>
       </div>
     </div>

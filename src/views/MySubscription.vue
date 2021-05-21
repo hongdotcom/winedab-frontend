@@ -59,7 +59,6 @@
               <ion-row>
                 <ion-col>
                   <ion-button
-                    class="normalButton"
                     @click="
                       showPostponeAlert(
                         subItem.id,
@@ -68,20 +67,29 @@
                       )
                     "
                     expand="block"
-                    >Postpone</ion-button
+                    >PAUSE</ion-button
                   >
                 </ion-col>
-              </ion-row>
 
-              <ion-row>
-                <ion-col>
+                <!-- <ion-col>
                   <ion-button
                     color="medium"
                     @click="showOnHoldAlert(subItem.id, subItem.status)"
                     expand="block"
                     >{{ this.reverseStatus(subItem.status) }}</ion-button
                   >
+                </ion-col> -->
+
+                <ion-col>
+                  <ion-button
+                    color="danger"
+                    @click="() => router.push('/testpage')"
+
+                    expand="block"
+                    >Edit</ion-button
+                  >
                 </ion-col>
+                
               </ion-row>
 
             </ion-card>
