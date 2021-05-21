@@ -154,8 +154,6 @@
             </ion-card-content>
           </ion-card>
         </div>
-
-
       </ion-content>
     </ion-page>
   </main-layout>

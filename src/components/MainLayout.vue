@@ -6,7 +6,7 @@
           <img src="assets/icon/logo-white.png" alt="logo" class="logo"
         /></ion-title>
 
-        <ion-title slot="end"> {{ pageTitle }} </ion-title>
+        <ion-title slot="end"> Hi, {{ pageTitle }} </ion-title>
       </ion-toolbar>
     </ion-header>
 
@@ -22,9 +22,9 @@
       <!-- <div class="nav-button">
         <router-link to="/share-wine"> Share&nbsp;Wine </router-link>
       </div> -->
-
       <div class="nav-button-last">
-        <router-link to="/my-subscription">Subscription
+        <router-link to="/my-subscription"
+          >Subscription
           <!-- <ion-icon :icon="settings"></ion-icon> -->
         </router-link>
       </div>
