@@ -1,8 +1,6 @@
 <template>
   <main-layout :pageTitle="profile.first_name">
     <ion-page>
-      <!--  Main Menu here  -->
-
       <ion-content>
         <div class="ion-padding">
           <h2>Manage Subscription</h2>
@@ -13,18 +11,20 @@
         </div>
 
         <div class="subs-margin" v-else>
-          <ion-card v-for="subItem in subs" :key="subItem.id">
+          <!-- <ion-card v-for="subItem in subs" :key="subItem.id">
+             -->
+          <ion-card>
             <ion-row>
               <ion-col>
                 <ion-card-title class="ion-padding">
-                  <h3>{{ subItem.line_items[0].name }}</h3>
+                  <h3>{{ subs[0].line_items[0].name }}</h3>
 
                   <ion-card-content>
                     <ion-row>
                       <ion-col>
                         <p>
-                          {{ subItem.shipping.first_name }} &nbsp;
-                          {{ subItem.shipping.last_name }}
+                          {{ subs[0].shipping.first_name }} &nbsp;
+                          {{ subs[0].shipping.last_name }}
                         </p>
                       </ion-col>
                     </ion-row>
@@ -35,7 +35,7 @@
                       </ion-col>
                       <ion-col>
                         <p>
-                          {{ subItem.next_payment_date }}
+                          {{ subs[0].next_payment_date }}
                         </p>
                       </ion-col>
                     </ion-row>
@@ -45,12 +45,12 @@
                         <p>Subscription Status:</p>
                       </ion-col>
                       <ion-col>
-                        {{ subItem.status }}
+                        {{ subs[0].status }}
                       </ion-col>
-                      <ion-col v-if="subItem.status == `active`">
+                      <ion-col v-if="subs[0].status == `active`">
                         <ion-button
                           class="normalButton"
-                          @click="showOnholdAlert(subItem.id, subItem.status)"
+                          @click="showOnholdAlert(subs[0].id, subs[0].status)"
                           expand="block"
                           >Pause Indefinitely</ion-button
                         >
@@ -62,14 +62,14 @@
             </ion-row>
 
             <ion-row>
-              <ion-col v-if="subItem.status == `active`">
+              <ion-col v-if="subs[0].status == `active`">
                 <ion-button
                   class="normalButton"
                   @click="
                     showPostponeAlert(
-                      subItem.id,
-                      subItem.status,
-                      subItem.next_payment_date
+                      subs[0].id,
+                      subs[0].status,
+                      subs[0].next_payment_date
                     )
                   "
                   expand="block"
@@ -77,13 +77,13 @@
                 >
               </ion-col>
 
-              <ion-col v-if="subItem.status == `on-hold`">
+              <ion-col v-if="subs[0].status == `on-hold`">
                 <ion-button
                   @click="
                     showActiveAlert(
-                      subItem.id,
-                      subItem.status,
-                      subItem.next_payment_date
+                      subs[0].id,
+                      subs[0].status,
+                      subs[0].next_payment_date
                     )
                   "
                   expand="block"
@@ -128,7 +128,6 @@ export default defineComponent({
     IonCard,
     IonCardTitle,
     IonCardContent,
-
     IonRow,
     IonCol,
     IonButton,

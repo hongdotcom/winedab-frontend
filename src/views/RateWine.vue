@@ -1,27 +1,11 @@
 <template>
-  <main-layout pageTitle="Username">
+  <main-layout :pageTitle="profile.first_name">
     <ion-page>
       <!--  Main Menu here  -->
-
       <ion-content class="ion-padding">
         <div class="ion-padding">
           <h2>My Orders</h2>
         </div>
-        <!-- 
-        <div class="ion-padding">
-          <ion-segment @ionChange="segmentChanged($event)" value="Current" color="primary">
-          <ion-segment-button value="Current">
-            <ion-label>Current</ion-label>
-          </ion-segment-button>
-          
-          <ion-segment-button value="12 Apr">
-            <ion-label>12 Apr</ion-label>
-          </ion-segment-button>
-          <ion-segment-button value="12 Mar">
-            <ion-label>12 Mar</ion-label>
-          </ion-segment-button>
-        </ion-segment>
-        </div> -->
 
         <div class="tab-holder">
           <button
@@ -54,26 +38,50 @@
           <h2>Current Order</h2>
           <ion-card v-for="wine in wines" :key="wine.id">
             <ion-card-header>
-              <ion-card-title>{{ wine.name }} {{ wine.year }}</ion-card-title>
+              <ion-card-title
+                >{{ wine.wine_name }} {{ wine.year }} - {{ wine.colour }}
+              </ion-card-title>
+              <ion-icon color="primary" name="star"></ion-icon>
             </ion-card-header>
 
             <ion-card-content>
-              <img src="/assets/icon/wine1.jpg" alt="wine1" class="wine" />
+              <img
+                v-if="wine.wine_photo"
+                src="/assets/icon/wine1.jpg"
+                alt="wine1"
+                class="wine"
+              />
 
-              <div>{{ wine.wine_info }}</div>
-
+              <div>{{ wine.description }}</div>
+              <div>
+                <ion-button @click="onRate(1)">
+                  <ion-icon color="white" name="settings"></ion-icon
+                ></ion-button>
+                <ion-button @click="onRate(2)">
+                  <ion-icon name="star-outline"></ion-icon
+                ></ion-button>
+                <ion-button @click="onRate(3)">
+                  <ion-icon name="star-outline"></ion-icon
+                ></ion-button>
+                <ion-button @click="onRate(4)">
+                  <ion-icon name="star-outline"></ion-icon
+                ></ion-button>
+                <ion-button @click="onRate(5)">
+                  <ion-icon name="star-outline"></ion-icon
+                ></ion-button>
+              </div>
               <ion-grid>
                 <ion-row>
-                  <ion-col>
+                  <!-- <ion-col>
                     <ion-button expand="block" @click="editRatingPrompt()">
                       Rate
                     </ion-button>
+                  </ion-col> -->
+                  <ion-col>
+                    <ion-button expand="block" @click="editCommentPrompt()">
+                      Comment
+                    </ion-button>
                   </ion-col>
-                  <!-- <ion-col>
-                  <ion-button expand="block" @click="editCommentPrompt()">
-                    Comment
-                  </ion-button>
-                </ion-col> -->
                   <ion-col>
                     <ion-button expand="block" @click="orderMorePrompt()">
                       Order More
@@ -89,7 +97,9 @@
           <h2>Last Month Order</h2>
           <ion-card v-for="wine in wines" :key="wine.id">
             <ion-card-header>
-              <ion-card-title>{{ wine.name }} {{ wine.year }}</ion-card-title>
+              <ion-card-title
+                >{{ wine.wine_name }} {{ wine.year }}</ion-card-title
+              >
             </ion-card-header>
 
             <ion-card-content>
@@ -124,7 +134,9 @@
           <h2>Previous Order</h2>
           <ion-card v-for="wine in wines" :key="wine.id">
             <ion-card-header>
-              <ion-card-title>{{ wine.name }} {{ wine.year }}</ion-card-title>
+              <ion-card-title
+                >{{ wine.wine_name }} {{ wine.year }}</ion-card-title
+              >
             </ion-card-header>
 
             <ion-card-content>
@@ -134,16 +146,16 @@
 
               <ion-grid>
                 <ion-row>
-                  <ion-col>
+                  <!-- <ion-col>
                     <ion-button expand="block" @click="editRatingPrompt()">
                       Rate
                     </ion-button>
+                  </ion-col> -->
+                  <ion-col>
+                    <ion-button expand="block" @click="editCommentPrompt()">
+                      Comment
+                    </ion-button>
                   </ion-col>
-                  <!-- <ion-col>
-                  <ion-button expand="block" @click="editCommentPrompt()">
-                    Comment
-                  </ion-button>
-                </ion-col> -->
                   <ion-col>
                     <ion-button expand="block" @click="orderMorePrompt()">
                       Order More
@@ -162,7 +174,7 @@
 <script>
 import { defineComponent } from "vue";
 import { alertController } from "@ionic/core";
-import { settings, keypad } from "ionicons/icons";
+import { settings, keypad, star } from "ionicons/icons";
 import {
   IonButton,
   IonCardContent,
@@ -170,6 +182,11 @@ import {
   IonCardTitle,
   IonCard,
   IonContent,
+  IonPage,
+  IonGrid,
+  IonIcon,
+  IonRow,
+  IonCol,
 } from "@ionic/vue";
 import { mapGetters, mapActions } from "vuex";
 export default defineComponent({
@@ -181,12 +198,17 @@ export default defineComponent({
     IonCardHeader,
     IonCardTitle,
     IonCard,
+    IonPage,
+    IonGrid,
+    IonRow,
+    IonCol,
+    IonIcon,
   },
   data() {
-    return { keypad, responseData: {}, currentTab: 1 };
+    return { star, keypad, responseData: {}, currentTab: 1 };
   },
   methods: {
-    ...mapActions(["loadWines"]),
+    ...mapActions(["loadWines", "loadProfile"]),
     async editCommentPrompt() {
       const alert = await alertController.create({
         cssClass: "my-custom-class",
@@ -327,6 +349,9 @@ export default defineComponent({
     selectTab(selectedTab) {
       this.currentTab = selectedTab;
     },
+    onRate(rating) {
+      console.log(rating);
+    },
   },
   computed: {
     ...mapGetters({
@@ -338,6 +363,7 @@ export default defineComponent({
   created() {
     console.log("i m in created loading wines");
     this.loadWines();
+    this.loadProfile();
   },
   setup() {
     return {
