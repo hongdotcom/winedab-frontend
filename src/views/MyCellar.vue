@@ -3,7 +3,7 @@
     <ion-page>
       <!--  Main Menu here  -->
 
-      <ion-content  class="ion-padding">
+      <ion-content class="ion-padding">
         <div class="ion-padding">
           <h2>My Favourites</h2>
         </div>
@@ -22,25 +22,33 @@
               {{ wine.wine_info }}
             </div>
 
-            <ion-grid>
-              <ion-row>
-                <!-- <ion-col>
-                  <ion-button expand="block" @click="editRatingPrompt()">
-                    Rate
-                  </ion-button>
-                </ion-col> -->
-                <ion-col>
-                  <ion-button expand="block" @click="editCommentPrompt()">
-                    Comment
-                  </ion-button>
-                </ion-col>
-                <!-- <ion-col>
-                  <ion-button expand="block" @click="orderMorePrompt()">
-                    Order More
-                  </ion-button>
-                </ion-col> -->
-              </ion-row>
-            </ion-grid>
+            
+                  <div class="comment-wrapper">
+                    <ion-grid>
+                      <ion-row>
+                        <ion-col size="8">
+                          <div>
+                            <input
+                              @keyup.enter="saveComment"
+                              type="text"
+                              v-model="newComment"
+                              placeholder="add comment"
+                            />
+                          </div>
+                        </ion-col>
+                        <ion-col>
+                          <div>
+                            <button @click="saveComment">
+                              Add Comment
+                            </button>
+                          </div>
+                        </ion-col>
+                      </ion-row>
+                    </ion-grid>
+                    <p v-for="comment in reversedComments" :key="comment.id">
+                    {{ comment.comment }}
+                  </p>
+                  </div>
           </ion-card-content>
         </ion-card>
       </ion-content>
@@ -53,10 +61,6 @@ import { defineComponent } from "vue";
 import { alertController } from "@ionic/core";
 import { settings, keypad } from "ionicons/icons";
 import {
-  IonButton,
-  //IonItem,
-  //IonRow,
-  //IonCol,
   IonCardContent,
   IonCardHeader,
   IonCardTitle,
@@ -68,17 +72,19 @@ export default defineComponent({
   name: "WineList",
   components: {
     IonContent,
-    IonButton,
-    //IonItem,
-    //IonRow,
-    //IonCol,
     IonCardContent,
     IonCardHeader,
     IonCardTitle,
     IonCard,
   },
   data() {
-    return { keypad, responseData: {} };
+    return {
+      keypad,
+      responseData: {},
+      editing: false,
+      newComment: "",
+      comments: [{ id: 1, comment: "" }],
+    };
   },
   methods: {
     ...mapActions(["loadWines"]),
@@ -219,6 +225,17 @@ export default defineComponent({
       });
       return alert.present();
     },
+    saveComment() {
+      this.comments.push({
+        id: this.comments.length + 1,
+        comment: this.newComment,
+      });
+      this.newComment = "";
+    },
+    doEdit(editing) {
+      this.editing = editing;
+      this.newComment = "";
+    },
   },
   computed: {
     ...mapGetters({
@@ -226,6 +243,9 @@ export default defineComponent({
       wines: "wines",
       profile: "profile",
     }),
+    reversedComments() {
+      return [...this.comments].reverse();
+    },
   },
   created() {
     console.log("i m in created loading wines");

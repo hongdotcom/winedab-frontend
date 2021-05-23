@@ -232,3 +232,32 @@ a.router-link-exact-active {
   background-color: #f99e0d;
   padding: 10px;
 }
+
+.comment-wrapper {
+  margin-top: 10px;
+  border: solid 1px #ccc;
+  border-radius: 4px;
+  padding: 4px;
+}
+
+.comment-wrapper input {
+  background-color: beige;
+  border: solid 1px #ccc;
+  border-radius: 4px;
+  padding: 4px;
+  width: 100%;
+}
+
+.comment-wrapper button {
+  display: inline-block;
+  text-align: center;
+  background-color:#6e1541;
+  color: #fff;
+  padding: 8px;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.comment-wrapper p {
+  margin: 10px;
+}
