@@ -2,19 +2,17 @@ import axios from "axios";
 
 // Wayne's test ids
 // const wineCustId = "745"; //Wayne
-const proCustId = "24"; //Wayne
-const subCustId = "24"; //Wayne
+// const proCustId = "24"; //Wayne
+// const subCustId = "24"; //Wayne
 // const custUUID = "2f2c1e2a-6ca6-4693-b4f9-1c13cc06b72b"; //Wayne
 
 // Junico's test ids
-//  const wineCustId = "744";
 
-const wineCustId = "181";
-// const wineCustId = "744";
-// const proCustId = "24";
-// const subCustId = "24";
+// const wineCustId = "181";
+const wineCustId = "744";
+const proCustId = "24";
+const subCustId = "24";
 
-// const subCustId = "24";
  const custUUID = "d7001590-8c1e-11ea-bcbf-07132ae12abf";
 export default {
   async loadSubscription({ commit }) {
