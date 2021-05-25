@@ -215,6 +215,7 @@ import {
 } from "@ionic/vue";
 import { mapGetters, mapActions } from "vuex";
 import { useRouter } from "vue-router";
+import { product } from "../constants/Product";
 export default defineComponent({
   name: "WineList",
   components: {
@@ -357,32 +358,10 @@ export default defineComponent({
       alert.present();
     },
     getPrice(planName) {
-      if (planName.line_items[0].name.includes("Everyday Exceptional")) {
-        return "119.98";
-      }
-      if (planName.line_items[0].name.includes("Bargain Bottles")) {
-        return "96.44";
-      }
-      if (planName.line_items[0].name.includes("Exquisite Entertaining")) {
-        return "156.44";
-      }
-      if (planName.line_items[0].name.includes("Stellar Selection")) {
-        return "288.44";
-      }
+      return product.getPrice(planName);
     },
     getProduct(planName) {
-      if (planName.line_items[0].name.includes("Everyday Exceptional")) {
-        return "15836";
-      }
-      if (planName.line_items[0].name.includes("Bargain Bottles")) {
-        return "15868";
-      }
-      if (planName.line_items[0].name.includes("Exquisite Entertaining")) {
-        return "15869";
-      }
-      if (planName.line_items[0].name.includes("Stellar Selection")) {
-        return "15870";
-      }
+      return product.getProduct(planName);
     },
     selectTab(selectedTab) {
       this.currentTab = selectedTab;
