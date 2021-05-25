@@ -192,12 +192,10 @@ export default defineComponent({
           {
             text: "Ok",
             handler: () => {
-              console.log("this is" + +id + status);
               const payload = [];
               payload.id = id;
               payload.status = this.reverseStatus(status);
               this.onholdSubscription(payload).then(() => {
-                console.log("done onhold load again");
                 this.loadSubscription();
               });
             },

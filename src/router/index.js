@@ -4,7 +4,6 @@ import { createRouter, createWebHistory } from "@ionic/vue-router";
 import Login from "../views/Login.vue";
 import WineList from "../views/WineList.vue";
 import Profile from "../views/Profile.vue";
-import BuyMore from "../views/BuyMore.vue";
 // junico's new pages
 
 import TestPage from "../views/TestPage.vue";
@@ -33,11 +32,6 @@ const routes = [
     path: "/profile",
     name: "Profile",
     component: Profile,
-  },
-  {
-    path: "/buymore",
-    name: "BuyMore",
-    component: BuyMore,
   },
   {
     path: "/profile",
