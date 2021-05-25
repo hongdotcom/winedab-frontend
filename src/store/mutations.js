@@ -12,4 +12,5 @@ export default {
     state.profile = profile;
   },
   SET_UPDATE_SUBS: () => {},
+  SET_UPDATE_ORDERS: () => {},
 };

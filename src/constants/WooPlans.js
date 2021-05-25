@@ -1,7 +1,6 @@
 /**
  * @TODO: refactor this to be returned from the back-end
  */
-import { each } from "lodash";
 
 export const SHIPPING_COST = 6.5;
 export const FIRST_BOX_DISCOUNT = 0.2;

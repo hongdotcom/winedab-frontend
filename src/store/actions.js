@@ -15,7 +15,7 @@ const wineCustId = "181";
 // const subCustId = "24";
 
 // const subCustId = "24";
- const custUUID = "d7001590-8c1e-11ea-bcbf-07132ae12abf";
+const custUUID = "d7001590-8c1e-11ea-bcbf-07132ae12abf";
 export default {
   async loadSubscription({ commit }) {
     console.log("loading subs");
@@ -56,27 +56,40 @@ export default {
   },
   async onholdSubscription({ commit }, payload) {
     // console.log("i m in action onhold" + payload.id + payload.status);
-    await axios.put(
-      `${process.env.VUE_APP_WC_ENDPOINT}/wp-json/wc/v1/subscriptions/${payload.id}?consumer_key=${process.env.VUE_APP_CONSUMER_KEY}&consumer_secret=${process.env.VUE_APP_CONSUMER_SECRET}&status=${payload.status}`,
-      {}
-    );
+    await axios
+      .put(
+        `${process.env.VUE_APP_WC_ENDPOINT}/wp-json/wc/v1/subscriptions/${payload.id}?consumer_key=${process.env.VUE_APP_CONSUMER_KEY}&consumer_secret=${process.env.VUE_APP_CONSUMER_SECRET}&status=${payload.status}`,
+        {}
+      )
+      .catch((err) => {
+        console.log(err);
+      });
     commit("SET_UPDATE_SUBS");
   },
   async postponeSubscription({ commit }, payload) {
     // console.log("action postpone" + payload.id + payload.nextPaymentDate);
-    await axios.put(
-      `${process.env.VUE_APP_WC_ENDPOINT}/wp-json/wc/v1/subscriptions/${payload.id}?consumer_key=${process.env.VUE_APP_CONSUMER_KEY}&consumer_secret=${process.env.VUE_APP_CONSUMER_SECRET}&next_payment_date=${payload.nextPaymentDate}`,
-      {}
-    );
+    await axios
+      .put(
+        `${process.env.VUE_APP_WC_ENDPOINT}/wp-json/wc/v1/subscriptions/${payload.id}?consumer_key=${process.env.VUE_APP_CONSUMER_KEY}&consumer_secret=${process.env.VUE_APP_CONSUMER_SECRET}&next_payment_date=${payload.nextPaymentDate}`,
+        {}
+      )
+      .catch((err) => {
+        console.log(err);
+      });
     commit("SET_UPDATE_SUBS");
   },
   async buyMoreOrder({ commit }, payload) {
     console.log("action buy more");
-    const response5 = await axios.post(
-      `${process.env.VUE_APP_WC_ENDPOINT}/wp-json/wc/v3/orders?consumer_key=${process.env.VUE_APP_CONSUMER_KEY}&consumer_secret=${process.env.VUE_APP_CONSUMER_SECRET}`,
-      { payload }
-    );
-    commit("SET_UPDATE_SUBS");
+    const response5 = await axios
+      .post(
+        `${process.env.VUE_APP_WC_ENDPOINT}/wp-json/wc/v3/orders?consumer_key=${process.env.VUE_APP_CONSUMER_KEY}&consumer_secret=${process.env.VUE_APP_CONSUMER_SECRET}`,
+        { payload },
+        { headers: { "content-type": "application/json" } }
+      )
+      .catch((err) => {
+        console.log(err);
+      });
+    commit("SET_UPDATE_ORDERS");
     console.log(response5.data);
   },
 };

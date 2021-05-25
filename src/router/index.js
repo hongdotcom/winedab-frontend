@@ -35,7 +35,7 @@ const routes = [
     component: Profile,
   },
   {
-    path: "/buymore",
+    path: "/buy-more",
     name: "BuyMore",
     component: BuyMore,
   },

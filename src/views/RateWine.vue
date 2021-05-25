@@ -83,7 +83,18 @@
                     </ion-button>
                   </ion-col>
                   <ion-col>
-                    <ion-button expand="block" @click="orderMorePrompt()">
+                    <ion-button
+                      expand="block"
+                      @click="
+                        orderMorePrompt(
+                          wine.wine_name,
+                          wine.year,
+                          wine.winedab_sku,
+                          subs[0],
+                          profile
+                        )
+                      "
+                    >
                       Order More
                     </ion-button>
                   </ion-col>
@@ -120,7 +131,18 @@
                   </ion-button>
                 </ion-col> -->
                   <ion-col>
-                    <ion-button expand="block" @click="orderMorePrompt()">
+                    <ion-button
+                      expand="block"
+                      @click="
+                        orderMorePrompt(
+                          wine.wine_name,
+                          wine.year,
+                          wine.winedab_sku,
+                          subs[0],
+                          profile
+                        )
+                      "
+                    >
                       Order More
                     </ion-button>
                   </ion-col>
@@ -157,7 +179,10 @@
                     </ion-button>
                   </ion-col>
                   <ion-col>
-                    <ion-button expand="block" @click="orderMorePrompt()">
+                    <ion-button
+                      expand="block"
+                      @click="$router.push('/my-subscription')"
+                    >
                       Order More
                     </ion-button>
                   </ion-col>
@@ -189,6 +214,7 @@ import {
   IonCol,
 } from "@ionic/vue";
 import { mapGetters, mapActions } from "vuex";
+import { useRouter } from "vue-router";
 export default defineComponent({
   name: "WineList",
   components: {
@@ -208,7 +234,12 @@ export default defineComponent({
     return { star, keypad, responseData: {}, currentTab: 1 };
   },
   methods: {
-    ...mapActions(["loadWines", "loadProfile"]),
+    ...mapActions([
+      "loadWines",
+      "loadProfile",
+      "loadSubscription",
+      "buyMoreOrder",
+    ]),
     async editCommentPrompt() {
       const alert = await alertController.create({
         cssClass: "my-custom-class",
@@ -241,20 +272,18 @@ export default defineComponent({
       });
       return alert.present();
     },
-    async orderMorePrompt(name, year) {
+    async orderMorePrompt(name, year, sku, sub, profile) {
+      console.log(sub);
       const alert = await alertController.create({
-        header: "Alert",
+        header: "Buy More",
         subheader: "Subtitle",
-        message: `How many ${name} ${year ? year : ""} do you want more?`,
-        inputs: [
-          {
-            value: "1",
-            name: "bottle",
-            type: "number",
-            min: 1,
-            max: 24,
-          },
-        ],
+        message: `By clicking "Submit Order", you will place an order of a box of 6 bottles of ${name} ${
+          year ? year : ""
+        }. The total order amount is $ ${this.getPrice(
+          sub
+        )} including standard shipping cost.
+        The order will be processed by our staff soon. Enjoy! Thank you!`,
+
         buttons: [
           {
             text: "Cancel",
@@ -263,88 +292,97 @@ export default defineComponent({
             handler: () => {},
           },
           {
-            text: "Ok",
+            text: "Submit Order",
             handler: () => {
-              console.log("buymore");
+              const payload = {
+                customer_id: profile.id,
+                payment_method: "bacs",
+                payment_method_title: "Direct Bank Transfer",
+                set_paid: false,
+                customer_note: `This is a test from app buymore function please ignore
+                 a box of six bottles of ${name} ${
+                  year ? year : ""
+                } with Total amount of ${this.getPrice(
+                  sub
+                )} including shipping cost `,
+                billing: {
+                  first_name: profile.billing.first_name,
+                  last_name: profile.billing.last_name,
+                  address_1: profile.billing.address_1,
+                  address_2: profile.billing.address_2,
+                  city: profile.billing.city,
+                  state: profile.billing.state,
+                  postcode: profile.billing.postcode,
+                  country: profile.billing.country,
+                  email: profile.billing.email,
+                  phone: profile.billing.phone,
+                },
+                shipping: {
+                  first_name: profile.shipping.first_name,
+                  last_name: profile.shipping.last_name,
+                  address_1: profile.shipping.address_1,
+                  address_2: profile.shipping.address_2,
+                  city: profile.shipping.city,
+                  state: profile.shipping.state,
+                  postcode: profile.shipping.postcode,
+                  country: profile.shipping.country,
+                },
+                line_items: [
+                  {
+                    product_id: this.getProduct(sub),
+                    quantity: 1,
+                  },
+                ],
+                shipping_lines: [
+                  {
+                    method_id: "flat_rate",
+                    method_title: "Flat Rate",
+                    total: "",
+                  },
+                ],
+                coupon_lines: [
+                  {
+                    code: "testcheckout!",
+                  },
+                ],
+              };
+              console.log(payload);
+              this.buyMoreOrder(payload).then(() => {
+                console.log("complete buy more");
+              });
             },
           },
         ],
       });
       alert.present();
     },
-    async editRatingPrompt() {
-      const alert = await alertController.create({
-        cssClass: "alertstar",
-        header: "Radio",
-        inputs: [
-          {
-            type: "radio",
-            label: "Radio 1",
-            value: "value1",
-            handler: () => {
-              console.log("Radio 1 selected");
-            },
-            checked: true,
-          },
-          {
-            type: "radio",
-            label: "Radio 2",
-            value: "value2",
-            handler: () => {
-              console.log("Radio 2 selected");
-            },
-          },
-          {
-            type: "radio",
-            label: "Radio 3",
-            value: "value3",
-            handler: () => {
-              console.log("Radio 3 selected");
-            },
-          },
-          {
-            type: "radio",
-            label: "Radio 4",
-            value: "value4",
-            handler: () => {
-              console.log("Radio 4 selected");
-            },
-          },
-          {
-            type: "radio",
-            label: "Radio 5",
-            value: "value5",
-            handler: () => {
-              console.log("Radio 5 selected");
-            },
-          },
-          {
-            type: "radio",
-            label: "Radio 6",
-            value: "value6",
-            handler: () => {
-              console.log("Radio 6 selected");
-            },
-          },
-        ],
-        buttons: [
-          {
-            text: "Cancel",
-            role: "cancel",
-            cssClass: "secondary",
-            handler: () => {
-              console.log("Confirm Cancel");
-            },
-          },
-          {
-            text: "Ok",
-            handler: () => {
-              console.log("Confirm Ok");
-            },
-          },
-        ],
-      });
-      return alert.present();
+    getPrice(planName) {
+      if (planName.line_items[0].name.includes("Everyday Exceptional")) {
+        return "119.98";
+      }
+      if (planName.line_items[0].name.includes("Bargain Bottles")) {
+        return "96.44";
+      }
+      if (planName.line_items[0].name.includes("Exquisite Entertaining")) {
+        return "156.44";
+      }
+      if (planName.line_items[0].name.includes("Stellar Selection")) {
+        return "288.44";
+      }
+    },
+    getProduct(planName) {
+      if (planName.line_items[0].name.includes("Everyday Exceptional")) {
+        return "15836";
+      }
+      if (planName.line_items[0].name.includes("Bargain Bottles")) {
+        return "15868";
+      }
+      if (planName.line_items[0].name.includes("Exquisite Entertaining")) {
+        return "15869";
+      }
+      if (planName.line_items[0].name.includes("Stellar Selection")) {
+        return "15870";
+      }
     },
     selectTab(selectedTab) {
       this.currentTab = selectedTab;
@@ -364,10 +402,13 @@ export default defineComponent({
     console.log("i m in created loading wines");
     this.loadWines();
     this.loadProfile();
+    this.loadSubscription();
   },
   setup() {
+    const router = useRouter();
     return {
       settings,
+      router,
     };
   },
 });
