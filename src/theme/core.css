@@ -1,4 +1,3 @@
-
 .login {
   background-color: #6e1541;
   position: relative;
@@ -167,7 +166,6 @@ ion-tab-bar {
   height: 5vh;
 }
 
-
 .custom-bar {
   border-top: solid 4px #f99e0d;
 }
@@ -192,7 +190,7 @@ ion-tab-bar {
   text-align: center;
   padding: 10px;
   text-decoration: none;
-  font-size:medium;
+  font-size: medium;
 }
 
 a.router-link-exact-active {
@@ -251,7 +249,7 @@ a.router-link-exact-active {
 .comment-wrapper button {
   display: inline-block;
   text-align: center;
-  background-color:#6e1541;
+  background-color: #6e1541;
   color: #fff;
   padding: 8px;
   border-radius: 4px;
@@ -262,6 +260,24 @@ a.router-link-exact-active {
   margin: 10px;
 }
 
-.searchbar-input-container  {
-  margin: 20px 0;
+.planButtonSelect {
+  display: inline-block;
+  text-align: center;
+  word-wrap: break-word;
+  background-color: #6e1541;
+  color: #fff;
+  padding: 8px;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.planButton {
+  display: inline-block;
+  text-align: center;
+  word-wrap: break-word;
+  background-color: #04283d;
+  color: #fff;
+  padding: 8px;
+  border-radius: 4px;
+  width: 100%;
 }
