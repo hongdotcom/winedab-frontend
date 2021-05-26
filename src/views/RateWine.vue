@@ -35,13 +35,13 @@
         </div>
 
         <div v-if="currentTab == 1">
-          <h2>Current Order</h2>
+            <!-- <ion-searchbar placeholder="Search wines"></ion-searchbar> -->
           <ion-card v-for="wine in wines" :key="wine.id">
             <ion-card-header>
               <ion-card-title
                 >{{ wine.wine_name }} {{ wine.year }} - {{ wine.colour }}
               </ion-card-title>
-              <ion-icon color="primary" name="star"></ion-icon>
+              <ion-icon color="primary" :icon="heartCircleOutline"></ion-icon>
             </ion-card-header>
 
             <ion-card-content>
@@ -55,139 +55,239 @@
               <div>{{ wine.description }}</div>
               <div>
                 <ion-button @click="onRate(1)">
-                  <ion-icon color="white" name="settings"></ion-icon
+                  <ion-icon :icon="starOutline"></ion-icon
                 ></ion-button>
                 <ion-button @click="onRate(2)">
-                  <ion-icon name="star-outline"></ion-icon
+                  <ion-icon :icon="starOutline"></ion-icon
                 ></ion-button>
                 <ion-button @click="onRate(3)">
-                  <ion-icon name="star-outline"></ion-icon
+                  <ion-icon :icon="starOutline"></ion-icon
                 ></ion-button>
                 <ion-button @click="onRate(4)">
-                  <ion-icon name="star-outline"></ion-icon
+                  <ion-icon :icon="starOutline"></ion-icon
                 ></ion-button>
                 <ion-button @click="onRate(5)">
-                  <ion-icon name="star-outline"></ion-icon
+                  <ion-icon :icon="starOutline"></ion-icon
                 ></ion-button>
               </div>
-              <ion-grid>
-                <ion-row>
-                  <!-- <ion-col>
-                    <ion-button expand="block" @click="editRatingPrompt()">
-                      Rate
-                    </ion-button>
-                  </ion-col> -->
-                  <ion-col>
-                    <ion-button expand="block" @click="editCommentPrompt()">
-                      Comment
-                    </ion-button>
-                  </ion-col>
-                  <ion-col>
-                    <ion-button
-                      expand="block"
-                      @click="
-                        orderMorePrompt(
-                          wine.wine_name,
-                          wine.year,
-                          wine.winedab_sku,
-                          subs[0],
-                          profile
-                        )
-                      "
-                    >
-                      Order More
-                    </ion-button>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
+
+              <!-- <div>
+                {{ wine.wine_info }}
+              </div> -->
+              
+              <ion-button
+                expand="block"
+                @click="
+                  orderMorePrompt(
+                    wine.wine_name,
+                    wine.year,
+                    wine.winedab_sku,
+                    subs[0],
+                    profile
+                  )
+                "
+              >
+                Buy Again
+              </ion-button>
+
+              <div class="comment-wrapper">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size="8">
+                      <div>
+                        <input
+                          @keyup.enter="saveComment"
+                          type="text"
+                          v-model="newComment"
+                          placeholder="Your personal notes here"
+                        />
+                      </div>
+                    </ion-col>
+                    <ion-col>
+                      <div>
+                        <button @click="saveComment">
+                          Add Note
+                        </button>
+                      </div>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+                <p v-for="comment in reversedComments" :key="comment.id">
+                  {{ comment.comment }}
+                </p>
+              </div>
             </ion-card-content>
           </ion-card>
         </div>
 
         <div v-if="currentTab == 2">
-          <h2>Last Month Order</h2>
+            <!-- <ion-searchbar placeholder="Search wines"></ion-searchbar> -->
           <ion-card v-for="wine in wines" :key="wine.id">
             <ion-card-header>
               <ion-card-title
-                >{{ wine.wine_name }} {{ wine.year }}</ion-card-title
-              >
+                >{{ wine.wine_name }} {{ wine.year }} - {{ wine.colour }}
+              </ion-card-title>
+              <ion-icon color="primary" :icon="heartCircleOutline"></ion-icon>
             </ion-card-header>
 
             <ion-card-content>
-              <img src="/assets/icon/wine1.jpg" alt="wine1" class="wine" />
+              <img
+                v-if="wine.wine_photo"
+                src="/assets/icon/wine1.jpg"
+                alt="wine1"
+                class="wine"
+              />
 
-              <div>{{ wine.wine_info }}</div>
+              <div>{{ wine.description }}</div>
+              <div>
+                <ion-button @click="onRate(1)">
+                  <ion-icon :icon="starOutline"></ion-icon
+                ></ion-button>
+                <ion-button @click="onRate(2)">
+                  <ion-icon :icon="starOutline"></ion-icon
+                ></ion-button>
+                <ion-button @click="onRate(3)">
+                  <ion-icon :icon="starOutline"></ion-icon
+                ></ion-button>
+                <ion-button @click="onRate(4)">
+                  <ion-icon :icon="starOutline"></ion-icon
+                ></ion-button>
+                <ion-button @click="onRate(5)">
+                  <ion-icon :icon="starOutline"></ion-icon
+                ></ion-button>
+              </div>
 
-              <ion-grid>
-                <ion-row>
-                  <ion-col>
-                    <ion-button expand="block" @click="editRatingPrompt()">
-                      Rate
-                    </ion-button>
-                  </ion-col>
-                  <!-- <ion-col>
-                  <ion-button expand="block" @click="editCommentPrompt()">
-                    Comment
-                  </ion-button>
-                </ion-col> -->
-                  <ion-col>
-                    <ion-button
-                      expand="block"
-                      @click="
-                        orderMorePrompt(
-                          wine.wine_name,
-                          wine.year,
-                          wine.winedab_sku,
-                          subs[0],
-                          profile
-                        )
-                      "
-                    >
-                      Order More
-                    </ion-button>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
+              <!-- <div>
+                {{ wine.wine_info }}
+              </div> -->
+              
+              <ion-button
+                expand="block"
+                @click="
+                  orderMorePrompt(
+                    wine.wine_name,
+                    wine.year,
+                    wine.winedab_sku,
+                    subs[0],
+                    profile
+                  )
+                "
+              >
+                Order More
+              </ion-button>
+
+              <div class="comment-wrapper">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size="8">
+                      <div>
+                        <input
+                          @keyup.enter="saveComment"
+                          type="text"
+                          v-model="newComment"
+                          placeholder="Your personal notes here"
+                        />
+                      </div>
+                    </ion-col>
+                    <ion-col>
+                      <div>
+                        <button @click="saveComment">
+                          Add Note
+                        </button>
+                      </div>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+                <p v-for="comment in reversedComments" :key="comment.id">
+                  {{ comment.comment }}
+                </p>
+              </div>
             </ion-card-content>
           </ion-card>
         </div>
 
         <div v-if="currentTab == 3">
-          <h2>Previous Order</h2>
+            <!-- <ion-searchbar placeholder="Search wines"></ion-searchbar> -->
           <ion-card v-for="wine in wines" :key="wine.id">
             <ion-card-header>
               <ion-card-title
-                >{{ wine.wine_name }} {{ wine.year }}</ion-card-title
-              >
+                >{{ wine.wine_name }} {{ wine.year }} - {{ wine.colour }}
+              </ion-card-title>
+              <ion-icon color="primary" :icon="heartCircleOutline"></ion-icon>
             </ion-card-header>
 
             <ion-card-content>
-              <img src="/assets/icon/wine1.jpg" alt="wine1" class="wine" />
+              <img
+                v-if="wine.wine_photo"
+                src="/assets/icon/wine1.jpg"
+                alt="wine1"
+                class="wine"
+              />
 
-              <div>{{ wine.wine_info }}</div>
+              <div>{{ wine.description }}</div>
+              <div>
+                <ion-button @click="onRate(1)">
+                  <ion-icon :icon="starOutline"></ion-icon
+                ></ion-button>
+                <ion-button @click="onRate(2)">
+                  <ion-icon :icon="starOutline"></ion-icon
+                ></ion-button>
+                <ion-button @click="onRate(3)">
+                  <ion-icon :icon="starOutline"></ion-icon
+                ></ion-button>
+                <ion-button @click="onRate(4)">
+                  <ion-icon :icon="starOutline"></ion-icon
+                ></ion-button>
+                <ion-button @click="onRate(5)">
+                  <ion-icon :icon="starOutline"></ion-icon
+                ></ion-button>
+              </div>
 
-              <ion-grid>
-                <ion-row>
-                  <!-- <ion-col>
-                    <ion-button expand="block" @click="editRatingPrompt()">
-                      Rate
-                    </ion-button>
-                  </ion-col> -->
-                  <ion-col>
-                    <ion-button expand="block" @click="editCommentPrompt()">
-                      Comment
-                    </ion-button>
-                  </ion-col>
-                  <ion-col>
-                    <ion-button
-                      expand="block"
-                      @click="$router.push('/my-subscription')"
-                    >
-                      Order More
-                    </ion-button>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
+              <!-- <div>
+                {{ wine.wine_info }}
+              </div> -->
+              
+              <ion-button
+                expand="block"
+                @click="
+                  orderMorePrompt(
+                    wine.wine_name,
+                    wine.year,
+                    wine.winedab_sku,
+                    subs[0],
+                    profile
+                  )
+                "
+              >
+                Order More
+              </ion-button>
+
+              <div class="comment-wrapper">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size="8">
+                      <div>
+                        <input
+                          @keyup.enter="saveComment"
+                          type="text"
+                          v-model="newComment"
+                          placeholder="Your personal notes here"
+                        />
+                      </div>
+                    </ion-col>
+                    <ion-col>
+                      <div>
+                        <button @click="saveComment">
+                          Add Note
+                        </button>
+                      </div>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+                <p v-for="comment in reversedComments" :key="comment.id">
+                  {{ comment.comment }}
+                </p>
+              </div>
             </ion-card-content>
           </ion-card>
         </div>
@@ -199,7 +299,7 @@
 <script>
 import { defineComponent } from "vue";
 import { alertController } from "@ionic/core";
-import { settings, keypad, star } from "ionicons/icons";
+import { settings, keypad, star, starOutline, heartCircleOutline } from "ionicons/icons";
 import {
   IonButton,
   IonCardContent,
@@ -212,6 +312,7 @@ import {
   IonIcon,
   IonRow,
   IonCol,
+  //IonSearchbar,
 } from "@ionic/vue";
 import { mapGetters, mapActions } from "vuex";
 import { useRouter } from "vue-router";
@@ -230,9 +331,10 @@ export default defineComponent({
     IonRow,
     IonCol,
     IonIcon,
+    //IonSearchbar,
   },
   data() {
-    return { star, keypad, responseData: {}, currentTab: 1 };
+    return { star, starOutline, heartCircleOutline, keypad, responseData: {}, currentTab: 1 };
   },
   methods: {
     ...mapActions([

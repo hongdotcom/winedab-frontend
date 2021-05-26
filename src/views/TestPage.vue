@@ -35,13 +35,13 @@
         </div>
 
         <div v-if="currentTab == 1">
-          <ion-searchbar placeholder="Search wines"></ion-searchbar>
+            <ion-searchbar placeholder="Search wines"></ion-searchbar>
           <ion-card v-for="wine in wines" :key="wine.id">
             <ion-card-header>
               <ion-card-title
                 >{{ wine.wine_name }} {{ wine.year }} - {{ wine.colour }}
               </ion-card-title>
-              <ion-icon color="primary" name="star"></ion-icon>
+              <ion-icon color="primary" :icon="heartCircleOutline"></ion-icon>
             </ion-card-header>
 
             <ion-card-content>
@@ -55,40 +55,67 @@
               <div>{{ wine.description }}</div>
               <div>
                 <ion-button @click="onRate(1)">
-                  <ion-icon color="white" name="settings"></ion-icon
+                  <ion-icon :icon="starOutline"></ion-icon
                 ></ion-button>
                 <ion-button @click="onRate(2)">
-                  <ion-icon name="star-outline"></ion-icon
+                  <ion-icon :icon="starOutline"></ion-icon
                 ></ion-button>
                 <ion-button @click="onRate(3)">
-                  <ion-icon name="star-outline"></ion-icon
+                  <ion-icon :icon="starOutline"></ion-icon
                 ></ion-button>
                 <ion-button @click="onRate(4)">
-                  <ion-icon name="star-outline"></ion-icon
+                  <ion-icon :icon="starOutline"></ion-icon
                 ></ion-button>
                 <ion-button @click="onRate(5)">
-                  <ion-icon name="star-outline"></ion-icon
+                  <ion-icon :icon="starOutline"></ion-icon
                 ></ion-button>
               </div>
-              <ion-grid>
-                <ion-row>
-                  <!-- <ion-col>
-                    <ion-button expand="block" @click="editRatingPrompt()">
-                      Rate
-                    </ion-button>
-                  </ion-col> -->
-                  <ion-col>
-                    <ion-button expand="block" @click="editCommentPrompt()">
-                      Comment
-                    </ion-button>
-                  </ion-col>
-                  <ion-col>
-                    <ion-button expand="block" @click="orderMorePrompt()">
-                      Order More
-                    </ion-button>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
+
+              <!-- <div>
+                {{ wine.wine_info }}
+              </div> -->
+              
+              <ion-button
+                expand="block"
+                @click="
+                  orderMorePrompt(
+                    wine.wine_name,
+                    wine.year,
+                    wine.winedab_sku,
+                    subs[0],
+                    profile
+                  )
+                "
+              >
+                Order More
+              </ion-button>
+
+              <div class="comment-wrapper">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size="8">
+                      <div>
+                        <input
+                          @keyup.enter="saveComment"
+                          type="text"
+                          v-model="newComment"
+                          placeholder="Your personal notes here"
+                        />
+                      </div>
+                    </ion-col>
+                    <ion-col>
+                      <div>
+                        <button @click="saveComment">
+                          Add Note
+                        </button>
+                      </div>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+                <p v-for="comment in reversedComments" :key="comment.id">
+                  {{ comment.comment }}
+                </p>
+              </div>
             </ion-card-content>
           </ion-card>
         </div>
@@ -120,7 +147,18 @@
                   </ion-button>
                 </ion-col> -->
                   <ion-col>
-                    <ion-button expand="block" @click="orderMorePrompt()">
+                    <ion-button
+                      expand="block"
+                      @click="
+                        orderMorePrompt(
+                          wine.wine_name,
+                          wine.year,
+                          wine.winedab_sku,
+                          subs[0],
+                          profile
+                        )
+                      "
+                    >
                       Order More
                     </ion-button>
                   </ion-col>
@@ -131,7 +169,7 @@
         </div>
 
         <div v-if="currentTab == 3">
-            <ion-searchbar placeholder="Search wines"></ion-searchbar>
+          <h2>Previous Order</h2>
           <ion-card v-for="wine in wines" :key="wine.id">
             <ion-card-header>
               <ion-card-title
@@ -157,7 +195,10 @@
                     </ion-button>
                   </ion-col>
                   <ion-col>
-                    <ion-button expand="block" @click="orderMorePrompt()">
+                    <ion-button
+                      expand="block"
+                      @click="$router.push('/my-subscription')"
+                    >
                       Order More
                     </ion-button>
                   </ion-col>
@@ -174,7 +215,7 @@
 <script>
 import { defineComponent } from "vue";
 import { alertController } from "@ionic/core";
-import { settings, keypad, star } from "ionicons/icons";
+import { settings, keypad, star, starOutline, heartCircleOutline } from "ionicons/icons";
 import {
   IonButton,
   IonCardContent,
@@ -190,6 +231,8 @@ import {
   IonSearchbar,
 } from "@ionic/vue";
 import { mapGetters, mapActions } from "vuex";
+import { useRouter } from "vue-router";
+import { product } from "../constants/Product";
 export default defineComponent({
   name: "WineList",
   components: {
@@ -207,10 +250,15 @@ export default defineComponent({
     IonSearchbar,
   },
   data() {
-    return { star, keypad, responseData: {}, currentTab: 1 };
+    return { star, starOutline, heartCircleOutline, keypad, responseData: {}, currentTab: 1 };
   },
   methods: {
-    ...mapActions(["loadWines", "loadProfile"]),
+    ...mapActions([
+      "loadWines",
+      "loadProfile",
+      "loadSubscription",
+      "buyMoreOrder",
+    ]),
     async editCommentPrompt() {
       const alert = await alertController.create({
         cssClass: "my-custom-class",
@@ -243,20 +291,18 @@ export default defineComponent({
       });
       return alert.present();
     },
-    async orderMorePrompt(name, year) {
+    async orderMorePrompt(name, year, sku, sub, profile) {
+      console.log(sub);
       const alert = await alertController.create({
-        header: "Alert",
+        header: "Buy More",
         subheader: "Subtitle",
-        message: `How many ${name} ${year ? year : ""} do you want more?`,
-        inputs: [
-          {
-            value: "1",
-            name: "bottle",
-            type: "number",
-            min: 1,
-            max: 24,
-          },
-        ],
+        message: `By clicking "Submit Order", you will place an order of a box of 6 bottles of ${name} ${
+          year ? year : ""
+        }. The total order amount is $ ${this.getPrice(
+          sub
+        )} including standard shipping cost.
+        The order will be processed by our staff soon. Enjoy! Thank you!`,
+
         buttons: [
           {
             text: "Cancel",
@@ -265,88 +311,75 @@ export default defineComponent({
             handler: () => {},
           },
           {
-            text: "Ok",
+            text: "Submit Order",
             handler: () => {
-              console.log("buymore");
+              const payload = {
+                customer_id: profile.id,
+                payment_method: "bacs",
+                payment_method_title: "Direct Bank Transfer",
+                set_paid: false,
+                customer_note: `This is a test from app buymore function please ignore
+                 a box of six bottles of ${name} ${
+                  year ? year : ""
+                } with Total amount of ${this.getPrice(
+                  sub
+                )} including shipping cost `,
+                billing: {
+                  first_name: profile.billing.first_name,
+                  last_name: profile.billing.last_name,
+                  address_1: profile.billing.address_1,
+                  address_2: profile.billing.address_2,
+                  city: profile.billing.city,
+                  state: profile.billing.state,
+                  postcode: profile.billing.postcode,
+                  country: profile.billing.country,
+                  email: profile.billing.email,
+                  phone: profile.billing.phone,
+                },
+                shipping: {
+                  first_name: profile.shipping.first_name,
+                  last_name: profile.shipping.last_name,
+                  address_1: profile.shipping.address_1,
+                  address_2: profile.shipping.address_2,
+                  city: profile.shipping.city,
+                  state: profile.shipping.state,
+                  postcode: profile.shipping.postcode,
+                  country: profile.shipping.country,
+                },
+                line_items: [
+                  {
+                    product_id: this.getProduct(sub),
+                    quantity: 1,
+                  },
+                ],
+                shipping_lines: [
+                  {
+                    method_id: "flat_rate",
+                    method_title: "Flat Rate",
+                    total: "",
+                  },
+                ],
+                coupon_lines: [
+                  {
+                    code: "testcheckout!",
+                  },
+                ],
+              };
+              console.log(payload);
+              this.buyMoreOrder(payload).then(() => {
+                console.log("complete buy more");
+              });
             },
           },
         ],
       });
       alert.present();
     },
-    async editRatingPrompt() {
-      const alert = await alertController.create({
-        cssClass: "alertstar",
-        header: "Radio",
-        inputs: [
-          {
-            type: "radio",
-            label: "Radio 1",
-            value: "value1",
-            handler: () => {
-              console.log("Radio 1 selected");
-            },
-            checked: true,
-          },
-          {
-            type: "radio",
-            label: "Radio 2",
-            value: "value2",
-            handler: () => {
-              console.log("Radio 2 selected");
-            },
-          },
-          {
-            type: "radio",
-            label: "Radio 3",
-            value: "value3",
-            handler: () => {
-              console.log("Radio 3 selected");
-            },
-          },
-          {
-            type: "radio",
-            label: "Radio 4",
-            value: "value4",
-            handler: () => {
-              console.log("Radio 4 selected");
-            },
-          },
-          {
-            type: "radio",
-            label: "Radio 5",
-            value: "value5",
-            handler: () => {
-              console.log("Radio 5 selected");
-            },
-          },
-          {
-            type: "radio",
-            label: "Radio 6",
-            value: "value6",
-            handler: () => {
-              console.log("Radio 6 selected");
-            },
-          },
-        ],
-        buttons: [
-          {
-            text: "Cancel",
-            role: "cancel",
-            cssClass: "secondary",
-            handler: () => {
-              console.log("Confirm Cancel");
-            },
-          },
-          {
-            text: "Ok",
-            handler: () => {
-              console.log("Confirm Ok");
-            },
-          },
-        ],
-      });
-      return alert.present();
+    getPrice(planName) {
+      return product.getPrice(planName);
+    },
+    getProduct(planName) {
+      return product.getProduct(planName);
     },
     selectTab(selectedTab) {
       this.currentTab = selectedTab;
@@ -366,10 +399,13 @@ export default defineComponent({
     console.log("i m in created loading wines");
     this.loadWines();
     this.loadProfile();
+    this.loadSubscription();
   },
   setup() {
+    const router = useRouter();
     return {
       settings,
+      router,
     };
   },
 });

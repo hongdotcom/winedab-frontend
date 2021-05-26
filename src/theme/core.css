@@ -217,18 +217,19 @@ a.router-link-exact-active {
 }
 
 .tab-holder {
-  border-radius: 4px;
+  margin-bottom: 30px;
 }
 .tab-holder button {
-  background-color: #fff;
+  background-color:#fff;
   color: #333;
   padding: 10px;
   margin: 0 2px;
 }
 
-.active-tab {
-  border: solid 1px #6e1541;
-  background-color: bisque;
+.tab-holder .active-tab {
+  border: solid 1px bisque;
+  border-radius: 8px;;
+  background-color:bisque;
   padding: 10px;
 }
 
@@ -259,4 +260,8 @@ a.router-link-exact-active {
 
 .comment-wrapper p {
   margin: 10px;
+}
+
+.searchbar-input-container  {
+  margin: 20px 0;
 }
