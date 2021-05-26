@@ -35,13 +35,13 @@
         </div>
 
         <div v-if="currentTab == 1">
-            <ion-searchbar placeholder="Search wines"></ion-searchbar>
+          <!-- <ion-searchbar placeholder="Search wines"></ion-searchbar> -->
           <ion-card v-for="wine in wines" :key="wine.id">
             <ion-card-header>
               <ion-card-title
                 >{{ wine.wine_name }} {{ wine.year }} - {{ wine.colour }}
+                <ion-icon color="primary" :icon="heartCircleOutline"></ion-icon>
               </ion-card-title>
-              <ion-icon color="primary" :icon="heartCircleOutline"></ion-icon>
             </ion-card-header>
 
             <ion-card-content>
@@ -52,43 +52,49 @@
                 class="wine"
               />
 
-              <div>{{ wine.description }}</div>
-              <div>
+
+              <div class="rating-wrapper">
                 <ion-button @click="onRate(1)">
-                  <ion-icon :icon="starOutline"></ion-icon
+                  <ion-icon color="warning" :icon="star"></ion-icon
                 ></ion-button>
                 <ion-button @click="onRate(2)">
-                  <ion-icon :icon="starOutline"></ion-icon
+                  <ion-icon color="warning" :icon="star"></ion-icon
                 ></ion-button>
                 <ion-button @click="onRate(3)">
-                  <ion-icon :icon="starOutline"></ion-icon
+                  <ion-icon color="warning" :icon="star"></ion-icon
                 ></ion-button>
                 <ion-button @click="onRate(4)">
-                  <ion-icon :icon="starOutline"></ion-icon
+                  <ion-icon color="warning" :icon="star"></ion-icon
                 ></ion-button>
                 <ion-button @click="onRate(5)">
-                  <ion-icon :icon="starOutline"></ion-icon
+                  <ion-icon color="dark" :icon="star"></ion-icon
                 ></ion-button>
               </div>
 
-              <!-- <div>
-                {{ wine.wine_info }}
-              </div> -->
-              
-              <ion-button
-                expand="block"
-                @click="
-                  orderMorePrompt(
-                    wine.wine_name,
-                    wine.year,
-                    wine.winedab_sku,
-                    subs[0],
-                    profile
-                  )
-                "
-              >
-                Order More
-              </ion-button>
+              <div>{{ wine.description }}</div>
+              {{ wine.wine_info }}
+
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="6" offset="3"> </ion-col>
+                  <ion-col size="3">
+                    <ion-button
+                      class="float-right"
+                      @click="
+                        orderMorePrompt(
+                          wine.wine_name,
+                          wine.year,
+                          wine.winedab_sku,
+                          subs[0],
+                          profile
+                        )
+                      "
+                    >
+                      Buy Again
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
 
               <div class="comment-wrapper">
                 <ion-grid>
@@ -121,34 +127,52 @@
         </div>
 
         <div v-if="currentTab == 2">
-          <ion-searchbar placeholder="Search wines"></ion-searchbar>
+          <!-- <ion-searchbar placeholder="Search wines"></ion-searchbar> -->
           <ion-card v-for="wine in wines" :key="wine.id">
             <ion-card-header>
               <ion-card-title
-                >{{ wine.wine_name }} {{ wine.year }}</ion-card-title
-              >
+                >{{ wine.wine_name }} {{ wine.year }} - {{ wine.colour }}
+                <ion-icon color="primary" :icon="heartCircleOutline"></ion-icon>
+              </ion-card-title>
             </ion-card-header>
 
             <ion-card-content>
-              <img src="/assets/icon/wine1.jpg" alt="wine1" class="wine" />
+              <img
+                v-if="wine.wine_photo"
+                src="/assets/icon/wine1.jpg"
+                alt="wine1"
+                class="wine"
+              />
 
-              <div>{{ wine.wine_info }}</div>
+              <div class="rating-wrapper">
+                <ion-button @click="onRate(1)">
+                  <ion-icon color="warning" :icon="star"></ion-icon
+                ></ion-button>
+                <ion-button @click="onRate(2)">
+                  <ion-icon color="warning" :icon="star"></ion-icon
+                ></ion-button>
+                <ion-button @click="onRate(3)">
+                  <ion-icon color="warning" :icon="star"></ion-icon
+                ></ion-button>
+                <ion-button @click="onRate(4)">
+                  <ion-icon color="dark" :icon="star"></ion-icon
+                ></ion-button>
+                <ion-button @click="onRate(5)">
+                  <ion-icon color="dark" :icon="star"></ion-icon
+                ></ion-button>
+              </div>
+
+              <div>{{ wine.description }}</div>
+              <!-- <div>
+                {{ wine.wine_info }}
+              </div> -->
 
               <ion-grid>
                 <ion-row>
-                  <ion-col>
-                    <ion-button expand="block" @click="editRatingPrompt()">
-                      Rate
-                    </ion-button>
-                  </ion-col>
-                  <!-- <ion-col>
-                  <ion-button expand="block" @click="editCommentPrompt()">
-                    Comment
-                  </ion-button>
-                </ion-col> -->
-                  <ion-col>
+                  <ion-col size="6" offset="3"> </ion-col>
+                  <ion-col size="3">
                     <ion-button
-                      expand="block"
+                      class="float-right"
                       @click="
                         orderMorePrompt(
                           wine.wine_name,
@@ -159,51 +183,130 @@
                         )
                       "
                     >
-                      Order More
+                      Buy Again
                     </ion-button>
                   </ion-col>
                 </ion-row>
               </ion-grid>
+
+              <div class="comment-wrapper">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size="8">
+                      <div>
+                        <input
+                          @keyup.enter="saveComment"
+                          type="text"
+                          v-model="newComment"
+                          placeholder="Your personal notes here"
+                        />
+                      </div>
+                    </ion-col>
+                    <ion-col>
+                      <div>
+                        <button @click="saveComment">
+                          Add Note
+                        </button>
+                      </div>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+                <p v-for="comment in reversedComments" :key="comment.id">
+                  {{ comment.comment }}
+                </p>
+              </div>
             </ion-card-content>
           </ion-card>
         </div>
 
         <div v-if="currentTab == 3">
-          <h2>Previous Order</h2>
+          <!-- <ion-searchbar placeholder="Search wines"></ion-searchbar> -->
           <ion-card v-for="wine in wines" :key="wine.id">
             <ion-card-header>
               <ion-card-title
-                >{{ wine.wine_name }} {{ wine.year }}</ion-card-title
-              >
+                >{{ wine.wine_name }} {{ wine.year }} - {{ wine.colour }}
+                <ion-icon color="primary" :icon="heartCircleOutline"></ion-icon>
+              </ion-card-title>
             </ion-card-header>
-
             <ion-card-content>
-              <img src="/assets/icon/wine1.jpg" alt="wine1" class="wine" />
+              <img
+                v-if="wine.wine_photo"
+                src="/assets/icon/wine1.jpg"
+                alt="wine1"
+                class="wine"
+              />
 
-              <div>{{ wine.wine_info }}</div>
+              <div class="rating-wrapper">
+                <ion-button @click="onRate(1)">
+                  <ion-icon color="warning" :icon="star"></ion-icon
+                ></ion-button>
+                <ion-button @click="onRate(2)">
+                  <ion-icon color="warning" :icon="star"></ion-icon
+                ></ion-button>
+                <ion-button @click="onRate(3)">
+                  <ion-icon color="warning" :icon="star"></ion-icon
+                ></ion-button>
+                <ion-button @click="onRate(4)">
+                  <ion-icon color="dark" :icon="star"></ion-icon
+                ></ion-button>
+                <ion-button @click="onRate(5)">
+                  <ion-icon color="dark" :icon="star"></ion-icon
+                ></ion-button>
+              </div>
+
+              <div>{{ wine.description }}</div>
+              <!-- <div>
+                {{ wine.wine_info }}
+              </div> -->
 
               <ion-grid>
                 <ion-row>
-                  <!-- <ion-col>
-                    <ion-button expand="block" @click="editRatingPrompt()">
-                      Rate
-                    </ion-button>
-                  </ion-col> -->
-                  <ion-col>
-                    <ion-button expand="block" @click="editCommentPrompt()">
-                      Comment
-                    </ion-button>
-                  </ion-col>
-                  <ion-col>
+                  <ion-col size="6" offset="3"> </ion-col>
+                  <ion-col size="3">
                     <ion-button
-                      expand="block"
-                      @click="$router.push('/my-subscription')"
+                      class="float-right"
+                      @click="
+                        orderMorePrompt(
+                          wine.wine_name,
+                          wine.year,
+                          wine.winedab_sku,
+                          subs[0],
+                          profile
+                        )
+                      "
                     >
-                      Order More
+                      Buy Again
                     </ion-button>
                   </ion-col>
                 </ion-row>
               </ion-grid>
+
+              <div class="comment-wrapper">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size="8">
+                      <div>
+                        <input
+                          @keyup.enter="saveComment"
+                          type="text"
+                          v-model="newComment"
+                          placeholder="add comment"
+                        />
+                      </div>
+                    </ion-col>
+                    <ion-col>
+                      <div>
+                        <button @click="saveComment">
+                          Add Comment
+                        </button>
+                      </div>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+                <p v-for="comment in reversedComments" :key="comment.id">
+                  {{ comment.comment }}
+                </p>
+              </div>
             </ion-card-content>
           </ion-card>
         </div>
@@ -215,7 +318,13 @@
 <script>
 import { defineComponent } from "vue";
 import { alertController } from "@ionic/core";
-import { settings, keypad, star, starOutline, heartCircleOutline } from "ionicons/icons";
+import {
+  settings,
+  keypad,
+  star,
+  starOutline,
+  heartCircleOutline,
+} from "ionicons/icons";
 import {
   IonButton,
   IonCardContent,
@@ -228,11 +337,10 @@ import {
   IonIcon,
   IonRow,
   IonCol,
-  IonSearchbar,
+  //IonSearchbar,
 } from "@ionic/vue";
 import { mapGetters, mapActions } from "vuex";
 import { useRouter } from "vue-router";
-import { product } from "../constants/Product";
 export default defineComponent({
   name: "WineList",
   components: {
@@ -247,10 +355,20 @@ export default defineComponent({
     IonRow,
     IonCol,
     IonIcon,
-    IonSearchbar,
+    //IonSearchbar,
   },
   data() {
-    return { star, starOutline, heartCircleOutline, keypad, responseData: {}, currentTab: 1 };
+    return {
+      star,
+      starOutline,
+      heartCircleOutline,
+      keypad,
+      responseData: {},
+      currentTab: 1,
+      editing: false,
+      newComment: "",
+      comments: [{ id: 1, comment: "" }],
+    };
   },
   methods: {
     ...mapActions([
@@ -376,16 +494,50 @@ export default defineComponent({
       alert.present();
     },
     getPrice(planName) {
-      return product.getPrice(planName);
+      if (planName.line_items[0].name.includes("Everyday Exceptional")) {
+        return "119.98";
+      }
+      if (planName.line_items[0].name.includes("Bargain Bottles")) {
+        return "96.44";
+      }
+      if (planName.line_items[0].name.includes("Exquisite Entertaining")) {
+        return "156.44";
+      }
+      if (planName.line_items[0].name.includes("Stellar Selection")) {
+        return "288.44";
+      }
     },
     getProduct(planName) {
-      return product.getProduct(planName);
+      if (planName.line_items[0].name.includes("Everyday Exceptional")) {
+        return "15836";
+      }
+      if (planName.line_items[0].name.includes("Bargain Bottles")) {
+        return "15868";
+      }
+      if (planName.line_items[0].name.includes("Exquisite Entertaining")) {
+        return "15869";
+      }
+      if (planName.line_items[0].name.includes("Stellar Selection")) {
+        return "15870";
+      }
     },
     selectTab(selectedTab) {
       this.currentTab = selectedTab;
     },
     onRate(rating) {
       console.log(rating);
+    },
+
+    saveComment() {
+      this.comments.push({
+        id: this.comments.length + 1,
+        comment: this.newComment,
+      });
+      this.newComment = "";
+    },
+    doEdit(editing) {
+      this.editing = editing;
+      this.newComment = "";
     },
   },
   computed: {
@@ -394,6 +546,9 @@ export default defineComponent({
       wines: "wines",
       profile: "profile",
     }),
+    reversedComments() {
+      return [...this.comments].reverse();
+    },
   },
   created() {
     console.log("i m in created loading wines");

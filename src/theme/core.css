@@ -281,3 +281,20 @@ a.router-link-exact-active {
   border-radius: 4px;
   width: 100%;
 }
+
+.rating-wrapper {
+  padding: 2px;
+  text-align: right;
+}
+
+.rating-wrapper ion-button {
+  --background: none;
+  --box-shadow: none;
+  --padding-start: 0;
+  --padding-end: 0;
+}
+
+.float-right {
+  float: right;
+  clear: both;
+}
