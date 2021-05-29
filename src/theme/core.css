@@ -215,19 +215,19 @@ a.router-link-exact-active {
 }
 
 .tab-holder {
-  background-color: bisque;
-  border-radius: 4px;
+  margin-bottom: 30px;
 }
 .tab-holder button {
-  background-color: #f99e0d;
-  color: #6e1541;
+  background-color:#fff;
+  color: #333;
   padding: 10px;
   margin: 0 2px;
 }
 
-.active-tab {
-  border-bottom: solid 2px #6e1541;
-  background-color: #f99e0d;
+.tab-holder .active-tab {
+  border: solid 1px bisque;
+  border-radius: 8px;;
+  background-color:bisque;
   padding: 10px;
 }
 
@@ -280,4 +280,21 @@ a.router-link-exact-active {
   padding: 8px;
   border-radius: 4px;
   width: 100%;
+}
+
+.rating-wrapper {
+  padding: 2px;
+  text-align: right;
+}
+
+.rating-wrapper ion-button {
+  --background: none;
+  --box-shadow: none;
+  --padding-start: 0;
+  --padding-end: 0;
+}
+
+.float-right {
+  float: right;
+  clear: both;
 }

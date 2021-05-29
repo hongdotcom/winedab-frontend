@@ -49,6 +49,7 @@
                     {{ comment.comment }}
                   </p>
                   </div>
+                  
           </ion-card-content>
         </ion-card>
       </ion-content>
