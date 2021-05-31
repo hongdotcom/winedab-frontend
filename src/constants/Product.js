@@ -1,31 +1,15 @@
-export default {
-  getPrice(planName) {
-    if (planName.line_items[0].name.includes("Everyday Exceptional")) {
-      return "119.98";
-    }
-    if (planName.line_items[0].name.includes("Bargain Bottles")) {
-      return "96.44";
-    }
-    if (planName.line_items[0].name.includes("Exquisite Entertaining")) {
-      return "156.44";
-    }
-    if (planName.line_items[0].name.includes("Stellar Selection")) {
-      return "288.44";
-    }
-  },
-
-  getProduct(planName) {
-    if (planName.line_items[0].name.includes("Everyday Exceptional")) {
-      return "15836";
-    }
-    if (planName.line_items[0].name.includes("Bargain Bottles")) {
-      return "15868";
-    }
-    if (planName.line_items[0].name.includes("Exquisite Entertaining")) {
-      return "15869";
-    }
-    if (planName.line_items[0].name.includes("Stellar Selection")) {
-      return "15870";
-    }
-  },
-};
+export default function getSKU(planName) {
+  if (planName.includes("Everyday Exceptional")) {
+    return "15836";
+  }
+  if (planName.includes("Bargain Bottles")) {
+    return "15868";
+  }
+  if (planName.includes("Exquisite Entertaining")) {
+    return "15869";
+  }
+  if (planName.includes("Stellar Selection")) {
+    return "15870";
+  }
+  return "xxxxx";
+}
