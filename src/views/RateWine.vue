@@ -205,7 +205,7 @@
                     <ion-col>
                       <div>
                         <button @click="saveComment">
-                          Add Note
+                          Add
                         </button>
                       </div>
                     </ion-col>
@@ -299,7 +299,7 @@
                     <ion-col>
                       <div>
                         <button @click="saveComment">
-                          Add Note
+                          Add
                         </button>
                       </div>
                     </ion-col>
@@ -392,7 +392,7 @@
                     <ion-col>
                       <div>
                         <button @click="saveComment">
-                          Add Note
+                          Add
                         </button>
                       </div>
                     </ion-col>

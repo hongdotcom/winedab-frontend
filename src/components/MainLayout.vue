@@ -2,7 +2,7 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title>
+        <ion-title slot="start">
           <img src="assets/icon/logo-white.png" alt="logo" class="logo"
         /></ion-title>
 

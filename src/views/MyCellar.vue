@@ -32,14 +32,14 @@
                               @keyup.enter="saveComment"
                               type="text"
                               v-model="newComment"
-                              placeholder="add comment"
+                              placeholder="Your personal notes here."
                             />
                           </div>
                         </ion-col>
                         <ion-col>
                           <div>
                             <button @click="saveComment">
-                              Add Comment
+                              Add
                             </button>
                           </div>
                         </ion-col>
