@@ -25,7 +25,7 @@
           <ion-button
             color="tertiary"
             expand="full"
-            @click="$router.push('/my-subscription')"
+            @click="$router.push('/rate-wine')"
           >
             LOGIN
           </ion-button>

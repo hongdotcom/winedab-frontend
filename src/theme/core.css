@@ -131,7 +131,9 @@
 
 */
 /*Junix code here*/
-
+h1, h2, h3, h4, h5 {
+  color:#333;
+}
 ion-card {
   padding: 10px;
 }
@@ -145,6 +147,11 @@ ion-tab-bar {
   --background: var(--ion-color-secondary);
   --color: var(--ion-color-secondary-contrast);
 }
+
+ion-button {
+  text-transform: capitalize;
+}
+
 
 .login-page {
   background-color: #6e1541 !important;
@@ -165,6 +172,8 @@ ion-tab-bar {
   margin: 0 auto;
   height: 5vh;
 }
+
+/* navigation area ===== */
 
 .custom-bar {
   border-top: solid 4px #f99e0d;
@@ -190,7 +199,7 @@ ion-tab-bar {
   text-align: center;
   padding: 10px;
   text-decoration: none;
-  font-size: medium;
+  font-size: small;
 }
 
 a.router-link-exact-active {
@@ -202,18 +211,18 @@ a.router-link-exact-active {
   border-top-right-radius: 10px;
 }
 
-.subs-margin {
-  margin: 15px;
-}
-
-.truncate {
+ /* used to truncate wine description */
+/* .truncate { 
   width: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   margin: 10px 0;
-}
+} */
 
+
+
+/* Rate Wine page =====  */
 .tab-holder {
   margin-bottom: 30px;
 }
@@ -231,6 +240,9 @@ a.router-link-exact-active {
   padding: 10px;
 }
 
+
+
+/* Rate Wine and My Cellar pages =====  */
 .comment-wrapper {
   margin-top: 10px;
   border: solid 1px #ccc;
@@ -260,27 +272,6 @@ a.router-link-exact-active {
   margin: 10px;
 }
 
-.planButtonSelect {
-  display: inline-block;
-  text-align: center;
-  word-wrap: break-word;
-  background-color: #6e1541;
-  color: #fff;
-  padding: 8px;
-  border-radius: 4px;
-  width: 100%;
-}
-
-.planButton {
-  display: inline-block;
-  text-align: center;
-  word-wrap: break-word;
-  background-color: #04283d;
-  color: #fff;
-  padding: 8px;
-  border-radius: 4px;
-  width: 100%;
-}
 
 .rating-wrapper {
   padding: 2px;
@@ -294,7 +285,51 @@ a.router-link-exact-active {
   --padding-end: 0;
 }
 
-.float-right {
+/* floating right the Buy Again button */
+.float-right { 
   float: right;
   clear: both;
+}
+
+
+
+/* subscription page  ====== */
+.subs-margin {
+  margin: 15px;
+}
+
+.border {
+  border: solid 1px #f99e0d;
+  margin-top: 20px;
+  border-radius: 4px;
+}
+
+.border-grey {
+  border: solid 1px #eee;
+  border-radius: 4px;
+}
+
+
+.planButtonSelect {
+  /* display: inline-block; */
+  /* text-align: center; */
+  word-wrap: break-word;
+  background-color: #6e1541;
+  border: solid 4px #f99e0d;
+  color: #fff;
+  /* padding: 2px; */
+  border-radius: 4px;
+  width: 100%;
+}
+
+.planButton {
+  /* display: inline-block; */
+  /* text-align: center; */
+  word-wrap: break-word;
+  background-color: #6e1541;
+  border: solid 2px #ccc;
+  color: #fff;
+  /* padding: 2px; */
+  /* border-radius: 4px; */
+  width: 100%;
 }

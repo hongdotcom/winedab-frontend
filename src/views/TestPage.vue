@@ -1,313 +1,361 @@
 <template>
   <main-layout :pageTitle="profile.first_name">
     <ion-page>
-      <!--  Main Menu here  -->
-      <ion-content class="ion-padding">
+      <ion-content>
         <div class="ion-padding">
-          <h2>My Orders</h2>
+          <h2>Manage Subscription</h2>
         </div>
 
-        <div class="tab-holder">
-          <button
-            @click="selectTab(1)"
-            :class="{ 'active-tab': currentTab == 1 }"
-          >
-            Current
-          </button>
-
-          <button
-            @click="selectTab(2)"
-            :class="{ 'active-tab': currentTab == 2 }"
-          >
-            Last Month
-          </button>
-
-          <button
-            @click="selectTab(3)"
-            :class="{ 'active-tab': currentTab == 3 }"
-          >
-            Previous Month
-          </button>
+        <div v-if="subs.length == 0" class="ion-padding">
+          <h3>Sorry! We can't find your valid subscription yet!</h3>
         </div>
 
-        <div v-if="wines.length == 0" class="ion-padding">
-          <h3>Sorry! We don't have wines delivered to you yet!</h3>
-        </div>
+        <div class="subs-margin" v-else>
 
-        <div v-if="currentTab == 1">
-          <!-- <ion-searchbar placeholder="Search wines"></ion-searchbar> -->
-          <ion-card v-for="wine in wines" :key="wine.id">
-            <ion-card-header>
-              <ion-card-title
-                >{{ wine.wine_name }} {{ wine.year }} - {{ wine.colour }}
-                <ion-icon color="primary" :icon="heartCircleOutline"></ion-icon>
-              </ion-card-title>
-            </ion-card-header>
+          <ion-card>
+            <div class="border-grey ion-padding">
+              <h4>Subscription name</h4>
+            <ion-grid class="ion-no-padding">
+              <ion-row v-if="this.runtime == 0">
 
-            <ion-card-content>
-              <img
-                v-if="wine.wine_photo"
-                src="/assets/icon/wine1.jpg"
-                alt="wine1"
-                class="wine"
-              />
+                <ion-col>
+                <ion-button
+                  :class="
+                    subs[0].line_items[0].name.includes('Bargain Bottles')
+                      ? 'planButtonSelect'
+                      : 'planButton'
+                  "
+                  @click="this.selectedPlan('Bargain Bottles')"
+                >
+                  Bargain Bottles
+                </ion-button>
+                </ion-col>
 
+                <ion-col>
+                <ion-button
+                  :class="
+                    subs[0].line_items[0].name.includes('Everyday Exceptional')
+                      ? 'planButtonSelect'
+                      : 'planButton'
+                  "
+                  class="planButtonSelect"
+                  @click="this.selectedPlan('Everyday Exceptional')"
+                >
+                  Everyday Exceptional
+                </ion-button>
+                </ion-col>
+                  
+                <ion-col>
+                <ion-button
+                  :class="
+                    subs[0].line_items[0].name.includes(
+                      'Exquisite Entertaining'
+                    )
+                      ? 'planButtonSelect'
+                      : 'planButton'
+                  "
+                  class="planButton"
+                  @click="this.selectedPlan('Exquisite Entertaining')"
+                >
+                  Exquisite Entertaining
+                </ion-button>
+                </ion-col>
+                  
+                <ion-col>
+                <ion-button
+                  :class="
+                    subs[0].line_items[0].name.includes('Stellar Selection')
+                      ? 'planButtonSelect'
+                      : 'planButton'
+                  "
+                  class="planButton"
+                  @click="this.selectedPlan('Stellar Selection')"
+                >
+                  Stellar Selection
+                </ion-button>
+                </ion-col>
+              </ion-row>
 
-              <div class="rating-wrapper">
-                <ion-button @click="onRate(1)">
-                  <ion-icon color="warning" :icon="star"></ion-icon
-                ></ion-button>
-                <ion-button @click="onRate(2)">
-                  <ion-icon color="warning" :icon="star"></ion-icon
-                ></ion-button>
-                <ion-button @click="onRate(3)">
-                  <ion-icon color="warning" :icon="star"></ion-icon
-                ></ion-button>
-                <ion-button @click="onRate(4)">
-                  <ion-icon color="warning" :icon="star"></ion-icon
-                ></ion-button>
-                <ion-button @click="onRate(5)">
-                  <ion-icon color="dark" :icon="star"></ion-icon
-                ></ion-button>
-              </div>
+              <!-- after selection -->
 
-              <div>{{ wine.description }}</div>
-              {{ wine.wine_info }}
+              <ion-row v-if="this.runtime != 0">
 
-              <ion-grid>
-                <ion-row>
-                  <ion-col size="6" offset="3"> </ion-col>
-                  <ion-col size="3">
-                    <ion-button
-                      class="float-right"
-                      @click="
-                        orderMorePrompt(
-                          wine.wine_name,
-                          wine.year,
-                          wine.winedab_sku,
-                          subs[0],
-                          profile
-                        )
-                      "
-                    >
-                      Buy Again
-                    </ion-button>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
+                <ion-col>
+                  <ion-button
+                    v-if="this.currentProduct.includes('Bargain Bottles')"
+                    class="planButtonSelect"
+                    @click="this.selectedPlan('Bargain Bottles')"
+                  >
+                    Bargain Bottles
+                  </ion-button>
+                  <ion-button
+                    v-if="!this.currentProduct.includes('Bargain Bottles')"
+                    class="planButton"
+                    @click="this.selectedPlan('Bargain Bottles')"
+                  >
+                    Bargain Bottles
+                  </ion-button>
+                </ion-col>
+                  
+                <ion-col>
+                  <ion-button
+                    v-if="this.currentProduct.includes('Everyday Exceptional')"
+                    class="planButtonSelect"
+                    @click="this.selectedPlan('Everyday Exceptional')"
+                  >
+                    Everyday Exceptional
+                  </ion-button>
+                  <ion-button
+                    v-if="!this.currentProduct.includes('Everyday Exceptional')"
+                    class="planButton"
+                    @click="this.selectedPlan('Everyday Exceptional')"
+                  >
+                    Everyday Exceptional
+                  </ion-button>
+                </ion-col>
+                  
+                <ion-col>
+                  <ion-button
+                    v-if="this.currentProduct.includes('Exquisite Entertaining')"
+                    class="planButtonSelect"
+                    @click="this.selectedPlan('Exquisite Entertaining')"
+                  >
+                    Exquisite Entertaining
+                  </ion-button>
+                  <ion-button
+                    v-if="!this.currentProduct.includes('Exquisite Entertaining')"
+                    class="planButton"
+                    @click="this.selectedPlan('Exquisite Entertaining')"
+                  >
+                    Exquisite Entertaining
+                  </ion-button>
+                </ion-col>
+                  
+                <ion-col>
+                  <ion-button
+                    v-if="this.currentProduct.includes('Stellar Selection')"
+                    class="planButtonSelect"
+                    @click="this.selectedPlan('Stellar Selection')"
+                  >
+                    Stellar Selection
+                  </ion-button>
+                  <ion-button
+                    v-if="!this.currentProduct.includes('Stellar Selection')"
+                    class="planButton"
+                    @click="this.selectedPlan('Stellar Selection')"
+                  >
+                    Stellar Selection
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
 
-              <div class="comment-wrapper">
-                <ion-grid>
-                  <ion-row>
-                    <ion-col size="8">
-                      <div>
-                        <input
-                          @keyup.enter="saveComment"
-                          type="text"
-                          v-model="newComment"
-                          placeholder="Your personal notes here"
-                        />
-                      </div>
-                    </ion-col>
-                    <ion-col>
-                      <div>
-                        <button @click="saveComment">
-                          Add Note
-                        </button>
-                      </div>
-                    </ion-col>
-                  </ion-row>
-                </ion-grid>
-                <p v-for="comment in reversedComments" :key="comment.id">
-                  {{ comment.comment }}
-                </p>
-              </div>
+            <!-- quantity selection -->
+            <h5> Bottle(s) per Month: </h5> 
+
+            <ion-grid class="ion-no-padding">
+              <ion-row v-if="this.runtimeQt == 0">
+                <ion-col expand="full">
+                  <ion-button
+                    :class="
+                      subs[0].line_items[0].quantity == 1
+                        ? 'planButtonSelect'
+                        : 'planButton'
+                    "
+                    @click="this.selectedQuantity(1)"
+                  >
+                    1
+                  </ion-button>
+                </ion-col>
+
+                <ion-col expand="full">
+                  <ion-button
+                    :class="
+                      subs[0].line_items[0].quantity == 3
+                        ? 'planButtonSelect'
+                        : 'planButton'
+                    "
+                    class="planButtonSelect"
+                    @click="this.selectedQuantity(3)"
+                  >
+                    3
+                  </ion-button>
+                </ion-col>
+
+                <ion-col expand="full">
+                  <ion-button
+                    :class="
+                      subs[0].line_items[0].quantity == 6
+                        ? 'planButtonSelect'
+                        : 'planButton'
+                    "
+                    class="planButton"
+                    @click="this.selectedQuantity(6)"
+                  >
+                    6
+                  </ion-button>
+                </ion-col>
+
+                <ion-col expand="full">
+                  <ion-button
+                    :class="
+                      subs[0].line_items[0].quantity == 12
+                        ? 'planButtonSelect'
+                        : 'planButton'
+                    "
+                    class="planButton"
+                    @click="this.selectedQuantity(12)"
+                  >
+                    12
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+
+              <ion-row v-if="this.runtimeQt != 0">
+                <ion-col expand="full">
+                  <ion-button
+                    v-if="this.currentQuantity == 1"
+                    class="planButtonSelect"
+                    @click="this.selectedQuantity(1)"
+                  >
+                    1
+                  </ion-button>
+                  <ion-button
+                    v-if="this.currentQuantity != 1"
+                    class="planButton"
+                    @click="this.selectedQuantity(1)"
+                  >
+                    1
+                  </ion-button>
+                </ion-col>
+
+                <ion-col expand="full">
+                  <ion-button
+                    v-if="this.currentQuantity == 3"
+                    class="planButtonSelect"
+                    @click="this.selectedQuantity(3)"
+                  >
+                    3
+                  </ion-button>
+                  <ion-button
+                    v-if="this.currentQuantity != 3"
+                    class="planButton"
+                    @click="this.selectedQuantity(3)"
+                  >
+                    3
+                  </ion-button>
+                </ion-col>
+
+                <ion-col expand="full">
+                  <ion-button
+                    v-if="this.currentQuantity == 6"
+                    class="planButtonSelect"
+                    @click="this.selectedQuantity(6)"
+                  >
+                    6
+                  </ion-button>
+                  <ion-button
+                    v-if="this.currentQuantity != 6"
+                    class="planButton"
+                    @click="this.selectedQuantity(6)"
+                  >
+                    6
+                  </ion-button>
+                </ion-col>
+
+                <ion-col expand="full">
+                  <ion-button
+                    v-if="this.currentQuantity == 12"
+                    class="planButtonSelect"
+                    @click="this.selectedQuantity(12)"
+                  >
+                    12
+                  </ion-button>
+                  <ion-button
+                    v-if="this.currentQuantity != 12"
+                    class="planButton"
+                    @click="this.selectedQuantity(12)"
+                  >
+                    12
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+            </div>
+
+            <ion-card-content class="border">
+              <ion-row >
+                <ion-col>
+                  <p>
+                    {{ subs[0].shipping.first_name }} &nbsp;
+                    {{ subs[0].shipping.last_name }}
+                  </p>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col>
+                  <p><b>Next Payment</b>: {{ subs[0].next_payment_date }}</p>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col>
+                  <p><b>Status</b>: {{ subs[0].status }}</p>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col v-if="subs[0].status == `active`">
+                  <ion-button
+                    @click="showOnholdAlert(subs[0].id, subs[0].status)"
+                    expand="block"
+                    >Pause Indefinitely</ion-button
+                  >
+                </ion-col>
+              </ion-row>
+
+              <!-- /* moved pause and update subscription here */ -->
+              <ion-row>
+                <ion-col v-if="subs[0].status == `active`">
+                  <ion-button
+                    class="normalButton"
+                    @click="
+                      showPostponeAlert(
+                        subs[0].id,
+                        subs[0].status,
+                        subs[0].next_payment_date
+                      )
+                    "
+                    expand="block"
+                    >Pause</ion-button
+                  >
+                </ion-col>
+
+                <ion-col v-if="subs[0].status == `on-hold`">
+                  <ion-button
+                    @click="
+                      showActiveAlert(
+                        subs[0].id,
+                        subs[0].status,
+                        subs[0].next_payment_date
+                      )
+                    "
+                    expand="block"
+                    >Un-Pause</ion-button
+                  >
+                </ion-col>
+
+                <ion-col>
+                  <ion-button
+                    color="danger"
+                    @click="updateSubsAlert(subs[0])"
+                    expand="block"
+                    >Update Subscription</ion-button
+                  >
+                </ion-col>
+              </ion-row>
             </ion-card-content>
-          </ion-card>
-        </div>
 
-        <div v-if="currentTab == 2">
-          <!-- <ion-searchbar placeholder="Search wines"></ion-searchbar> -->
-          <ion-card v-for="wine in wines" :key="wine.id">
-            <ion-card-header>
-              <ion-card-title
-                >{{ wine.wine_name }} {{ wine.year }} - {{ wine.colour }}
-                <ion-icon color="primary" :icon="heartCircleOutline"></ion-icon>
-              </ion-card-title>
-            </ion-card-header>
-
-            <ion-card-content>
-              <img
-                v-if="wine.wine_photo"
-                src="/assets/icon/wine1.jpg"
-                alt="wine1"
-                class="wine"
-              />
-
-              <div class="rating-wrapper">
-                <ion-button @click="onRate(1)">
-                  <ion-icon color="warning" :icon="star"></ion-icon
-                ></ion-button>
-                <ion-button @click="onRate(2)">
-                  <ion-icon color="warning" :icon="star"></ion-icon
-                ></ion-button>
-                <ion-button @click="onRate(3)">
-                  <ion-icon color="warning" :icon="star"></ion-icon
-                ></ion-button>
-                <ion-button @click="onRate(4)">
-                  <ion-icon color="dark" :icon="star"></ion-icon
-                ></ion-button>
-                <ion-button @click="onRate(5)">
-                  <ion-icon color="dark" :icon="star"></ion-icon
-                ></ion-button>
-              </div>
-
-              <div>{{ wine.description }}</div>
-              <!-- <div>
-                {{ wine.wine_info }}
-              </div> -->
-
-              <ion-grid>
-                <ion-row>
-                  <ion-col size="6" offset="3"> </ion-col>
-                  <ion-col size="3">
-                    <ion-button
-                      class="float-right"
-                      @click="
-                        orderMorePrompt(
-                          wine.wine_name,
-                          wine.year,
-                          wine.winedab_sku,
-                          subs[0],
-                          profile
-                        )
-                      "
-                    >
-                      Buy Again
-                    </ion-button>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
-
-              <div class="comment-wrapper">
-                <ion-grid>
-                  <ion-row>
-                    <ion-col size="8">
-                      <div>
-                        <input
-                          @keyup.enter="saveComment"
-                          type="text"
-                          v-model="newComment"
-                          placeholder="Your personal notes here"
-                        />
-                      </div>
-                    </ion-col>
-                    <ion-col>
-                      <div>
-                        <button @click="saveComment">
-                          Add Note
-                        </button>
-                      </div>
-                    </ion-col>
-                  </ion-row>
-                </ion-grid>
-                <p v-for="comment in reversedComments" :key="comment.id">
-                  {{ comment.comment }}
-                </p>
-              </div>
-            </ion-card-content>
-          </ion-card>
-        </div>
-
-        <div v-if="currentTab == 3">
-          <!-- <ion-searchbar placeholder="Search wines"></ion-searchbar> -->
-          <ion-card v-for="wine in wines" :key="wine.id">
-            <ion-card-header>
-              <ion-card-title
-                >{{ wine.wine_name }} {{ wine.year }} - {{ wine.colour }}
-                <ion-icon color="primary" :icon="heartCircleOutline"></ion-icon>
-              </ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-              <img
-                v-if="wine.wine_photo"
-                src="/assets/icon/wine1.jpg"
-                alt="wine1"
-                class="wine"
-              />
-
-              <div class="rating-wrapper">
-                <ion-button @click="onRate(1)">
-                  <ion-icon color="warning" :icon="star"></ion-icon
-                ></ion-button>
-                <ion-button @click="onRate(2)">
-                  <ion-icon color="warning" :icon="star"></ion-icon
-                ></ion-button>
-                <ion-button @click="onRate(3)">
-                  <ion-icon color="warning" :icon="star"></ion-icon
-                ></ion-button>
-                <ion-button @click="onRate(4)">
-                  <ion-icon color="dark" :icon="star"></ion-icon
-                ></ion-button>
-                <ion-button @click="onRate(5)">
-                  <ion-icon color="dark" :icon="star"></ion-icon
-                ></ion-button>
-              </div>
-
-              <div>{{ wine.description }}</div>
-              <!-- <div>
-                {{ wine.wine_info }}
-              </div> -->
-
-              <ion-grid>
-                <ion-row>
-                  <ion-col size="6" offset="3"> </ion-col>
-                  <ion-col size="3">
-                    <ion-button
-                      class="float-right"
-                      @click="
-                        orderMorePrompt(
-                          wine.wine_name,
-                          wine.year,
-                          wine.winedab_sku,
-                          subs[0],
-                          profile
-                        )
-                      "
-                    >
-                      Buy Again
-                    </ion-button>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
-
-              <div class="comment-wrapper">
-                <ion-grid>
-                  <ion-row>
-                    <ion-col size="8">
-                      <div>
-                        <input
-                          @keyup.enter="saveComment"
-                          type="text"
-                          v-model="newComment"
-                          placeholder="add comment"
-                        />
-                      </div>
-                    </ion-col>
-                    <ion-col>
-                      <div>
-                        <button @click="saveComment">
-                          Add Comment
-                        </button>
-                      </div>
-                    </ion-col>
-                  </ion-row>
-                </ion-grid>
-                <p v-for="comment in reversedComments" :key="comment.id">
-                  {{ comment.comment }}
-                </p>
-              </div>
-            </ion-card-content>
           </ion-card>
         </div>
       </ion-content>
@@ -318,109 +366,55 @@
 <script>
 import { defineComponent } from "vue";
 import { alertController } from "@ionic/core";
+
 import {
-  settings,
-  keypad,
-  star,
-  starOutline,
-  heartCircleOutline,
-} from "ionicons/icons";
-import {
-  IonButton,
-  IonCardContent,
-  IonCardHeader,
-  IonCardTitle,
-  IonCard,
   IonContent,
-  IonPage,
-  IonGrid,
-  IonIcon,
+  IonCard,
+  IonCardContent,
   IonRow,
   IonCol,
-  //IonSearchbar,
+  IonButton,
+  // IonButtons,
+  IonPage,
 } from "@ionic/vue";
 import { mapGetters, mapActions } from "vuex";
-import { useRouter } from "vue-router";
 export default defineComponent({
-  name: "WineList",
+  name: "Subscription",
   components: {
     IonContent,
-    IonButton,
-    IonCardContent,
-    IonCardHeader,
-    IonCardTitle,
     IonCard,
-    IonPage,
-    IonGrid,
+    IonCardContent,
     IonRow,
     IonCol,
-    IonIcon,
-    //IonSearchbar,
-  },
-  data() {
-    return {
-      star,
-      starOutline,
-      heartCircleOutline,
-      keypad,
-      responseData: {},
-      currentTab: 1,
-      editing: false,
-      newComment: "",
-      comments: [{ id: 1, comment: "" }],
-    };
+    IonButton,
+    // IonButtons,
+    IonPage,
   },
   methods: {
     ...mapActions([
-      "loadWines",
-      "loadProfile",
       "loadSubscription",
-      "buyMoreOrder",
+      "onholdSubscription",
+      "loadProfile",
+      "updateSubs",
+      "test",
     ]),
-    async editCommentPrompt() {
+
+    async showPostponeAlert(id, status, nextPaymentDate) {
       const alert = await alertController.create({
+        header: "Pause Your Subscription",
         cssClass: "my-custom-class",
-        header: "Enter Your Comment!",
+        subheader: "Subtitle",
+        message: `How many months do you want to postpone?? Or tick the indefinitely checkbox.`,
         inputs: [
           {
-            name: "Wine Comment",
-            id: "wine_comment",
-            value: "",
-            placeholder: "Your Comment",
-            type: "textarea",
+            value: "1",
+            name: "month",
+            placeholder: "How many months?",
+            type: "number",
+            min: 1,
+            max: 12,
           },
         ],
-        buttons: [
-          {
-            text: "Cancel",
-            role: "cancel",
-            cssClass: "secondary",
-            handler: () => {
-              console.log("Confirm Cancel");
-            },
-          },
-          {
-            text: "Ok",
-            handler: () => {
-              console.log("Confirm Ok");
-            },
-          },
-        ],
-      });
-      return alert.present();
-    },
-    async orderMorePrompt(name, year, sku, sub, profile) {
-      console.log(sub);
-      const alert = await alertController.create({
-        header: "Buy More",
-        subheader: "Subtitle",
-        message: `By clicking "Submit Order", you will place an order of a box of 6 bottles of ${name} ${
-          year ? year : ""
-        }. The total order amount is $ ${this.getPrice(
-          sub
-        )} including standard shipping cost.
-        The order will be processed by our staff soon. Enjoy! Thank you!`,
-
         buttons: [
           {
             text: "Cancel",
@@ -429,63 +423,43 @@ export default defineComponent({
             handler: () => {},
           },
           {
-            text: "Submit Order",
+            text: "Ok",
             handler: () => {
-              const payload = {
-                customer_id: profile.id,
-                payment_method: "bacs",
-                payment_method_title: "Direct Bank Transfer",
-                set_paid: false,
-                customer_note: `This is a test from app buymore function please ignore
-                 a box of six bottles of ${name} ${
-                  year ? year : ""
-                } with Total amount of ${this.getPrice(
-                  sub
-                )} including shipping cost `,
-                billing: {
-                  first_name: profile.billing.first_name,
-                  last_name: profile.billing.last_name,
-                  address_1: profile.billing.address_1,
-                  address_2: profile.billing.address_2,
-                  city: profile.billing.city,
-                  state: profile.billing.state,
-                  postcode: profile.billing.postcode,
-                  country: profile.billing.country,
-                  email: profile.billing.email,
-                  phone: profile.billing.phone,
-                },
-                shipping: {
-                  first_name: profile.shipping.first_name,
-                  last_name: profile.shipping.last_name,
-                  address_1: profile.shipping.address_1,
-                  address_2: profile.shipping.address_2,
-                  city: profile.shipping.city,
-                  state: profile.shipping.state,
-                  postcode: profile.shipping.postcode,
-                  country: profile.shipping.country,
-                },
-                line_items: [
-                  {
-                    product_id: this.getProduct(sub),
-                    quantity: 1,
-                  },
-                ],
-                shipping_lines: [
-                  {
-                    method_id: "flat_rate",
-                    method_title: "Flat Rate",
-                    total: "",
-                  },
-                ],
-                coupon_lines: [
-                  {
-                    code: "testcheckout!",
-                  },
-                ],
-              };
-              console.log(payload);
-              this.buyMoreOrder(payload).then(() => {
-                console.log("complete buy more");
+              console.log("this is" + +id + status + nextPaymentDate);
+              const payload = [];
+              payload.id = id;
+              payload.status = this.reverseStatus(status);
+              payload.nextPaymentDate = this.newPaymentDate(nextPaymentDate);
+              this.onholdSubscription(payload);
+              this.loadSubscription();
+            },
+          },
+        ],
+      });
+      alert.present();
+    },
+    async showOnholdAlert(id, status) {
+      const alert = await alertController.create({
+        header: "On-hold",
+        subheader: "Subtitle",
+        message: `Are you sure you want to put your subscription ${this.reverseStatus(
+          status
+        )}?`,
+        buttons: [
+          {
+            text: "Cancel",
+            role: "cancel",
+            cssClass: "secondary",
+            handler: () => {},
+          },
+          {
+            text: "Ok",
+            handler: () => {
+              const payload = [];
+              payload.id = id;
+              payload.status = this.reverseStatus(status);
+              this.onholdSubscription(payload).then(() => {
+                this.loadSubscription();
               });
             },
           },
@@ -493,75 +467,173 @@ export default defineComponent({
       });
       alert.present();
     },
-    getPrice(planName) {
-      if (planName.line_items[0].name.includes("Everyday Exceptional")) {
-        return "119.98";
+    async showActiveAlert(id, status, nextPaymentDate) {
+      const alert = await alertController.create({
+        header: "Activate Your Subscription",
+        subheader: "Subtitle",
+        message: `Are you sure you want to Activate your subscription ?`,
+        buttons: [
+          {
+            text: "Cancel",
+            role: "cancel",
+            cssClass: "secondary",
+            handler: () => {},
+          },
+          {
+            text: "Ok",
+            handler: () => {
+              console.log("this is" + +id + status);
+              const payload = [];
+              payload.id = id;
+              payload.status = this.reverseStatus(status);
+              payload.nextPaymentDate = this.newPaymentDate(nextPaymentDate, 0);
+              this.onholdSubscription(payload).then(() => {
+                this.loadSubscription();
+              });
+            },
+          },
+        ],
+      });
+      alert.present();
+    },
+    async updateSubsAlert(sub) {
+      if (!this.currentProduct) {
+        console.log("set product");
+        let planName = this.getProduct(sub.line_items[0].name);
+        this.selectedPlan(planName);
+        console.log("after set" + this.currentProduct);
       }
-      if (planName.line_items[0].name.includes("Bargain Bottles")) {
-        return "96.44";
+      if (!this.currentQuantity) {
+        console.log("set quantity");
+        let planName = this.getQuantity(sub.line_items[0].name);
+        this.selectedQuantity(planName);
+        console.log("after set" + this.currentQuantity);
       }
-      if (planName.line_items[0].name.includes("Exquisite Entertaining")) {
-        return "156.44";
-      }
-      if (planName.line_items[0].name.includes("Stellar Selection")) {
-        return "288.44";
-      }
+
+      const alert = await alertController.create({
+        header: "Update",
+        subheader: "Subtitle",
+        message: `Do you confirm that you want to change your subscriptions to
+        ${this.currentProduct} of ${this.currentQuantity} bottles per month?`,
+        buttons: [
+          {
+            text: "Cancel",
+            role: "cancel",
+            cssClass: "secondary",
+            handler: () => {},
+          },
+          {
+            text: "Ok",
+            handler: () => {
+              console.log(this.currentQuantity + this.currentProduct);
+              const payload = [];
+              payload.id = sub.id;
+              payload.currentProduct = this.currentProduct;
+              payload.currentQuantity = this.currentQuantity;
+              console.log(this.test());
+              this.updateSubs(payload).then(() => {
+                this.loadSubscription();
+              });
+              // payload.status = this.reverseStatus(status);
+              // this.onholdSubscription(payload)
+            },
+          },
+        ],
+      });
+      alert.present();
     },
     getProduct(planName) {
-      if (planName.line_items[0].name.includes("Everyday Exceptional")) {
-        return "15836";
+      console.log("getProduct");
+      console.log(planName);
+      if (planName.includes("Everyday Exceptional")) {
+        return "Everyday Exceptional";
       }
-      if (planName.line_items[0].name.includes("Bargain Bottles")) {
-        return "15868";
+      if (planName.includes("Bargain Bottles")) {
+        return "Bargain Bottles";
       }
-      if (planName.line_items[0].name.includes("Exquisite Entertaining")) {
-        return "15869";
+      if (planName.includes("Exquisite Entertaining")) {
+        return "Exquisite Entertaining";
       }
-      if (planName.line_items[0].name.includes("Stellar Selection")) {
-        return "15870";
+      if (planName.includes("Stellar Selection")) {
+        return "Stellar Selection";
       }
     },
-    selectTab(selectedTab) {
-      this.currentTab = selectedTab;
+    selectedPlan(planName) {
+      console.log(planName);
+      this.runtime = 1;
+      if (planName) {
+        this.currentProduct = this.getProduct(planName);
+        return this.currentProduct;
+      }
+      return this.currentProduct;
     },
-    onRate(rating) {
-      console.log(rating);
+    selectedQuantity(quan) {
+      console.log(quan);
+      this.runtimeQt = 1;
+      if (quan) {
+        this.currentQuantity = quan;
+        return this.currentQuantity;
+      }
+      return this.currentQuantity;
     },
+    reverseStatus(status) {
+      const newStatus = status != "on-hold" ? "on-hold" : "active";
 
-    saveComment() {
-      this.comments.push({
-        id: this.comments.length + 1,
-        comment: this.newComment,
-      });
-      this.newComment = "";
+      return newStatus;
     },
-    doEdit(editing) {
-      this.editing = editing;
-      this.newComment = "";
+    newPaymentDate(nextPaymentDate, month) {
+      if (nextPaymentDate == "") {
+        //enter this when active or anything without a nextpaymentdate.
+        //No business logic so just add 1 month
+        const newDate = new Date();
+        newDate.setMonth(parseInt(newDate.getMonth()) + parseInt(1));
+        return this.changeDateFormat(newDate);
+      } else {
+        const newDate = new Date(nextPaymentDate);
+        newDate.setMonth(parseInt(newDate.getMonth()) + parseInt(month));
+        return this.changeDateFormat(newDate);
+      }
+    },
+    changeDateFormat(newDate) {
+      return (
+        newDate.getFullYear() +
+        "-" +
+        (newDate.getMonth() + 1) +
+        "-" +
+        newDate.getDate() +
+        "%2000:00:00"
+      );
+    },
+    displayDateFormat(newDate) {
+      return (
+        newDate.getFullYear() +
+        "-" +
+        (newDate.getMonth() + 1) +
+        "-" +
+        newDate.getDate() +
+        "%2000:00:00"
+      );
     },
   },
+  data() {
+    return {
+      runtime: 0,
+      runtimeQt: 0,
+      currentProduct: "",
+      currentQuantity: "",
+    };
+  },
+  updated() {},
   computed: {
     ...mapGetters({
       subs: "subscription",
       wines: "wines",
       profile: "profile",
     }),
-    reversedComments() {
-      return [...this.comments].reverse();
-    },
   },
   created() {
-    console.log("i m in created loading wines");
-    this.loadWines();
-    this.loadProfile();
     this.loadSubscription();
-  },
-  setup() {
-    const router = useRouter();
-    return {
-      settings,
-      router,
-    };
+    this.loadProfile();
   },
 });
 </script>

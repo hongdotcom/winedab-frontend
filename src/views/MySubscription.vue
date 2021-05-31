@@ -11,314 +11,351 @@
         </div>
 
         <div class="subs-margin" v-else>
+
           <ion-card>
-            <ion-row>
-              <ion-col>
-                <ion-row>
-                  <ion-buttons class="ion-padding" v-if="this.runtime == 0">
-                    <ion-button
-                      :class="
-                        subs[0].line_items[0].name.includes('Bargain Bottles')
-                          ? 'planButtonSelect'
-                          : 'planButton'
-                      "
-                      @click="this.selectedPlan('Bargain Bottles')"
-                    >
-                      Bargain Bottles
-                    </ion-button>
-                    <ion-button
-                      :class="
-                        subs[0].line_items[0].name.includes(
-                          'Everyday Exceptional'
-                        )
-                          ? 'planButtonSelect'
-                          : 'planButton'
-                      "
-                      class="planButtonSelect"
-                      @click="this.selectedPlan('Everyday Exceptional')"
-                    >
-                      Everyday Exceptional
-                    </ion-button>
-                    <ion-button
-                      :class="
-                        subs[0].line_items[0].name.includes(
-                          'Exquisite Entertaining'
-                        )
-                          ? 'planButtonSelect'
-                          : 'planButton'
-                      "
-                      class="planButton"
-                      @click="this.selectedPlan('Exquisite Entertaining')"
-                    >
-                      Exquisite Entertaining
-                    </ion-button>
-                    <ion-button
-                      :class="
-                        subs[0].line_items[0].name.includes('Stellar Selection')
-                          ? 'planButtonSelect'
-                          : 'planButton'
-                      "
-                      class="planButton"
-                      @click="this.selectedPlan('Stellar Selection')"
-                    >
-                      Stellar Selection
-                    </ion-button>
-                  </ion-buttons>
-                  <!-- after selection -->
-                  <ion-buttons class="ion-padding" v-if="this.runtime != 0">
-                    <ion-button
-                      v-if="this.currentProduct.includes('Bargain Bottles')"
-                      class="planButtonSelect"
-                      @click="this.selectedPlan('Bargain Bottles')"
-                    >
-                      Bargain Bottles
-                    </ion-button>
-                    <ion-button
-                      v-if="!this.currentProduct.includes('Bargain Bottles')"
-                      class="planButton"
-                      @click="this.selectedPlan('Bargain Bottles')"
-                    >
-                      Bargain Bottles
-                    </ion-button>
-                    <ion-button
-                      v-if="
-                        this.currentProduct.includes('Everyday Exceptional')
-                      "
-                      class="planButtonSelect"
-                      @click="this.selectedPlan('Everyday Exceptional')"
-                    >
-                      Everyday Exceptional
-                    </ion-button>
-                    <ion-button
-                      v-if="
-                        !this.currentProduct.includes('Everyday Exceptional')
-                      "
-                      class="planButton"
-                      @click="this.selectedPlan('Everyday Exceptional')"
-                    >
-                      Everyday Exceptional
-                    </ion-button>
-                    <ion-button
-                      v-if="
-                        this.currentProduct.includes('Exquisite Entertaining')
-                      "
-                      class="planButtonSelect"
-                      @click="this.selectedPlan('Exquisite Entertaining')"
-                    >
-                      Exquisite Entertaining
-                    </ion-button>
-                    <ion-button
-                      v-if="
-                        !this.currentProduct.includes('Exquisite Entertaining')
-                      "
-                      class="planButton"
-                      @click="this.selectedPlan('Exquisite Entertaining')"
-                    >
-                      Exquisite Entertaining
-                    </ion-button>
-                    <ion-button
-                      v-if="this.currentProduct.includes('Stellar Selection')"
-                      class="planButtonSelect"
-                      @click="this.selectedPlan('Stellar Selection')"
-                    >
-                      Stellar Selection
-                    </ion-button>
-                    <ion-button
-                      v-if="!this.currentProduct.includes('Stellar Selection')"
-                      class="planButton"
-                      @click="this.selectedPlan('Stellar Selection')"
-                    >
-                      Stellar Selection
-                    </ion-button>
-                  </ion-buttons>
-                </ion-row>
-                <ion-row>
-                  <!-- quantity selection -->
-                  <ion-buttons class="ion-padding" v-if="this.runtimeQt == 0">
-                    <ion-button
-                      :class="
-                        subs[0].line_items[0].quantity == 1
-                          ? 'planButtonSelect'
-                          : 'planButton'
-                      "
-                      @click="this.selectedQuantity(1)"
-                    >
-                      1
-                    </ion-button>
-                    <ion-button
-                      :class="
-                        subs[0].line_items[0].quantity == 3
-                          ? 'planButtonSelect'
-                          : 'planButton'
-                      "
-                      class="planButtonSelect"
-                      @click="this.selectedQuantity(3)"
-                    >
-                      3
-                    </ion-button>
-                    <ion-button
-                      :class="
-                        subs[0].line_items[0].quantity == 6
-                          ? 'planButtonSelect'
-                          : 'planButton'
-                      "
-                      class="planButton"
-                      @click="this.selectedQuantity(6)"
-                    >
-                      6
-                    </ion-button>
-                    <ion-button
-                      :class="
-                        subs[0].line_items[0].quantity == 12
-                          ? 'planButtonSelect'
-                          : 'planButton'
-                      "
-                      class="planButton"
-                      @click="this.selectedQuantity(12)"
-                    >
-                      12
-                    </ion-button>
-                  </ion-buttons>
-                  <ion-buttons class="ion-padding" v-if="this.runtimeQt != 0">
-                    <ion-button
-                      v-if="this.currentQuantity == 1"
-                      class="planButtonSelect"
-                      @click="this.selectedQuantity(1)"
-                    >
-                      1
-                    </ion-button>
-                    <ion-button
-                      v-if="this.currentQuantity != 1"
-                      class="planButton"
-                      @click="this.selectedQuantity(1)"
-                    >
-                      1
-                    </ion-button>
-                    <ion-button
-                      v-if="this.currentQuantity == 3"
-                      class="planButtonSelect"
-                      @click="this.selectedQuantity(3)"
-                    >
-                      3
-                    </ion-button>
-                    <ion-button
-                      v-if="this.currentQuantity != 3"
-                      class="planButton"
-                      @click="this.selectedQuantity(3)"
-                    >
-                      3
-                    </ion-button>
-                    <ion-button
-                      v-if="this.currentQuantity == 6"
-                      class="planButtonSelect"
-                      @click="this.selectedQuantity(6)"
-                    >
-                      6
-                    </ion-button>
-                    <ion-button
-                      v-if="this.currentQuantity != 6"
-                      class="planButton"
-                      @click="this.selectedQuantity(6)"
-                    >
-                      6
-                    </ion-button>
-                    <ion-button
-                      v-if="this.currentQuantity == 12"
-                      class="planButtonSelect"
-                      @click="this.selectedQuantity(12)"
-                    >
-                      12
-                    </ion-button>
-                    <ion-button
-                      v-if="this.currentQuantity != 12"
-                      class="planButton"
-                      @click="this.selectedQuantity(12)"
-                    >
-                      12
-                    </ion-button>
-                  </ion-buttons>
-                </ion-row>
-                <ion-card-content>
-                  <ion-row>
-                    <ion-col>
-                      <p>
-                        {{ subs[0].shipping.first_name }} &nbsp;
-                        {{ subs[0].shipping.last_name }}
-                      </p>
-                    </ion-col>
-                  </ion-row>
+            <div class="border-grey ion-padding">
+              <h4>Subscription name</h4>
+            <ion-grid class="ion-no-padding">
+              <ion-row v-if="this.runtime == 0">
 
-                  <ion-row>
-                    <ion-col>
-                      <p>Next Payment Date:</p>
-                    </ion-col>
-                    <ion-col>
-                      <p>
-                        {{ subs[0].next_payment_date }}
-                      </p>
-                    </ion-col>
-                  </ion-row>
-
-                  <ion-row>
-                    <ion-col>
-                      <p>Subscription Status:</p>
-                    </ion-col>
-                    <ion-col>
-                      <ion-col>
-                        {{ subs[0].status }}
-                      </ion-col>
-                      <ion-col v-if="subs[0].status == `active`">
-                        <ion-button
-                          @click="showOnholdAlert(subs[0].id, subs[0].status)"
-                          expand="block"
-                          >Pause Indefinitely</ion-button
-                        >
-                      </ion-col>
-                    </ion-col>
-                  </ion-row>
-                </ion-card-content>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col v-if="subs[0].status == `active`">
+                <ion-col>
                 <ion-button
-                  class="normalButton"
-                  @click="
-                    showPostponeAlert(
-                      subs[0].id,
-                      subs[0].status,
-                      subs[0].next_payment_date
-                    )
+                  :class="
+                    subs[0].line_items[0].name.includes('Bargain Bottles')
+                      ? 'planButtonSelect'
+                      : 'planButton'
                   "
-                  expand="block"
-                  >Pause</ion-button
+                  @click="this.selectedPlan('Bargain Bottles')"
                 >
-              </ion-col>
+                  Bargain Bottles
+                </ion-button>
+                </ion-col>
 
-              <ion-col v-if="subs[0].status == `on-hold`">
+                <ion-col>
                 <ion-button
-                  @click="
-                    showActiveAlert(
-                      subs[0].id,
-                      subs[0].status,
-                      subs[0].next_payment_date
-                    )
+                  :class="
+                    subs[0].line_items[0].name.includes('Everyday Exceptional')
+                      ? 'planButtonSelect'
+                      : 'planButton'
                   "
-                  expand="block"
-                  >Un-Pause</ion-button
+                  class="planButtonSelect"
+                  @click="this.selectedPlan('Everyday Exceptional')"
                 >
-              </ion-col>
-
-              <ion-col>
+                  Everyday Exceptional
+                </ion-button>
+                </ion-col>
+                  
+                <ion-col>
                 <ion-button
-                  color="danger"
-                  @click="updateSubsAlert(subs[0])"
-                  expand="block"
-                  >Update Subscription</ion-button
+                  :class="
+                    subs[0].line_items[0].name.includes(
+                      'Exquisite Entertaining'
+                    )
+                      ? 'planButtonSelect'
+                      : 'planButton'
+                  "
+                  class="planButton"
+                  @click="this.selectedPlan('Exquisite Entertaining')"
                 >
-              </ion-col>
-            </ion-row>
+                  Exquisite Entertaining
+                </ion-button>
+                </ion-col>
+                  
+                <ion-col>
+                <ion-button
+                  :class="
+                    subs[0].line_items[0].name.includes('Stellar Selection')
+                      ? 'planButtonSelect'
+                      : 'planButton'
+                  "
+                  class="planButton"
+                  @click="this.selectedPlan('Stellar Selection')"
+                >
+                  Stellar Selection
+                </ion-button>
+                </ion-col>
+              </ion-row>
+
+              <!-- after selection -->
+
+              <ion-row v-if="this.runtime != 0">
+
+                <ion-col>
+                  <ion-button
+                    v-if="this.currentProduct.includes('Bargain Bottles')"
+                    class="planButtonSelect"
+                    @click="this.selectedPlan('Bargain Bottles')"
+                  >
+                    Bargain Bottles
+                  </ion-button>
+                  <ion-button
+                    v-if="!this.currentProduct.includes('Bargain Bottles')"
+                    class="planButton"
+                    @click="this.selectedPlan('Bargain Bottles')"
+                  >
+                    Bargain Bottles
+                  </ion-button>
+                </ion-col>
+                  
+                <ion-col>
+                  <ion-button
+                    v-if="this.currentProduct.includes('Everyday Exceptional')"
+                    class="planButtonSelect"
+                    @click="this.selectedPlan('Everyday Exceptional')"
+                  >
+                    Everyday Exceptional
+                  </ion-button>
+                  <ion-button
+                    v-if="!this.currentProduct.includes('Everyday Exceptional')"
+                    class="planButton"
+                    @click="this.selectedPlan('Everyday Exceptional')"
+                  >
+                    Everyday Exceptional
+                  </ion-button>
+                </ion-col>
+                  
+                <ion-col>
+                  <ion-button
+                    v-if="this.currentProduct.includes('Exquisite Entertaining')"
+                    class="planButtonSelect"
+                    @click="this.selectedPlan('Exquisite Entertaining')"
+                  >
+                    Exquisite Entertaining
+                  </ion-button>
+                  <ion-button
+                    v-if="!this.currentProduct.includes('Exquisite Entertaining')"
+                    class="planButton"
+                    @click="this.selectedPlan('Exquisite Entertaining')"
+                  >
+                    Exquisite Entertaining
+                  </ion-button>
+                </ion-col>
+                  
+                <ion-col>
+                  <ion-button
+                    v-if="this.currentProduct.includes('Stellar Selection')"
+                    class="planButtonSelect"
+                    @click="this.selectedPlan('Stellar Selection')"
+                  >
+                    Stellar Selection
+                  </ion-button>
+                  <ion-button
+                    v-if="!this.currentProduct.includes('Stellar Selection')"
+                    class="planButton"
+                    @click="this.selectedPlan('Stellar Selection')"
+                  >
+                    Stellar Selection
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+
+            <!-- quantity selection -->
+            <h5> Bottle(s) per Month: </h5> 
+
+            <ion-grid class="ion-no-padding">
+              <ion-row v-if="this.runtimeQt == 0">
+                <ion-col expand="full">
+                  <ion-button
+                    :class="
+                      subs[0].line_items[0].quantity == 1
+                        ? 'planButtonSelect'
+                        : 'planButton'
+                    "
+                    @click="this.selectedQuantity(1)"
+                  >
+                    1
+                  </ion-button>
+                </ion-col>
+
+                <ion-col expand="full">
+                  <ion-button
+                    :class="
+                      subs[0].line_items[0].quantity == 3
+                        ? 'planButtonSelect'
+                        : 'planButton'
+                    "
+                    class="planButtonSelect"
+                    @click="this.selectedQuantity(3)"
+                  >
+                    3
+                  </ion-button>
+                </ion-col>
+
+                <ion-col expand="full">
+                  <ion-button
+                    :class="
+                      subs[0].line_items[0].quantity == 6
+                        ? 'planButtonSelect'
+                        : 'planButton'
+                    "
+                    class="planButton"
+                    @click="this.selectedQuantity(6)"
+                  >
+                    6
+                  </ion-button>
+                </ion-col>
+
+                <ion-col expand="full">
+                  <ion-button
+                    :class="
+                      subs[0].line_items[0].quantity == 12
+                        ? 'planButtonSelect'
+                        : 'planButton'
+                    "
+                    class="planButton"
+                    @click="this.selectedQuantity(12)"
+                  >
+                    12
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+
+              <ion-row v-if="this.runtimeQt != 0">
+                <ion-col expand="full">
+                  <ion-button
+                    v-if="this.currentQuantity == 1"
+                    class="planButtonSelect"
+                    @click="this.selectedQuantity(1)"
+                  >
+                    1
+                  </ion-button>
+                  <ion-button
+                    v-if="this.currentQuantity != 1"
+                    class="planButton"
+                    @click="this.selectedQuantity(1)"
+                  >
+                    1
+                  </ion-button>
+                </ion-col>
+
+                <ion-col expand="full">
+                  <ion-button
+                    v-if="this.currentQuantity == 3"
+                    class="planButtonSelect"
+                    @click="this.selectedQuantity(3)"
+                  >
+                    3
+                  </ion-button>
+                  <ion-button
+                    v-if="this.currentQuantity != 3"
+                    class="planButton"
+                    @click="this.selectedQuantity(3)"
+                  >
+                    3
+                  </ion-button>
+                </ion-col>
+
+                <ion-col expand="full">
+                  <ion-button
+                    v-if="this.currentQuantity == 6"
+                    class="planButtonSelect"
+                    @click="this.selectedQuantity(6)"
+                  >
+                    6
+                  </ion-button>
+                  <ion-button
+                    v-if="this.currentQuantity != 6"
+                    class="planButton"
+                    @click="this.selectedQuantity(6)"
+                  >
+                    6
+                  </ion-button>
+                </ion-col>
+
+                <ion-col expand="full">
+                  <ion-button
+                    v-if="this.currentQuantity == 12"
+                    class="planButtonSelect"
+                    @click="this.selectedQuantity(12)"
+                  >
+                    12
+                  </ion-button>
+                  <ion-button
+                    v-if="this.currentQuantity != 12"
+                    class="planButton"
+                    @click="this.selectedQuantity(12)"
+                  >
+                    12
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+            </div>
+
+            <ion-card-content class="border">
+              <ion-row >
+                <ion-col>
+                  <p>
+                    {{ subs[0].shipping.first_name }} &nbsp;
+                    {{ subs[0].shipping.last_name }}
+                  </p>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col>
+                  <p><b>Next Payment</b>: {{ subs[0].next_payment_date }}</p>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col>
+                  <p><b>Status</b>: {{ subs[0].status }}</p>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col v-if="subs[0].status == `active`">
+                  <ion-button
+                    @click="showOnholdAlert(subs[0].id, subs[0].status)"
+                    expand="block"
+                    >Pause Indefinitely</ion-button
+                  >
+                </ion-col>
+              </ion-row>
+
+              <!-- /* moved pause and update subscription here */ -->
+              <ion-row>
+                <ion-col v-if="subs[0].status == `active`">
+                  <ion-button
+                    class="normalButton"
+                    @click="
+                      showPostponeAlert(
+                        subs[0].id,
+                        subs[0].status,
+                        subs[0].next_payment_date
+                      )
+                    "
+                    expand="block"
+                    >Pause</ion-button
+                  >
+                </ion-col>
+
+                <ion-col v-if="subs[0].status == `on-hold`">
+                  <ion-button
+                    @click="
+                      showActiveAlert(
+                        subs[0].id,
+                        subs[0].status,
+                        subs[0].next_payment_date
+                      )
+                    "
+                    expand="block"
+                    >Un-Pause</ion-button
+                  >
+                </ion-col>
+
+                <ion-col>
+                  <ion-button
+                    color="danger"
+                    @click="updateSubsAlert(subs[0])"
+                    expand="block"
+                    >Update Subscription</ion-button
+                  >
+                </ion-col>
+              </ion-row>
+            </ion-card-content>
+
           </ion-card>
         </div>
       </ion-content>
@@ -337,7 +374,7 @@ import {
   IonRow,
   IonCol,
   IonButton,
-  IonButtons,
+  // IonButtons,
   IonPage,
 } from "@ionic/vue";
 import { mapGetters, mapActions } from "vuex";
@@ -350,7 +387,7 @@ export default defineComponent({
     IonRow,
     IonCol,
     IonButton,
-    IonButtons,
+    // IonButtons,
     IonPage,
   },
   methods: {
