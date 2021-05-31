@@ -64,6 +64,7 @@
                       Stellar Selection
                     </ion-button>
                   </ion-buttons>
+                  <!-- after selection -->
                   <ion-buttons class="ion-padding" v-if="this.runtime != 0">
                     <ion-button
                       v-if="this.currentProduct.includes('Bargain Bottles')"
@@ -312,9 +313,9 @@
               <ion-col>
                 <ion-button
                   color="danger"
-                  @click="() => router.push('/testpage')"
+                  @click="updateSubsAlert(subs[0])"
                   expand="block"
-                  >Edit</ion-button
+                  >Update Subscription</ion-button
                 >
               </ion-col>
             </ion-row>
@@ -353,7 +354,13 @@ export default defineComponent({
     IonPage,
   },
   methods: {
-    ...mapActions(["loadSubscription", "onholdSubscription", "loadProfile"]),
+    ...mapActions([
+      "loadSubscription",
+      "onholdSubscription",
+      "loadProfile",
+      "updateSubs",
+      "test",
+    ]),
 
     async showPostponeAlert(id, status, nextPaymentDate) {
       const alert = await alertController.create({
@@ -452,7 +459,52 @@ export default defineComponent({
       });
       alert.present();
     },
+    async updateSubsAlert(sub) {
+      if (!this.currentProduct) {
+        console.log("set product");
+        let planName = this.getProduct(sub.line_items[0].name);
+        this.selectedPlan(planName);
+        console.log("after set" + this.currentProduct);
+      }
+      if (!this.currentQuantity) {
+        console.log("set quantity");
+        let planName = this.getQuantity(sub.line_items[0].name);
+        this.selectedQuantity(planName);
+        console.log("after set" + this.currentQuantity);
+      }
 
+      const alert = await alertController.create({
+        header: "Update",
+        subheader: "Subtitle",
+        message: `Do you confirm that you want to change your subscriptions to
+        ${this.currentProduct} of ${this.currentQuantity} bottles per month?`,
+        buttons: [
+          {
+            text: "Cancel",
+            role: "cancel",
+            cssClass: "secondary",
+            handler: () => {},
+          },
+          {
+            text: "Ok",
+            handler: () => {
+              console.log(this.currentQuantity + this.currentProduct);
+              const payload = [];
+              payload.id = sub.id;
+              payload.currentProduct = this.currentProduct;
+              payload.currentQuantity = this.currentQuantity;
+              console.log(this.test());
+              this.updateSubs(payload).then(() => {
+                this.loadSubscription();
+              });
+              // payload.status = this.reverseStatus(status);
+              // this.onholdSubscription(payload)
+            },
+          },
+        ],
+      });
+      alert.present();
+    },
     getProduct(planName) {
       console.log("getProduct");
       console.log(planName);
@@ -506,6 +558,16 @@ export default defineComponent({
       }
     },
     changeDateFormat(newDate) {
+      return (
+        newDate.getFullYear() +
+        "-" +
+        (newDate.getMonth() + 1) +
+        "-" +
+        newDate.getDate() +
+        "%2000:00:00"
+      );
+    },
+    displayDateFormat(newDate) {
       return (
         newDate.getFullYear() +
         "-" +

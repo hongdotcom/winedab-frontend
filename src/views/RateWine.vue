@@ -52,8 +52,79 @@
                 class="wine"
               />
 
+              <div
+                v-if="wine.rating == 0 || !wine.rating"
+                class="rating-wrapper"
+              >
+                <ion-button @click="onRate(1)">
+                  <ion-icon color="dark" :icon="star"></ion-icon
+                ></ion-button>
+                <ion-button @click="onRate(2)">
+                  <ion-icon color="dark" :icon="star"></ion-icon
+                ></ion-button>
+                <ion-button @click="onRate(3)">
+                  <ion-icon color="dark" :icon="star"></ion-icon
+                ></ion-button>
+                <ion-button @click="onRate(4)">
+                  <ion-icon color="dark" :icon="star"></ion-icon
+                ></ion-button>
+                <ion-button @click="onRate(5)">
+                  <ion-icon color="dark" :icon="star"></ion-icon
+                ></ion-button>
+              </div>
 
-              <div class="rating-wrapper">
+              <div v-if="wine.rating == 1" class="rating-wrapper">
+                <ion-button @click="onRate(1)">
+                  <ion-icon color="warning" :icon="star"></ion-icon
+                ></ion-button>
+                <ion-button @click="onRate(2)">
+                  <ion-icon color="dark" :icon="star"></ion-icon
+                ></ion-button>
+                <ion-button @click="onRate(3)">
+                  <ion-icon color="dark" :icon="star"></ion-icon
+                ></ion-button>
+                <ion-button @click="onRate(4)">
+                  <ion-icon color="dark" :icon="star"></ion-icon
+                ></ion-button>
+                <ion-button @click="onRate(5)">
+                  <ion-icon color="dark" :icon="star"></ion-icon
+                ></ion-button>
+              </div>
+              <div v-if="wine.rating == 2" class="rating-wrapper">
+                <ion-button @click="onRate(1)">
+                  <ion-icon color="warning" :icon="star"></ion-icon
+                ></ion-button>
+                <ion-button @click="onRate(2)">
+                  <ion-icon color="warning" :icon="star"></ion-icon
+                ></ion-button>
+                <ion-button @click="onRate(3)">
+                  <ion-icon color="dark" :icon="star"></ion-icon
+                ></ion-button>
+                <ion-button @click="onRate(4)">
+                  <ion-icon color="dark" :icon="star"></ion-icon
+                ></ion-button>
+                <ion-button @click="onRate(5)">
+                  <ion-icon color="dark" :icon="star"></ion-icon
+                ></ion-button>
+              </div>
+              <div v-if="wine.rating == 3" class="rating-wrapper">
+                <ion-button @click="onRate(1)">
+                  <ion-icon color="warning" :icon="star"></ion-icon
+                ></ion-button>
+                <ion-button @click="onRate(2)">
+                  <ion-icon color="warning" :icon="star"></ion-icon
+                ></ion-button>
+                <ion-button @click="onRate(3)">
+                  <ion-icon color="warning" :icon="star"></ion-icon
+                ></ion-button>
+                <ion-button @click="onRate(4)">
+                  <ion-icon color="dark" :icon="star"></ion-icon
+                ></ion-button>
+                <ion-button @click="onRate(5)">
+                  <ion-icon color="dark" :icon="star"></ion-icon
+                ></ion-button>
+              </div>
+              <div v-if="wine.rating == 4" class="rating-wrapper">
                 <ion-button @click="onRate(1)">
                   <ion-icon color="warning" :icon="star"></ion-icon
                 ></ion-button>
@@ -70,6 +141,23 @@
                   <ion-icon color="dark" :icon="star"></ion-icon
                 ></ion-button>
               </div>
+              <div v-if="wine.rating == 5" class="rating-wrapper">
+                <ion-button @click="onRate(1)">
+                  <ion-icon color="warning" :icon="star"></ion-icon
+                ></ion-button>
+                <ion-button @click="onRate(2)">
+                  <ion-icon color="warning" :icon="star"></ion-icon
+                ></ion-button>
+                <ion-button @click="onRate(3)">
+                  <ion-icon color="warning" :icon="star"></ion-icon
+                ></ion-button>
+                <ion-button @click="onRate(4)">
+                  <ion-icon color="warning" :icon="star"></ion-icon
+                ></ion-button>
+                <ion-button @click="onRate(5)">
+                  <ion-icon color="warning" :icon="star"></ion-icon
+                ></ion-button>
+              </div>
 
               <div>{{ wine.description }}</div>
               {{ wine.wine_info }}
@@ -77,8 +165,9 @@
               <ion-grid>
                 <ion-row>
                   <ion-col size="9"> </ion-col>
-                  <ion-col >
-                    <ion-button color="danger"
+                  <ion-col>
+                    <ion-button
+                      color="danger"
                       class="float-right"
                       @click="
                         orderMorePrompt(
@@ -105,7 +194,11 @@
                           @keyup.enter="saveComment"
                           type="text"
                           v-model="newComment"
-                          placeholder="Your personal notes here."
+                          v-bind:placeholder="
+                            wine.comment
+                              ? wine.comment
+                              : 'Your personal notes here.'
+                          "
                         />
                       </div>
                     </ion-col>
@@ -171,7 +264,8 @@
                 <ion-row>
                   <ion-col size="9"> </ion-col>
                   <ion-col>
-                    <ion-button color="danger"
+                    <ion-button
+                      color="danger"
                       class="float-right"
                       @click="
                         orderMorePrompt(
@@ -263,7 +357,8 @@
                 <ion-row>
                   <ion-col size="9"> </ion-col>
                   <ion-col>
-                    <ion-button color="danger"
+                    <ion-button
+                      color="danger"
                       class="float-right"
                       @click="
                         orderMorePrompt(
