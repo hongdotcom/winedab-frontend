@@ -1,13 +1,16 @@
 {
-  "appId": "com.winedab.winemanage",
-  "appName": "winedab",
-  "bundledWebRuntime": false,
-  "npmClient": "yarn",
-  "webDir": "dist",
-  "plugins": {
-    "SplashScreen": {
-      "launchShowDuration": 0
-    }
-  },
-  "cordova": {}
+	"appId": "com.winedab.winemanage",
+	"appName": "winedab",
+	"bundledWebRuntime": false,
+	"npmClient": "yarn",
+	"webDir": "dist",
+	"plugins": {
+		"SplashScreen": {
+			"launchShowDuration": 0
+		}
+	},
+	"server": {
+		"hostname": "localhost:8100"
+	},
+	"cordova": {}
 }

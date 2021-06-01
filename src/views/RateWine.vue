@@ -40,6 +40,7 @@
             <ion-card-header>
               <ion-card-title
                 >{{ wine.wine_name }} {{ wine.year }} - {{ wine.colour }}
+
                 <ion-icon color="danger" :icon="heartCircleOutline"></ion-icon>
               </ion-card-title>
             </ion-card-header>
@@ -56,111 +57,110 @@
                 v-if="wine.rating == 0 || !wine.rating"
                 class="rating-wrapper"
               >
-                <ion-button @click="onRate(1)">
+                <ion-button @click="onRate(wine, 1)">
                   <ion-icon color="dark" :icon="star"></ion-icon
                 ></ion-button>
-                <ion-button @click="onRate(2)">
+                <ion-button @click="onRate(wine, 2)">
                   <ion-icon color="dark" :icon="star"></ion-icon
                 ></ion-button>
-                <ion-button @click="onRate(3)">
+                <ion-button @click="onRate(wine, 3)">
                   <ion-icon color="dark" :icon="star"></ion-icon
                 ></ion-button>
-                <ion-button @click="onRate(4)">
+                <ion-button @click="onRate(wine, 4)">
                   <ion-icon color="dark" :icon="star"></ion-icon
                 ></ion-button>
-                <ion-button @click="onRate(5)">
+                <ion-button @click="onRate(wine, 5)">
                   <ion-icon color="dark" :icon="star"></ion-icon
                 ></ion-button>
               </div>
 
               <div v-if="wine.rating == 1" class="rating-wrapper">
-                <ion-button @click="onRate(1)">
+                <ion-button @click="onRate(wine, 1)">
                   <ion-icon color="warning" :icon="star"></ion-icon
                 ></ion-button>
-                <ion-button @click="onRate(2)">
+                <ion-button @click="onRate(wine, 2)">
                   <ion-icon color="dark" :icon="star"></ion-icon
                 ></ion-button>
-                <ion-button @click="onRate(3)">
+                <ion-button @click="onRate(wine, 3)">
                   <ion-icon color="dark" :icon="star"></ion-icon
                 ></ion-button>
-                <ion-button @click="onRate(4)">
+                <ion-button @click="onRate(wine, 4)">
                   <ion-icon color="dark" :icon="star"></ion-icon
                 ></ion-button>
-                <ion-button @click="onRate(5)">
+                <ion-button @click="onRate(wine, 5)">
                   <ion-icon color="dark" :icon="star"></ion-icon
                 ></ion-button>
               </div>
               <div v-if="wine.rating == 2" class="rating-wrapper">
-                <ion-button @click="onRate(1)">
+                <ion-button @click="onRate(wine, 1)">
                   <ion-icon color="warning" :icon="star"></ion-icon
                 ></ion-button>
-                <ion-button @click="onRate(2)">
+                <ion-button @click="onRate(wine, 2)">
                   <ion-icon color="warning" :icon="star"></ion-icon
                 ></ion-button>
-                <ion-button @click="onRate(3)">
+                <ion-button @click="onRate(wine, 3)">
                   <ion-icon color="dark" :icon="star"></ion-icon
                 ></ion-button>
-                <ion-button @click="onRate(4)">
+                <ion-button @click="onRate(wine, 4)">
                   <ion-icon color="dark" :icon="star"></ion-icon
                 ></ion-button>
-                <ion-button @click="onRate(5)">
+                <ion-button @click="onRate(wine, 5)">
                   <ion-icon color="dark" :icon="star"></ion-icon
                 ></ion-button>
               </div>
               <div v-if="wine.rating == 3" class="rating-wrapper">
-                <ion-button @click="onRate(1)">
+                <ion-button @click="onRate(wine, 1)">
                   <ion-icon color="warning" :icon="star"></ion-icon
                 ></ion-button>
-                <ion-button @click="onRate(2)">
+                <ion-button @click="onRate(wine, 2)">
                   <ion-icon color="warning" :icon="star"></ion-icon
                 ></ion-button>
-                <ion-button @click="onRate(3)">
+                <ion-button @click="onRate(wine, 3)">
                   <ion-icon color="warning" :icon="star"></ion-icon
                 ></ion-button>
-                <ion-button @click="onRate(4)">
+                <ion-button @click="onRate(wine, 4)">
                   <ion-icon color="dark" :icon="star"></ion-icon
                 ></ion-button>
-                <ion-button @click="onRate(5)">
+                <ion-button @click="onRate(wine, 5)">
                   <ion-icon color="dark" :icon="star"></ion-icon
                 ></ion-button>
               </div>
               <div v-if="wine.rating == 4" class="rating-wrapper">
-                <ion-button @click="onRate(1)">
+                <ion-button @click="onRate(wine, 1)">
                   <ion-icon color="warning" :icon="star"></ion-icon
                 ></ion-button>
-                <ion-button @click="onRate(2)">
+                <ion-button @click="onRate(wine, 2)">
                   <ion-icon color="warning" :icon="star"></ion-icon
                 ></ion-button>
-                <ion-button @click="onRate(3)">
+                <ion-button @click="onRate(wine, 3)">
                   <ion-icon color="warning" :icon="star"></ion-icon
                 ></ion-button>
-                <ion-button @click="onRate(4)">
+                <ion-button @click="onRate(wine, 4)">
                   <ion-icon color="warning" :icon="star"></ion-icon
                 ></ion-button>
-                <ion-button @click="onRate(5)">
+                <ion-button @click="onRate(wine, 5)">
                   <ion-icon color="dark" :icon="star"></ion-icon
                 ></ion-button>
               </div>
               <div v-if="wine.rating == 5" class="rating-wrapper">
-                <ion-button @click="onRate(1)">
+                <ion-button @click="onRate(wine, 1)">
                   <ion-icon color="warning" :icon="star"></ion-icon
                 ></ion-button>
-                <ion-button @click="onRate(2)">
+                <ion-button @click="onRate(wine, 2)">
                   <ion-icon color="warning" :icon="star"></ion-icon
                 ></ion-button>
-                <ion-button @click="onRate(3)">
+                <ion-button @click="onRate(wine, 3)">
                   <ion-icon color="warning" :icon="star"></ion-icon
                 ></ion-button>
-                <ion-button @click="onRate(4)">
+                <ion-button @click="onRate(wine, 4)">
                   <ion-icon color="warning" :icon="star"></ion-icon
                 ></ion-button>
-                <ion-button @click="onRate(5)">
+                <ion-button @click="onRate(wine, 5)">
                   <ion-icon color="warning" :icon="star"></ion-icon
                 ></ion-button>
               </div>
 
               <div>{{ wine.description }}</div>
-              {{ wine.wine_info }}
 
               <ion-grid>
                 <ion-row>
@@ -179,7 +179,7 @@
                         )
                       "
                     >
-                      Buy Again
+                      {{ wine.winedab_sku }}
                     </ion-button>
                   </ion-col>
                 </ion-row>
@@ -191,9 +191,9 @@
                     <ion-col size="9">
                       <div>
                         <input
-                          @keyup.enter="saveComment"
+                          @keyup.enter="saveComment(wine, wine.winedab_sku)"
                           type="text"
-                          v-model="newComment"
+                          :v-model="newComment[wine.winedab_sku]"
                           v-bind:placeholder="
                             wine.comment
                               ? wine.comment
@@ -204,16 +204,13 @@
                     </ion-col>
                     <ion-col>
                       <div>
-                        <button @click="saveComment">
+                        <button @click="saveComment(wine, wine.winedab_sku)">
                           Add
                         </button>
                       </div>
                     </ion-col>
                   </ion-row>
                 </ion-grid>
-                <p v-for="comment in reversedComments" :key="comment.id">
-                  {{ comment.comment }}
-                </p>
               </div>
             </ion-card-content>
           </ion-card>
@@ -256,10 +253,6 @@
               </div>
 
               <div>{{ wine.description }}</div>
-              <!-- <div>
-                {{ wine.wine_info }}
-              </div> -->
-
               <ion-grid>
                 <ion-row>
                   <ion-col size="9"> </ion-col>
@@ -305,9 +298,6 @@
                     </ion-col>
                   </ion-row>
                 </ion-grid>
-                <p v-for="comment in reversedComments" :key="comment.id">
-                  {{ comment.comment }}
-                </p>
               </div>
             </ion-card-content>
           </ion-card>
@@ -349,10 +339,6 @@
               </div>
 
               <div>{{ wine.description }}</div>
-              <!-- <div>
-                {{ wine.wine_info }}
-              </div> -->
-
               <ion-grid>
                 <ion-row>
                   <ion-col size="9"> </ion-col>
@@ -432,7 +418,7 @@ import {
   IonIcon,
   IonRow,
   IonCol,
-  //IonSearchbar,
+  IonSearchbar,
 } from "@ionic/vue";
 import { mapGetters, mapActions } from "vuex";
 import { useRouter } from "vue-router";
@@ -450,7 +436,7 @@ export default defineComponent({
     IonRow,
     IonCol,
     IonIcon,
-    //IonSearchbar,
+    IonSearchbar,
   },
   data() {
     return {
@@ -471,6 +457,7 @@ export default defineComponent({
       "loadProfile",
       "loadSubscription",
       "buyMoreOrder",
+      "submitRating",
     ]),
     async editCommentPrompt() {
       const alert = await alertController.create({
@@ -619,15 +606,38 @@ export default defineComponent({
     selectTab(selectedTab) {
       this.currentTab = selectedTab;
     },
-    onRate(rating) {
-      console.log(rating);
+    async onRate(wine, rating) {
+      console.log(wine.comment);
+      const payload = {
+        order_delivery_id: wine.order_delivery_id,
+        order_id: wine.order_id,
+        code: wine.winedab_sku,
+        rating: rating,
+        comment: wine.comment,
+      };
+      await this.submitRating(payload).then(() => {
+        console.log("complete on rating");
+      });
+      this.loadWines();
     },
 
-    saveComment() {
-      this.comments.push({
-        id: this.comments.length + 1,
-        comment: this.newComment,
+    async saveComment(wine, key) {
+      console.log(key);
+      const payload = {
+        order_delivery_id: wine.order_delivery_id,
+        order_id: wine.order_id,
+        code: wine.winedab_sku,
+        rating: wine.rating,
+        comment: "test",
+      };
+      await this.submitRating(payload).then(() => {
+        console.log("complete on Comment");
       });
+      this.loadWines();
+      // this.comments.push({
+      //   id: this.comments.length + 1,
+      //   comment: this.newComment,
+      // });
       this.newComment = "";
     },
     doEdit(editing) {

@@ -1,15 +1,16 @@
 import axios from "axios";
 
 // Wayne's test ids
-// const wineCustId = "745"; //Wayne
+const wineCustId = "745"; //Wayne
 const proCustId = "24"; //Wayne
 const subCustId = "24"; //Wayne
 const custUUID = "2f2c1e2a-6ca6-4693-b4f9-1c13cc06b72b"; //Wayne
-
+const klaviyo_id = "01EHBED86VPWD066SGBF173J5G";
+console.log(klaviyo_id);
 // Junico's test ids
 
 // const wineCustId = "181";
- const wineCustId = "744";
+//  const wineCustId = "744";
 // const proCustId = "24";
 // const subCustId = "24";
 // const custUUID = "d7001590-8c1e-11ea-bcbf-07132ae12abf";
@@ -118,13 +119,34 @@ export default {
     commit("SET_UPDATE_ORDERS");
     console.log(response6.data);
   },
-  async test({ commit }) {
-    // console.log("loading quix");
-    const response4 = await axios.get(
+  async getWines({ commit }) {
+    const response7 = await axios.get(
       `${process.env.VUE_APP_LARAVEL_ENDPOINT}/api/wine-data`,
       {}
     );
-    console.log(response4.data);
-    commit("SET_QUIZ", response4.data);
+    console.log(response7.data);
+    commit("SET_WINES", response7.data);
+  },
+  async submitRating({ commit }, payload) {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        order_delivery_id: payload.order_delivery_id,
+        order_id: payload.order_id,
+        klaviyoId: klaviyo_id,
+        code: payload.code,
+        rating: payload.rating,
+        comment: payload.comment,
+      }),
+    };
+    console.log("submit rate & comment");
+    const response8 = await fetch(
+      `${process.env.VUE_APP_LARAVEL_ENDPOINT}/api/rating/${klaviyo_id}`,
+      requestOptions
+    );
+
+    console.log(response8.data);
+    commit("SET_WINES", response8.data);
   },
 };

@@ -13,4 +13,5 @@ export default {
   },
   SET_UPDATE_SUBS: () => {},
   SET_UPDATE_ORDERS: () => {},
+  SET_UPDATE_WINES: () => {},
 };
