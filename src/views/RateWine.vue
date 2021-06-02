@@ -2,6 +2,14 @@
   <main-layout :pageTitle="profile.first_name">
     <ion-page>
       <!--  Main Menu here  -->
+      <!-- <div class="custom-bar">
+        <ion-buttons>
+          <ion-button class="nav-button active" @click="$router.push('/rate-wine')"> Rate Wine </ion-button>
+          <ion-button class="nav-button" @click="$router.push('/my-cellar')"> My Cellar </ion-button>
+          <ion-button class="nav-button-last" @click="$router.push('/my-subscription')"> Subscription </ion-button>
+        </ion-buttons>
+      </div> -->
+      
       <ion-content class="ion-padding">
         <div class="ion-padding">
           <h2>My Orders</h2>
@@ -38,7 +46,7 @@
           <ion-searchbar placeholder="Search wines"></ion-searchbar>
           <ion-card v-for="wine in wines" :key="wine.id">
             <ion-card-header>
-              <ion-card-title
+              <ion-card-title class="title-header"
                 >{{ wine.wine_name }} {{ wine.year }} - {{ wine.colour }}
 
                 <ion-icon color="danger" :icon="heartCircleOutline"></ion-icon>
