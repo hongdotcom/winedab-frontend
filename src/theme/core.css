@@ -131,8 +131,12 @@
 
 */
 /*Junix code here*/
-h1, h2, h3, h4, h5 {
-  color:#333;
+h1,
+h2,
+h3,
+h4,
+h5 {
+  color: #333;
 }
 ion-card {
   padding: 10px;
@@ -151,7 +155,6 @@ ion-tab-bar {
 ion-button {
   text-transform: capitalize;
 }
-
 
 .login-page {
   background-color: #6e1541 !important;
@@ -211,7 +214,7 @@ a.router-link-exact-active {
   border-top-right-radius: 10px;
 }
 
- /* used to truncate wine description */
+/* used to truncate wine description */
 /* .truncate { 
   width: 100%;
   white-space: nowrap;
@@ -220,14 +223,12 @@ a.router-link-exact-active {
   margin: 10px 0;
 } */
 
-
-
 /* Rate Wine page =====  */
 .tab-holder {
   margin-bottom: 30px;
 }
 .tab-holder button {
-  background-color:#fff;
+  background-color: #fff;
   color: #333;
   padding: 10px;
   margin: 0 2px;
@@ -235,12 +236,10 @@ a.router-link-exact-active {
 
 .tab-holder .active-tab {
   border: solid 1px bisque;
-  border-radius: 8px;;
-  background-color:bisque;
+  border-radius: 8px;
+  background-color: bisque;
   padding: 10px;
 }
-
-
 
 /* Rate Wine and My Cellar pages =====  */
 .comment-wrapper {
@@ -272,7 +271,6 @@ a.router-link-exact-active {
   margin: 10px;
 }
 
-
 .rating-wrapper {
   padding: 2px;
   text-align: right;
@@ -286,12 +284,10 @@ a.router-link-exact-active {
 }
 
 /* floating right the Buy Again button */
-.float-right { 
+.float-right {
   float: right;
   clear: both;
 }
-
-
 
 /* subscription page  ====== */
 .subs-margin {
@@ -308,7 +304,6 @@ a.router-link-exact-active {
   border: solid 1px #eee;
   border-radius: 4px;
 }
-
 
 .planButtonSelect {
   /* display: inline-block; */

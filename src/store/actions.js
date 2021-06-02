@@ -142,28 +142,39 @@ export default {
   },
   async updateSubs({ commit }, payload) {
     console.log("action update subs");
-    var data1 = JSON.stringify({
-      id: 15807,
-      customer_note: "This is a test from app please ignore ",
-      line_items: [
-        {
-          id: 6819,
-          product_id: 9193,
-          subtotal: "499.00",
-          quantity: 1,
-          variation_id: 9197,
-        },
-      ],
-    });
-    const response6 = await axios
-      .put(
-        `${process.env.VUE_APP_WC_ENDPOINT}/wp-json/wc/v3/orders/${payload.id}?consumer_key=${process.env.VUE_APP_CONSUMER_KEY}&consumer_secret=${process.env.VUE_APP_CONSUMER_SECRET}`,
-        { data: data1 },
-        { headers: { "Content-Type": "application/json" } }
-      )
-      .catch((err) => {
-        console.log(err);
-      });
+    console.log(payload.product_id);
+    console.log(payload.variation_id);
+
+    const requestOptions = {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        id: payload.id,
+        customer_note: "This is a test from app please ignore ",
+        line_items: [
+          {
+            id: payload.item_id,
+            product_id: payload.product_id,
+            subtotal: payload.subtotal,
+            quantity: 1,
+            variation_id: payload.variation_id,
+          },
+        ],
+      }),
+    };
+    const response6 = await fetch(
+      `${process.env.VUE_APP_WC_ENDPOINT}/wp-json/wc/v3/orders/${payload.id}?consumer_key=${process.env.VUE_APP_CONSUMER_KEY}&consumer_secret=${process.env.VUE_APP_CONSUMER_SECRET}`,
+      requestOptions
+    );
+    // const response6 = await axios
+    //   .put(
+    //     `${process.env.VUE_APP_WC_ENDPOINT}/wp-json/wc/v3/orders/${payload.id}?consumer_key=${process.env.VUE_APP_CONSUMER_KEY}&consumer_secret=${process.env.VUE_APP_CONSUMER_SECRET}`,
+    //     { data: data1 },
+    //     { headers: { "Content-Type": "application/json" } }
+    //   )
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
     commit("SET_UPDATE_ORDERS");
     console.log(response6.data);
   },
