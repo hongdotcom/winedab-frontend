@@ -1,6 +1,15 @@
 <template>
   <main-layout :pageTitle="profile.first_name">
     <ion-page>
+      <!--  Main Menu here  -->
+      <div class="custom-bar">
+        <ion-buttons>
+          <ion-button class="nav-button" @click="$router.push('/rate-wine')"> Rate Wine </ion-button>
+          <ion-button class="nav-button" @click="$router.push('/my-cellar')"> My Cellar </ion-button>
+          <ion-button class="nav-button-last active" @click="$router.push('/my-subscription')"> Subscription </ion-button>
+        </ion-buttons>
+      </div>
+      
       <ion-content>
         <div class="ion-padding">
           <h2>Manage Subscription</h2>
