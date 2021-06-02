@@ -34,7 +34,7 @@
                       "
                       @click="this.selectedPlan('Bargain Bottles')"
                     >
-                      Bargain Bottles
+                      am i here
                     </ion-button>
                   </ion-col>
 
@@ -47,7 +47,6 @@
                           ? 'planButtonSelect'
                           : 'planButton'
                       "
-                      class="planButtonSelect"
                       @click="this.selectedPlan('Everyday Exceptional')"
                     >
                       Everyday Exceptional
@@ -63,7 +62,6 @@
                           ? 'planButtonSelect'
                           : 'planButton'
                       "
-                      class="planButton"
                       @click="this.selectedPlan('Exquisite Entertaining')"
                     >
                       Exquisite Entertaining
@@ -77,7 +75,6 @@
                           ? 'planButtonSelect'
                           : 'planButton'
                       "
-                      class="planButton"
                       @click="this.selectedPlan('Stellar Selection')"
                     >
                       Stellar Selection
@@ -174,7 +171,7 @@
                   <ion-col expand="full">
                     <ion-button
                       :class="
-                        subs[0].line_items[0].quantity == 1
+                        subs[0].line_items[0].sku.includes('01')
                           ? 'planButtonSelect'
                           : 'planButton'
                       "
@@ -187,11 +184,10 @@
                   <ion-col expand="full">
                     <ion-button
                       :class="
-                        subs[0].line_items[0].quantity == 3
+                        subs[0].line_items[0].sku.includes('03')
                           ? 'planButtonSelect'
                           : 'planButton'
                       "
-                      class="planButtonSelect"
                       @click="this.selectedQuantity(3)"
                     >
                       3
@@ -201,11 +197,10 @@
                   <ion-col expand="full">
                     <ion-button
                       :class="
-                        subs[0].line_items[0].quantity == 6
+                        subs[0].line_items[0].sku.includes('06')
                           ? 'planButtonSelect'
                           : 'planButton'
                       "
-                      class="planButton"
                       @click="this.selectedQuantity(6)"
                     >
                       6
@@ -215,11 +210,10 @@
                   <ion-col expand="full">
                     <ion-button
                       :class="
-                        subs[0].line_items[0].quantity == 12
+                        subs[0].line_items[0].sku.includes('12')
                           ? 'planButtonSelect'
                           : 'planButton'
                       "
-                      class="planButton"
                       @click="this.selectedQuantity(12)"
                     >
                       12
@@ -556,16 +550,22 @@ export default defineComponent({
             text: "Ok",
             handler: () => {
               console.log(this.currentQuantity + this.currentProduct);
+
               const payload = [];
               payload.id = sub.id;
-              payload.currentProduct = this.currentProduct;
-              payload.currentQuantity = this.currentQuantity;
-              console.log(this.test());
+              payload.product_id = this.getProductId(this.currentProduct);
+              payload.variation_id = this.getVariationId(
+                this.currentProduct,
+                this.currentQuantity
+              );
+              payload.subtotal = this.getSubtotal(
+                this.currentProduct,
+                this.currentQuantity
+              );
+              payload.item_id = sub.line_items[0].id;
               this.updateSubs(payload).then(() => {
                 this.loadSubscription();
               });
-              // payload.status = this.reverseStatus(status);
-              // this.onholdSubscription(payload)
             },
           },
         ],
@@ -606,11 +606,135 @@ export default defineComponent({
       }
       return this.currentQuantity;
     },
+    getProductId(planName) {
+      console.log("getProductID");
+      console.log(planName);
+      if (planName.includes("Everyday Exceptional")) {
+        return 9177;
+      }
+      if (planName.includes("Bargain Bottles")) {
+        return 15021;
+      }
+      if (planName.includes("Exquisite Entertaining")) {
+        return 9188;
+      }
+      if (planName.includes("Stellar Selection")) {
+        return 9193;
+      }
+    },
+    getVariationId(planName, quan) {
+      console.log("getVariationId");
+      console.log(planName + quan);
+      if (planName.includes("Bargain Bottles")) {
+        switch (quan) {
+          case 1:
+            console.log("I am good boy yat ming");
+            return 15022;
+          case 3:
+            return 15023;
+          case 6:
+            return 15024;
+          case 12:
+            return 15025;
+        }
+      }
+      if (planName.includes("Everyday Exceptional")) {
+        switch (quan) {
+          case 1:
+            return 9179;
+          case 3:
+            return 9180;
+          case 6:
+            return 9181;
+          case 12:
+            return 9182;
+        }
+      }
+
+      if (planName.includes("Exquisite Entertaining")) {
+        switch (quan) {
+          case 1:
+            return 9189;
+          case 3:
+            return 9190;
+          case 6:
+            return 9191;
+          case 12:
+            return 9192;
+        }
+      }
+      if (planName.includes("Stellar Selection")) {
+        switch (quan) {
+          case 1:
+            return 9194;
+          case 3:
+            return 9195;
+          case 6:
+            return 9196;
+          case 12:
+            return 9197;
+        }
+      }
+    },
+    getSubtotal(planName, quan) {
+      console.log("get subtotal");
+      console.log(planName + quan);
+      if (planName.includes("Bargain Bottles")) {
+        switch (quan) {
+          case 1:
+            console.log("I am good boy yat ming");
+            return "14.99";
+          case 3:
+            return "44.97";
+          case 6:
+            return "89.94";
+          case 12:
+            return "179.88";
+        }
+      }
+      if (planName.includes("Everyday Exceptional")) {
+        switch (quan) {
+          case 1:
+            return "19.99";
+          case 3:
+            return "57.00";
+          case 6:
+            return "113.00";
+          case 12:
+            return "215.00";
+        }
+      }
+
+      if (planName.includes("Exquisite Entertaining")) {
+        switch (quan) {
+          case 1:
+            return "29.99";
+          case 3:
+            return "87.00";
+          case 6:
+            return "164.00";
+          case 12:
+            return "309.00";
+        }
+      }
+      if (planName.includes("Stellar Selection")) {
+        switch (quan) {
+          case 1:
+            return "46.99";
+          case 3:
+            return "137.00";
+          case 6:
+            return "259.00";
+          case 12:
+            return "499.00";
+        }
+      }
+    },
     reverseStatus(status) {
       const newStatus = status != "on-hold" ? "on-hold" : "active";
-
       return newStatus;
     },
+
     newPaymentDate(nextPaymentDate, month) {
       if (nextPaymentDate == "") {
         //enter this when active or anything without a nextpaymentdate.
@@ -624,6 +748,7 @@ export default defineComponent({
         return this.changeDateFormat(newDate);
       }
     },
+
     changeDateFormat(newDate) {
       return (
         newDate.getFullYear() +
@@ -640,8 +765,7 @@ export default defineComponent({
         "-" +
         (newDate.getMonth() + 1) +
         "-" +
-        newDate.getDate() +
-        "%2000:00:00"
+        newDate.getDate()
       );
     },
   },
