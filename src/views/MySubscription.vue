@@ -287,6 +287,17 @@
                     </ion-button>
                   </ion-col>
                 </ion-row>
+
+                <ion-row class="ion-padding-top">
+                  <ion-col>
+                  <ion-button
+                    color="danger"
+                    @click="updateSubsAlert(subs[0])"
+                    expand="block"
+                    >Update Subscription</ion-button
+                  >
+                </ion-col>
+                </ion-row>  
               </ion-grid>
             </div>
 
@@ -352,14 +363,14 @@
                   >
                 </ion-col>
 
-                <ion-col>
+                <!-- <ion-col>
                   <ion-button
                     color="danger"
                     @click="updateSubsAlert(subs[0])"
                     expand="block"
                     >Update Subscription</ion-button
                   >
-                </ion-col>
+                </ion-col> -->
               </ion-row>
             </ion-card-content>
           </ion-card>

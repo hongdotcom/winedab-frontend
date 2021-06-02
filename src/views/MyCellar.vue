@@ -1,5 +1,5 @@
 <template>
-  <main-layout pageTitle="Username">
+  <main-layout :pageTitle="profile.first_name">
     <ion-page>
       <!--  Main Menu here  -->
 

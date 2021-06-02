@@ -38,7 +38,7 @@
           <ion-searchbar placeholder="Search wines"></ion-searchbar>
           <ion-card v-for="wine in wines" :key="wine.id">
             <ion-card-header>
-              <ion-card-title
+              <ion-card-title class="title-header"
                 >{{ wine.wine_name }} {{ wine.year }} - {{ wine.colour }}
 
                 <ion-icon color="danger" :icon="heartCircleOutline"></ion-icon>

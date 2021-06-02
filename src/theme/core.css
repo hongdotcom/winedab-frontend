@@ -134,9 +134,15 @@
 h1, h2, h3, h4, h5 {
   color:#333;
 }
+
+ ion-card-title {
+  color: #6e1541;
+  font-size: 1rem;
+}
 ion-card {
   padding: 10px;
 }
+
 
 ion-toolbar {
   --background: var(--ion-color-primary);
