@@ -25,7 +25,7 @@
                       "
                       @click="this.selectedPlan('Bargain Bottles')"
                     >
-                      am i here
+                      Bargain Bottles
                     </ion-button>
                   </ion-col>
 
