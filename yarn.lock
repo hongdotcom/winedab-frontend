@@ -908,12 +908,12 @@
     "tslib" "^2.1.0"
     "xml2js" "^0.4.23"
 
-"@capacitor/core@^2.4.7", "@capacitor/core@~2.4.0":
-  "integrity" "sha512-ZPzXXQ4EPwR/ZhNDkmlxyzw4FvquIl/ROj8HMMM0MEd4xZfM8ulNGPIL6br9TWdlFLGBKq40eymPZjKaivGnig=="
-  "resolved" "https://registry.npmjs.org/@capacitor/core/-/core-2.4.7.tgz"
-  "version" "2.4.7"
+"@capacitor/core@^3.0.0", "@capacitor/core@~2.4.0":
+  "integrity" "sha512-JmKE6QEayo8MqWcApwMP5YFimpVb2mcIEHBwgP/P9nSAOxOcbdpJyd9HhBt5pzZAE1MBngPADWWwZLrdNSjCnA=="
+  "resolved" "https://registry.npmjs.org/@capacitor/core/-/core-3.0.0.tgz"
+  "version" "3.0.0"
   dependencies:
-    "tslib" "^1.9.0"
+    "tslib" "^2.1.0"
 
 "@capacitor/ios@2.4.7":
   "integrity" "sha512-XKYU67ZM+yY4/vDJ3ZVfs+phjtWK8TcKwq75fGoxB9PKXuCmMi5bihPuA3Xs/sIFXuozpnaYnspp0eTRJ7bG0w=="
