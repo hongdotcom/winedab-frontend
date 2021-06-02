@@ -138,9 +138,15 @@ h4,
 h5 {
   color: #333;
 }
+
+ ion-card-title {
+  color: #6e1541;
+  font-size: 1rem;
+}
 ion-card {
   padding: 10px;
 }
+
 
 ion-toolbar {
   --background: var(--ion-color-primary);
@@ -180,20 +186,22 @@ ion-button {
 
 .custom-bar {
   border-top: solid 4px #f99e0d;
+  background-color: #f99e0d;
+  color: #6e1541;
 }
 
 .nav-button {
   display: inline-block;
   background-color: #f99e0d;
   width: 33%;
-  margin-top: -2px;
+  /* margin-top: -2px; */
 }
 
 .nav-button-last {
   display: inline-block;
   background-color: #f99e0d;
   width: 34%;
-  margin-top: -2px;
+  /* margin-top: -2px; */
 }
 
 .nav-button a,
@@ -205,9 +213,9 @@ ion-button {
   font-size: small;
 }
 
-a.router-link-exact-active {
+a.router-link-exact-active, .active {
   background-color: #fff;
-  padding: 10px;
+  /* padding: 10px; */
   color: black;
   border-bottom: none;
   border-top-left-radius: 10px;
