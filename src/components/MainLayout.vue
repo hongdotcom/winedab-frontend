@@ -10,7 +10,7 @@
       </ion-toolbar>
     </ion-header>
 
-    <!-- <div class="custom-bar">
+    <div class="custom-bar">
       <div class="nav-button">
         <router-link to="/rate-wine"> Rate&nbsp;Wine </router-link>
       </div>
@@ -22,7 +22,7 @@
       <div class="nav-button-last">
         <router-link to="/my-subscription">Subscription </router-link>
       </div>
-    </div> -->
+    </div>
 
     <ion-content>
       <slot></slot>

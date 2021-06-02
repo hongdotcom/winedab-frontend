@@ -10,7 +10,7 @@ console.log(klaviyo_id);
 // Junico's test ids
 
 //const wineCustId = "764";
-const wineCustId = "183";
+const wineCustId = "194";
  const proCustId = "24";
  const subCustId = "24";
 // const custUUID = "d7001590-8c1e-11ea-bcbf-07132ae12abf";

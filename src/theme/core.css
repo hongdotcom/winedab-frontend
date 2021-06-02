@@ -191,7 +191,7 @@ ion-button {
 }
 
 .nav-button {
-  /* display: inline-block; */
+  display: inline-block;
   background-color: #f99e0d;
   width: 33%;
   /* margin-top: -2px; */
