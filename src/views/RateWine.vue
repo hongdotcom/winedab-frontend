@@ -179,7 +179,7 @@
                         )
                       "
                     >
-                      {{ wine.winedab_sku }}
+                      Buy More
                     </ion-button>
                   </ion-col>
                 </ion-row>
@@ -193,7 +193,8 @@
                         <input
                           @keyup.enter="saveComment(wine, wine.winedab_sku)"
                           type="text"
-                          :v-model="newComment[wine.winedab_sku]"
+                          :key="wine.winedab_sku"
+                          v-model="newComment"
                           v-bind:placeholder="
                             wine.comment
                               ? wine.comment
@@ -622,13 +623,15 @@ export default defineComponent({
     },
 
     async saveComment(wine, key) {
+      console.log(this.newComment);
+      console.log(wine.comment);
       console.log(key);
       const payload = {
         order_delivery_id: wine.order_delivery_id,
         order_id: wine.order_id,
         code: wine.winedab_sku,
         rating: wine.rating,
-        comment: "test",
+        comment: this.newComment,
       };
       await this.submitRating(payload).then(() => {
         console.log("complete on Comment");

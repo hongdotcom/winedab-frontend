@@ -79,16 +79,64 @@ export default {
     commit("SET_UPDATE_SUBS");
   },
   async buyMoreOrder({ commit }, payload) {
+    console.log("submit rate & comment");
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        customer_id: payload.customer_id,
+        payment_method: payload.payment_method,
+        payment_method_title: payload.payment_method_title,
+        set_paid: payload.set_paid,
+        customer_note: payload.customer_note,
+        billing: {
+          first_name: payload.billing.first_name,
+          last_name: payload.billing.last_name,
+          address_1: payload.billing.address_1,
+          address_2: payload.billing.address_2,
+          city: payload.billing.city,
+          state: payload.billing.state,
+          postcode: payload.billing.postcode,
+          country: payload.billing.country,
+          email: payload.billing.email,
+          phone: payload.billing.phone,
+        },
+        shipping: {
+          first_name: payload.shipping.first_name,
+          last_name: payload.shipping.last_name,
+          address_1: payload.shipping.address_1,
+          address_2: payload.shipping.address_2,
+          city: payload.shipping.city,
+          state: payload.shipping.state,
+          postcode: payload.shipping.postcode,
+          country: payload.shipping.country,
+        },
+        line_items: [
+          {
+            product_id: payload.line_items[0].product_id,
+            quantity: payload.line_items[0].quantity,
+          },
+        ],
+        shipping_lines: [
+          {
+            method_id: payload.shipping_lines[0].method_id,
+            method_title: payload.shipping_lines[0].method_title,
+            total: "",
+          },
+        ],
+        coupon_lines: [
+          {
+            code: "testcheckout!",
+          },
+        ],
+      }),
+    };
+
+    const response5 = await fetch(
+      `${process.env.VUE_APP_WC_ENDPOINT}/wp-json/wc/v3/orders?consumer_key=${process.env.VUE_APP_CONSUMER_KEY}&consumer_secret=${process.env.VUE_APP_CONSUMER_SECRET}`,
+      requestOptions
+    );
     console.log("action buy more");
-    const response5 = await axios
-      .post(
-        `${process.env.VUE_APP_WC_ENDPOINT}/wp-json/wc/v3/orders?consumer_key=${process.env.VUE_APP_CONSUMER_KEY}&consumer_secret=${process.env.VUE_APP_CONSUMER_SECRET}`,
-        { payload },
-        { headers: { "content-type": "application/json" } }
-      )
-      .catch((err) => {
-        console.log(err);
-      });
     commit("SET_UPDATE_ORDERS");
     console.log(response5.data);
   },
@@ -146,7 +194,7 @@ export default {
       requestOptions
     );
 
-    console.log(response8.data);
+    console.log(response8);
     commit("SET_WINES", response8.data);
   },
 };
