@@ -9,7 +9,7 @@
           <ion-button class="nav-button-last active" @click="$router.push('/my-subscription')"> Subscription </ion-button>
         </ion-buttons>
       </div> -->
-      
+
       <ion-content>
         <div class="ion-padding">
           <h2>Manage Subscription</h2>
@@ -295,14 +295,14 @@
 
                 <ion-row class="ion-padding-top">
                   <ion-col>
-                  <ion-button
-                    color="danger"
-                    @click="updateSubsAlert(subs[0])"
-                    expand="block"
-                    >Update Subscription</ion-button
-                  >
-                </ion-col>
-                </ion-row>  
+                    <ion-button
+                      color="danger"
+                      @click="updateSubsAlert(subs[0])"
+                      expand="block"
+                      >Update Subscription</ion-button
+                    >
+                  </ion-col>
+                </ion-row>
               </ion-grid>
             </div>
 
@@ -318,7 +318,10 @@
 
               <ion-row>
                 <ion-col>
-                  <p><b>Next Payment</b>: {{ subs[0].next_payment_date }}</p>
+                  <p>
+                    <b>Next Payment</b>:
+                    {{ this.displayDateFormat(subs[0].next_payment_date) }}
+                  </p>
                 </ion-col>
               </ion-row>
 
@@ -364,7 +367,7 @@
                       )
                     "
                     expand="block"
-                    >Un-Pause</ion-button
+                    >Restart</ion-button
                   >
                 </ion-col>
 
@@ -423,6 +426,7 @@ export default defineComponent({
       "loadProfile",
       "updateSubs",
       "getWines",
+      "postponeSubscription",
     ]),
 
     async showPostponeAlert(id, status, nextPaymentDate) {
@@ -450,13 +454,15 @@ export default defineComponent({
           },
           {
             text: "Ok",
-            handler: () => {
-              console.log("this is" + +id + status + nextPaymentDate);
+            handler: (data) => {
               const payload = [];
               payload.id = id;
               payload.status = this.reverseStatus(status);
-              payload.nextPaymentDate = this.newPaymentDate(nextPaymentDate);
-              this.onholdSubscription(payload);
+              payload.nextPaymentDate = this.newPaymentDate(
+                nextPaymentDate,
+                data.month
+              );
+              this.postponeSubscription(payload);
               this.loadSubscription();
             },
           },
@@ -524,16 +530,12 @@ export default defineComponent({
     },
     async updateSubsAlert(sub) {
       if (!this.currentProduct) {
-        console.log("set product");
         let planName = this.getProduct(sub.line_items[0].name);
         this.selectedPlan(planName);
-        console.log("after set" + this.currentProduct);
       }
       if (!this.currentQuantity) {
-        console.log("set quantity");
         let planName = this.getQuantity(sub.line_items[0].name);
         this.selectedQuantity(planName);
-        console.log("after set" + this.currentQuantity);
       }
 
       const alert = await alertController.create({
@@ -551,8 +553,6 @@ export default defineComponent({
           {
             text: "Ok",
             handler: () => {
-              console.log(this.currentQuantity + this.currentProduct);
-
               const payload = [];
               payload.id = sub.id;
               payload.product_id = this.getProductId(this.currentProduct);
@@ -575,8 +575,6 @@ export default defineComponent({
       alert.present();
     },
     getProduct(planName) {
-      console.log("getProduct");
-      console.log(planName);
       if (planName.includes("Everyday Exceptional")) {
         return "Everyday Exceptional";
       }
@@ -591,7 +589,6 @@ export default defineComponent({
       }
     },
     selectedPlan(planName) {
-      console.log(planName);
       this.runtime = 1;
       if (planName) {
         this.currentProduct = this.getProduct(planName);
@@ -600,7 +597,6 @@ export default defineComponent({
       return this.currentProduct;
     },
     selectedQuantity(quan) {
-      console.log(quan);
       this.runtimeQt = 1;
       if (quan) {
         this.currentQuantity = quan;
@@ -609,8 +605,6 @@ export default defineComponent({
       return this.currentQuantity;
     },
     getProductId(planName) {
-      console.log("getProductID");
-      console.log(planName);
       if (planName.includes("Everyday Exceptional")) {
         return 9177;
       }
@@ -625,8 +619,6 @@ export default defineComponent({
       }
     },
     getVariationId(planName, quan) {
-      console.log("getVariationId");
-      console.log(planName + quan);
       if (planName.includes("Bargain Bottles")) {
         switch (quan) {
           case 1:
@@ -679,8 +671,6 @@ export default defineComponent({
       }
     },
     getSubtotal(planName, quan) {
-      console.log("get subtotal");
-      console.log(planName + quan);
       if (planName.includes("Bargain Bottles")) {
         switch (quan) {
           case 1:
@@ -746,29 +736,59 @@ export default defineComponent({
         return this.changeDateFormat(newDate);
       } else {
         const newDate = new Date(nextPaymentDate);
-        newDate.setMonth(parseInt(newDate.getMonth()) + parseInt(month));
-        return this.changeDateFormat(newDate);
+        console.log(
+          newDate.setMonth(parseInt(newDate.getMonth()) + parseInt(month))
+        );
+        return (
+          newDate.getFullYear() +
+          "-" +
+          newDate.getMonth() +
+          "-" +
+          newDate.getDate() +
+          "%2000:00:00"
+        );
       }
     },
 
     changeDateFormat(newDate) {
+      const newformatDate = new Date(newDate);
+      console.log(
+        newformatDate.getFullYear() +
+          "-" +
+          newformatDate.getMonth() +
+          "-" +
+          newformatDate.getDate() +
+          "%2000:00:00"
+      );
       return (
-        newDate.getFullYear() +
+        newformatDate.getFullYear() +
         "-" +
-        (newDate.getMonth() + 1) +
+        newformatDate.getMonth() +
         "-" +
-        newDate.getDate() +
+        newformatDate.getDate() +
         "%2000:00:00"
       );
     },
-    displayDateFormat(newDate) {
-      return (
-        newDate.getFullYear() +
-        "-" +
-        (newDate.getMonth() + 1) +
-        "-" +
-        newDate.getDate()
-      );
+    displayDateFormat(nextPaymentDate) {
+      console.log(nextPaymentDate);
+      const newDate = new Date(nextPaymentDate);
+      let monthNames = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ];
+      let monthIndex = newDate.getMonth();
+      let monthName = monthNames[monthIndex];
+      return newDate.getDate() + "-" + monthName + "-" + newDate.getFullYear();
     },
   },
   data() {

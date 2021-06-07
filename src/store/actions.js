@@ -1,31 +1,28 @@
 import axios from "axios";
 
 // Wayne's test ids
-// const wineCustId = "745"; //Wayne
-// const proCustId = "24"; //Wayne
-// const subCustId = "24"; //Wayne
+const wineCustId = "745"; //Wayne
+const proCustId = "24"; //Wayne
+const subCustId = "24"; //Wayne
 const custUUID = "2f2c1e2a-6ca6-4693-b4f9-1c13cc06b72b"; //Wayne
 const klaviyo_id = "01EHBED86VPWD066SGBF173J5G";
-console.log(klaviyo_id);
 // Junico's test ids
 
 //const wineCustId = "764";
-const wineCustId = "194";
- const proCustId = "24";
- const subCustId = "24";
+// const wineCustId = "194";
+//  const proCustId = "24";
+//  const subCustId = "24";
 // const custUUID = "d7001590-8c1e-11ea-bcbf-07132ae12abf";
 export default {
   async loadSubscription({ commit }) {
-    console.log("loading subs");
     const response = await axios.get(
       `${process.env.VUE_APP_WC_ENDPOINT}/wp-json/wc/v1/subscriptions?consumer_key=${process.env.VUE_APP_CONSUMER_KEY}&consumer_secret=${process.env.VUE_APP_CONSUMER_SECRET}&customer=${subCustId}`,
       {}
     );
-    console.log(response.data);
+
     commit("SET_SUBSCRIPTION", response.data);
   },
   async loadWines({ commit }) {
-    // console.log("loading wine");
     const response2 = await axios
       .get(
         `${process.env.VUE_APP_LARAVEL_ENDPOINT}/api/previouslySelected/${wineCustId}`,
@@ -34,29 +31,25 @@ export default {
       .catch((err) => {
         console.log(err);
       });
-    console.log(response2.data);
+
     commit("SET_WINES", response2.data);
   },
   async loadProfile({ commit }) {
-    // console.log("loading profile");
     const response3 = await axios.get(
       `${process.env.VUE_APP_WC_ENDPOINT}/wp-json/wc/v3/customers/${proCustId}?consumer_key=${process.env.VUE_APP_CONSUMER_KEY}&consumer_secret=${process.env.VUE_APP_CONSUMER_SECRET}`,
       {}
     );
     commit("SET_PROFILE", response3.data);
-    console.log(response3.data);
   },
   async loadQuiz({ commit }) {
-    // console.log("loading quix");
     const response4 = await axios.get(
       `${process.env.VUE_APP_LARAVEL_ENDPOINT}/api/questionnaireAnswers/${custUUID}`,
       {}
     );
-    console.log(response4.data);
+
     commit("SET_QUIZ", response4.data);
   },
   async onholdSubscription({ commit }, payload) {
-    // console.log("i m in action onhold" + payload.id + payload.status);
     await axios
       .put(
         `${process.env.VUE_APP_WC_ENDPOINT}/wp-json/wc/v1/subscriptions/${payload.id}?consumer_key=${process.env.VUE_APP_CONSUMER_KEY}&consumer_secret=${process.env.VUE_APP_CONSUMER_SECRET}&status=${payload.status}`,
@@ -79,7 +72,7 @@ export default {
     commit("SET_UPDATE_SUBS");
   },
   async buyMoreOrder({ commit }, payload) {
-    console.log("submit rate & comment");
+    console.log(payload.line_items[0].product_id);
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -114,7 +107,7 @@ export default {
         line_items: [
           {
             product_id: payload.line_items[0].product_id,
-            quantity: payload.line_items[0].quantity,
+            quantity: 1,
           },
         ],
         shipping_lines: [
@@ -132,19 +125,13 @@ export default {
       }),
     };
 
-    const response5 = await fetch(
+    await fetch(
       `${process.env.VUE_APP_WC_ENDPOINT}/wp-json/wc/v3/orders?consumer_key=${process.env.VUE_APP_CONSUMER_KEY}&consumer_secret=${process.env.VUE_APP_CONSUMER_SECRET}`,
       requestOptions
     );
-    console.log("action buy more");
     commit("SET_UPDATE_ORDERS");
-    console.log(response5.data);
   },
   async updateSubs({ commit }, payload) {
-    console.log("action update subs");
-    console.log(payload.product_id);
-    console.log(payload.variation_id);
-
     const requestOptions = {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -162,7 +149,7 @@ export default {
         ],
       }),
     };
-    const response6 = await fetch(
+    await fetch(
       `${process.env.VUE_APP_WC_ENDPOINT}/wp-json/wc/v3/orders/${payload.id}?consumer_key=${process.env.VUE_APP_CONSUMER_KEY}&consumer_secret=${process.env.VUE_APP_CONSUMER_SECRET}`,
       requestOptions
     );
@@ -176,14 +163,13 @@ export default {
     //     console.log(err);
     //   });
     commit("SET_UPDATE_ORDERS");
-    console.log(response6.data);
   },
   async getWines({ commit }) {
     const response7 = await axios.get(
       `${process.env.VUE_APP_LARAVEL_ENDPOINT}/api/wine-data`,
       {}
     );
-    console.log(response7.data);
+
     commit("SET_WINES", response7.data);
   },
   async submitRating({ commit }, payload) {
@@ -199,13 +185,11 @@ export default {
         comment: payload.comment,
       }),
     };
-    console.log("submit rate & comment");
+
     const response8 = await fetch(
       `${process.env.VUE_APP_LARAVEL_ENDPOINT}/api/rating/${klaviyo_id}`,
       requestOptions
     );
-
-    console.log(response8);
     commit("SET_WINES", response8.data);
   },
 };

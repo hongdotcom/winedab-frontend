@@ -9,7 +9,7 @@
           <ion-button class="nav-button-last" @click="$router.push('/my-subscription')"> Subscription </ion-button>
         </ion-buttons>
       </div> -->
-      
+
       <ion-content class="ion-padding">
         <div class="ion-padding">
           <h2>My Orders</h2>
@@ -443,6 +443,7 @@ export default defineComponent({
     IonPage,
     IonGrid,
     IonRow,
+
     IonCol,
     IonIcon,
     IonSearchbar,
@@ -501,7 +502,7 @@ export default defineComponent({
       return alert.present();
     },
     async orderMorePrompt(name, year, sku, sub, profile) {
-      console.log(sub);
+      console.log(this.getProduct(sub));
       const alert = await alertController.create({
         header: "Buy More",
         subheader: "Subtitle",
@@ -575,9 +576,7 @@ export default defineComponent({
                 ],
               };
               console.log(payload);
-              this.buyMoreOrder(payload).then(() => {
-                console.log("complete buy more");
-              });
+              this.buyMoreOrder(payload).then(() => {});
             },
           },
         ],
@@ -616,7 +615,6 @@ export default defineComponent({
       this.currentTab = selectedTab;
     },
     async onRate(wine, rating) {
-      console.log(wine.comment);
       const payload = {
         order_delivery_id: wine.order_delivery_id,
         order_id: wine.order_id,
@@ -624,16 +622,11 @@ export default defineComponent({
         rating: rating,
         comment: wine.comment,
       };
-      await this.submitRating(payload).then(() => {
-        console.log("complete on rating");
-      });
+      await this.submitRating(payload).then(() => {});
       this.loadWines();
     },
 
-    async saveComment(wine, key) {
-      console.log(this.newComment);
-      console.log(wine.comment);
-      console.log(key);
+    async saveComment(wine) {
       const payload = {
         order_delivery_id: wine.order_delivery_id,
         order_id: wine.order_id,
@@ -641,14 +634,8 @@ export default defineComponent({
         rating: wine.rating,
         comment: this.newComment,
       };
-      await this.submitRating(payload).then(() => {
-        console.log("complete on Comment");
-      });
+      await this.submitRating(payload).then(() => {});
       this.loadWines();
-      // this.comments.push({
-      //   id: this.comments.length + 1,
-      //   comment: this.newComment,
-      // });
       this.newComment = "";
     },
     doEdit(editing) {
